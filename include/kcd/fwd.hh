@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Antonio El Khoury.
+// Copyright (C) 2011 by Antonio El Khoury.
 //
 // This file is part of the kcd-capsule.
 //
@@ -19,12 +19,12 @@
  * \brief Forward declarations.
  */
 
-#ifndef KCD_CAPSULE_FWD_HH
-# define KCD_CAPSULE_FWD_HH
+#ifndef KCD_FWD_HH
+# define KCD_FWD_HH
 
-namespace Kcd-capsule
+namespace kcd
 {
-  class Kcd-capsule;
-} // end of namespace Kcd-capsule.
+  class Capsule;
+} // end of namespace kcd.
 
-#endif //! KCD_CAPSULE_FWD_HH
+#endif //! KCD_FWD_HH

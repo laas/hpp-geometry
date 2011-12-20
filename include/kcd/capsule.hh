@@ -1,4 +1,4 @@
-// Copyright (C) 2009 by Antonio El Khoury.
+// Copyright (C) 2011 by Antonio El Khoury.
 //
 // This file is part of the kcd-capsule.
 //
@@ -17,21 +17,28 @@
 
 
 /**
- * \file src/kcd-capsule.cc
- *
- * \brief Implementation of Kcd-capsule.
+ * \brief Declaration of Capsule.
  */
 
-#include "kcd-capsule/kcd-capsule.hh"
+#ifndef KCD_CAPSULE_HH_
+# define KCD_CAPSULE_HH_
 
-namespace Kcd-capsule
+namespace kcd
 {
-  Kcd-capsule::Kcd-capsule ()
+  /// \brief This class has been generated automatically
+  /// See Doxygen documentation to learn how to document your classes:
+  /// http://www.stack.nl/~dimitri/doxygen/
+  class Capsule
   {
-  }
+  public:
+    /// Main constructor.
+    Capsule ();
+    /// Destructor.
+    ~Capsule ();
 
-  Kcd-capsule::~Kcd-capsule ()
-  {
-  }
+    //FIXME: more here.
+  };
 
-} // end of namespace Kcd-capsule.
+} // end of namespace kcd.
+
+#endif //! KCD_CAPSULE_HH_

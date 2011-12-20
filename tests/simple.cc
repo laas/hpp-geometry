@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with kcd-capsule.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <kcd-capsule/kcd-capsule.hh>
+#include "kcd/capsule.hh"
 
 #define BOOST_TEST_MODULE simple
 

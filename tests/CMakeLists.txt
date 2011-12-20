@@ -16,17 +16,17 @@ ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
 # Boost and add it to the test suite.
 #
 MACRO(ADD_TESTCASE NAME)
-  ADD_EXECUTABLE(${NAME} ${NAME}.cc)
+  ADD_EXECUTABLE(${NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cc)
   ADD_TEST(${NAME} ${RUNTIME_OUTPUT_DIRECTORY}/${NAME})
 
-  # Link against package library.
-  TARGET_LINK_LIBRARIES(${NAME} libkcd-capsule.so)
+  PKG_CONFIG_USE_DEPENDENCY(${NAME} KineoController)
 
-  # Link against Boost.
-  TARGET_LINK_LIBRARIES(${NAME} ${Boost_LIBRARIES})
+  # Link against package library.
+  TARGET_LINK_LIBRARIES(${NAME} 
+    ${Boost_LIBRARIES}
+    ${PROJECT_NAME})
 ENDMACRO(ADD_TESTCASE)
 
 # Generated test.
 ADD_TESTCASE(simple)
-
-# FIXME: add more test cases here...
+KINEO_STANDALONE(simple)
