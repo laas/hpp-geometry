@@ -17,6 +17,8 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 SET(${PROJECT_NAME}_HEADERS
   include/kcd/fwd.hh
   include/kcd/capsule.hh
+  include/kcd/test-tree-capsule.hh
+  include/kcd/detector-capsule-capsule.hh
 )
 
 SETUP_PROJECT()

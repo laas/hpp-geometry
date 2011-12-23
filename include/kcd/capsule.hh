@@ -23,20 +23,77 @@
 #ifndef KCD_CAPSULE_HH_
 # define KCD_CAPSULE_HH_
 
+# include <kcd2/kcdInterface.h>
+
+# include "kcd/fwd.hh"
+
 namespace kcd
 {
-  /// \brief This class has been generated automatically
-  /// See Doxygen documentation to learn how to document your classes:
-  /// http://www.stack.nl/~dimitri/doxygen/
-  class Capsule
+  class Capsule : public CkcdGeometrySubElement
   {
   public:
-    /// Main constructor.
-    Capsule ();
+    /// Create a new capsule.
+    ///
+    /// \param tree Tree to which the element belongs
+    ///	\param index Sphere index within the tree
+    /// \param endPoint1 First end point of the capsule axis
+    ///	\param endPoint2 Second end point of the capsule axis
+    ///	\param radius Radius of the capsule
+    ///
+    /// \return New capsule
+    static CapsuleShPtr create (const TestTreeCapsuleShPtr testTree,
+				unsigned int index,
+				const CkcdPoint& endPoint1,
+				const CkcdPoint& endPoint2,
+				kcdReal radius);
+    
     /// Destructor.
-    ~Capsule ();
+    virtual ~Capsule ();
 
-    //FIXME: more here.
+    /// Get the parent geometry.
+    virtual CkcdGeometryConstShPtr geometry () const;
+
+    /// Get index in test tree.
+    unsigned int index () const;
+
+    /// Get the coordinates of the capsule's axis first end point
+    /// relative to the root of the tree.
+    ///
+    /// \return center coordinate
+    CkcdPoint endPoint1 () const;
+
+    /// Get the coordinates of the capsule's axis second end point
+    /// relative to the root of the tree.
+    ///
+    /// \return center coordinate
+    CkcdPoint endPoint2 () const;
+
+    /// Retrieves the radius of the capsule.
+    ///
+    /// \return radius
+    kcdReal radius () const;
+
+  protected:
+    /// Constructor.
+    Capsule (TestTreeCapsuleShPtr testTree);
+
+    /// Initialize.
+    ktStatus init (const CapsuleWkPtr& weakPtr,
+		   unsigned int index,
+		   const CkcdPoint& endPoint1,
+		   const CkcdPoint& endPoint2,
+		   kcdReal radius);
+
+    /// Get capsule test tree.
+    TestTreeCapsuleShPtr testTreeCapsule () const;
+
+  private:
+    CapsuleWkPtr weakPtr_;
+
+    unsigned int index_;
+    CkcdPoint endPoint1_;
+    CkcdPoint endPoint2_;
+    kcdReal radius_;
   };
 
 } // end of namespace kcd.
