@@ -28,5 +28,5 @@ MACRO(ADD_TESTCASE NAME)
 ENDMACRO(ADD_TESTCASE)
 
 # Generated test.
-ADD_TESTCASE(simple)
-KINEO_STANDALONE(simple)
+ADD_TESTCASE(collision-detection)
+KINEO_STANDALONE(collision-detection)

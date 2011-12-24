@@ -26,10 +26,6 @@
 
 namespace kcd
 {
-  // this line registers the test tree in the global locked test tree list
-  // for non static initialisation, see run_kcd() in KineoTutorialKCDNewType.cpp
-  KCD_REGISTER_TEST_TREE_LOCKED (TestTreeCapsule);
-
   // this line gets a new unique dispatch ID from CkcdGlobal
   unsigned int TestTreeCapsule::capsuleDispatchID_ = CkcdGlobal::getNewDispatchID ();
 

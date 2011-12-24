@@ -22,15 +22,18 @@
  * \brief Implementation of DetectorCapsuleCapsule.
  */
 
+#include <geometric-tools/Wm5DistSegment3Segment3.h>
+
 #include "kcd/detector-capsule-capsule.hh"
 #include "kcd/test-tree-capsule.hh"
+#include "kcd/util.hh"
 
 namespace kcd
 {
   DetectorCapsuleCapsuleShPtr DetectorCapsuleCapsule::
   create ()
   {
-    DetectorCapsuleCapsule*			ptr = new DetectorCapsuleCapsule ();
+    DetectorCapsuleCapsule* ptr = new DetectorCapsuleCapsule ();
     DetectorCapsuleCapsuleShPtr	shPtr (ptr);
 
     if (KD_OK != ptr->init (shPtr))
@@ -61,6 +64,31 @@ namespace kcd
     return DetectorCapsuleCapsule::createCopy (weakPtr_.lock ());
   }
 
+  void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
+					    const CkcdPoint& leftEndPoint2,
+					    const CkcdPoint& rightEndPoint1,
+					    const CkcdPoint& rightEndPoint2,
+					    kcdReal& squareDistance)
+  {
+    using namespace Wm5;
+
+    Vector3<kcdReal> leftP0;
+    Vector3<kcdReal> leftP1;
+    Vector3<kcdReal> rightP0;
+    Vector3<kcdReal> rightP1;
+
+    convertKcdPointToVector3 (leftP0, leftEndPoint1);
+    convertKcdPointToVector3 (leftP1, leftEndPoint2);
+    convertKcdPointToVector3 (rightP0, rightEndPoint1);
+    convertKcdPointToVector3 (rightP1, rightEndPoint2);
+
+    Segment3<kcdReal> s0 (leftP0, leftP1);
+    Segment3<kcdReal> s1 (rightP0, rightP1);
+
+    DistSegment3Segment3<kcdReal> distance (s0, s1);
+    squareDistance = distance.GetSquared ();
+  }
+
   CkcdDetectorTestAnswer DetectorCapsuleCapsule::
   analyze (const CkcdTreeIterator& left, 
 	   const CkcdTreeIterator& right,
@@ -69,7 +97,7 @@ namespace kcd
   {
     CkcdDetectorTestAnswer testAnswer;
 
-    // Retrieves capsules information
+    // Retrieve capsules information.
     const TestTreeCapsule* leftTree
       = static_cast<TestTreeCapsule*> (left.testTree ());
     const TestTreeCapsule* rightTree
@@ -80,12 +108,17 @@ namespace kcd
     leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
     rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
 
-    // apply transformation to have both position in the same frame
+    // Apply transformation to have both positions in the same frame.
     rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;
     rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
 
-    // we prevent use of sqrt as much as possible
-    kcdReal squareDistance = leftEndPoint1.squareDistanceFrom (rightEndPoint1);
+    // Compute Distance between the two capsules axes.
+    kcdReal squareDistance;
+    computeSquareDistanceSegmentSegment (leftEndPoint1,
+					 leftEndPoint2,
+					 rightEndPoint1,
+					 rightEndPoint2,
+					 squareDistance);
     kcdReal radiusSum = leftRadius + rightRadius;
 
     // depending on the result, we will call one of the 4 report
