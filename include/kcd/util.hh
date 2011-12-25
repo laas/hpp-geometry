@@ -33,6 +33,14 @@ namespace kcd
     dst[2] = src[2];
   }
 
+  /// \brief Convert Geometric Tools Vector3 to CkcdPoint.
+  void convertVector3ToKcdPoint (CkcdPoint& dst, const Wm5::Vector3<kcdReal>& src)
+  {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
+  }
+
   std::ostream&
   operator<< (std::ostream& os, const CkcdMat4& kcdMat4)
   {

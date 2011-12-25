@@ -68,7 +68,9 @@ namespace kcd
 					    const CkcdPoint& leftEndPoint2,
 					    const CkcdPoint& rightEndPoint1,
 					    const CkcdPoint& rightEndPoint2,
-					    kcdReal& squareDistance)
+					    kcdReal& squareDistance,
+					    CkcdPoint& leftClosest,
+					    CkcdPoint& rightClosest)
   {
     using namespace Wm5;
 
@@ -86,7 +88,16 @@ namespace kcd
     Segment3<kcdReal> s1 (rightP0, rightP1);
 
     DistSegment3Segment3<kcdReal> distance (s0, s1);
+
     squareDistance = distance.GetSquared ();
+
+    Vector3<kcdReal> wm5LeftClosest = s0.Center
+      + distance.GetSegment0Parameter () * s0.Direction;
+    Vector3<kcdReal> wm5RightClosest = s1.Center
+      + distance.GetSegment1Parameter () * s1.Direction;
+
+    convertVector3ToKcdPoint (rightClosest, wm5RightClosest);
+    convertVector3ToKcdPoint (rightClosest, wm5RightClosest);
   }
 
   CkcdDetectorTestAnswer DetectorCapsuleCapsule::
@@ -114,11 +125,17 @@ namespace kcd
 
     // Compute Distance between the two capsules axes.
     kcdReal squareDistance;
+    CkcdPoint leftClosest;
+    CkcdPoint rightClosest;
+
     computeSquareDistanceSegmentSegment (leftEndPoint1,
 					 leftEndPoint2,
 					 rightEndPoint1,
 					 rightEndPoint2,
-					 squareDistance);
+					 squareDistance,
+					 leftClosest,
+					 rightClosest);
+
     kcdReal radiusSum = leftRadius + rightRadius;
 
     // depending on the result, we will call one of the 4 report
@@ -150,10 +167,6 @@ namespace kcd
 	else
 	  {
 	    // if it is a leaf, report an exact distance
-	    CkcdPoint axis = rightEndPoint1 - leftEndPoint1;
-	    axis.normalize ();
-	    CkcdPoint leftClosest = leftEndPoint1 + axis * leftRadius;
-	    CkcdPoint rightClosest = rightEndPoint1 - axis * rightRadius;
 	    testAnswer = query.reportExactDistance (left,
 						    right,
 						    testData,
