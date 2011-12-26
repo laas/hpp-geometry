@@ -69,8 +69,8 @@ namespace kcd
 					    const CkcdPoint& rightEndPoint1,
 					    const CkcdPoint& rightEndPoint2,
 					    kcdReal& squareDistance,
-					    CkcdPoint& leftClosest,
-					    CkcdPoint& rightClosest)
+					    CkcdPoint& leftSegmentClosest,
+					    CkcdPoint& rightSegmentClosest)
   {
     using namespace Wm5;
 
@@ -91,13 +91,13 @@ namespace kcd
 
     squareDistance = distance.GetSquared ();
 
-    Vector3<kcdReal> wm5LeftClosest = s0.Center
+    Vector3<kcdReal> wm5LeftSegmentClosest = s0.Center
       + distance.GetSegment0Parameter () * s0.Direction;
-    Vector3<kcdReal> wm5RightClosest = s1.Center
+    Vector3<kcdReal> wm5RightSegmentClosest = s1.Center
       + distance.GetSegment1Parameter () * s1.Direction;
 
-    convertVector3ToKcdPoint (rightClosest, wm5RightClosest);
-    convertVector3ToKcdPoint (rightClosest, wm5RightClosest);
+    convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
+    convertVector3ToKcdPoint (rightSegmentClosest, wm5RightSegmentClosest);
   }
 
   CkcdDetectorTestAnswer DetectorCapsuleCapsule::
@@ -125,16 +125,16 @@ namespace kcd
 
     // Compute Distance between the two capsules axes.
     kcdReal squareDistance;
-    CkcdPoint leftClosest;
-    CkcdPoint rightClosest;
+    CkcdPoint leftSegmentClosest;
+    CkcdPoint rightSegmentClosest;
 
     computeSquareDistanceSegmentSegment (leftEndPoint1,
 					 leftEndPoint2,
 					 rightEndPoint1,
 					 rightEndPoint2,
 					 squareDistance,
-					 leftClosest,
-					 rightClosest);
+					 leftSegmentClosest,
+					 rightSegmentClosest);
 
     kcdReal radiusSum = leftRadius + rightRadius;
 
@@ -167,6 +167,13 @@ namespace kcd
 	else
 	  {
 	    // if it is a leaf, report an exact distance
+	    CkitVect3 axis = rightSegmentClosest - leftSegmentClosest;
+	    axis.normalize ();
+	    CkcdPoint leftClosest = leftSegmentClosest
+	      + axis * leftRadius;
+	    CkcdPoint rightClosest = rightSegmentClosest
+	      - axis * rightRadius;
+
 	    testAnswer = query.reportExactDistance (left,
 						    right,
 						    testData,
