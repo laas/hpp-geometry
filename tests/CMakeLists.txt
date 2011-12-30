@@ -29,4 +29,7 @@ ENDMACRO(ADD_TESTCASE)
 
 # Generated test.
 ADD_TESTCASE(collision-detection)
-KINEO_STANDALONE(collision-detection)
+#KINEO_STANDALONE(collision-detection)
+
+ADD_TESTCASE(proximity-query)
+KINEO_STANDALONE(proximity-query)
