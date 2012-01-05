@@ -2,6 +2,7 @@ SET(LIBRARY_NAME ${PROJECT_NAME})
 
 ADD_LIBRARY(${LIBRARY_NAME}
   SHARED
+  kcd/util.cc
   kcd/capsule.cc
   kcd/poly-capsule.cc
   kcd/test-tree-capsule.cc

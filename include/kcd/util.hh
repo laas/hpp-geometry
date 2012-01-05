@@ -23,10 +23,13 @@
 
 # include <geometric-tools/Wm5Vector3.h>
 
+# include <kcd2/kcdInterface.h>
+
 namespace kcd
 {
   /// \brief Convert CkcdPoint to Geometric Tools Vector3.
-  void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst, const CkcdPoint& src)
+  inline void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst,
+					const CkcdPoint& src)
   {
     dst[0] = src[0];
     dst[1] = src[1];
@@ -34,77 +37,33 @@ namespace kcd
   }
 
   /// \brief Convert Geometric Tools Vector3 to CkcdPoint.
-  void convertVector3ToKcdPoint (CkcdPoint& dst, const Wm5::Vector3<kcdReal>& src)
+  inline void convertVector3ToKcdPoint (CkcdPoint& dst,
+					const Wm5::Vector3<kcdReal>& src)
   {
     dst[0] = src[0];
     dst[1] = src[1];
     dst[2] = src[2];
   }
 
-  std::ostream&
-  operator<< (std::ostream& os, const CkcdMat4& kcdMat4)
-  {
-    for (unsigned int rowId = 0; rowId < 4; ++rowId)
-      {
-	for (unsigned int colId = 0; colId < 4; ++colId)
-	  os << kcdMat4 (rowId, colId) << " ";
-	os << std::endl;
-      }
+  /// \brief Print kcdMat4 matrix.
+  std::ostream& operator<< (std::ostream& os, const CkcdMat4& kcdMat4);
 
-    return os;
-  }
-
-  std::ostream&
-  operator<< (std::ostream& os, const CkcdCollisionReportShPtr& kcdCollision)
-  {
-    unsigned int nbPairs = kcdCollision->countPairs();
-  
-    if (nbPairs == 0)
-      os << "No Collisions reported" << std::endl;
-    else
-      os << "Collisions reported: " << std::endl;
-    
-    for(unsigned int i=0; i < nbPairs; i++)
-      {
-	os << "  colliding capsule pair :" << std::endl;
-
-	CkcdGeometrySubElementConstShPtr gse1 = kcdCollision->leftSubElement (i);
-	CkcdGeometrySubElementConstShPtr gse2 = kcdCollision->rightSubElement (i);
-
-	CapsuleConstShPtr capsule1 = KIT_DYNAMIC_PTR_CAST (const Capsule, gse1);
-	CapsuleConstShPtr capsule2 = KIT_DYNAMIC_PTR_CAST (const Capsule, gse2);
-
-	// Retrieve the points (relative to their geometry's position)
-	CkcdPoint leftEndPoint1 = capsule1->endPoint1 ();
-	CkcdPoint leftEndPoint2 = capsule1->endPoint2 ();
-	CkcdPoint rightEndPoint1 = capsule1->endPoint1 ();
-	CkcdPoint rightEndPoint2 = capsule1->endPoint2 ();
-	kcdReal r1 = capsule1->radius();
-	kcdReal r2 = capsule2->radius();
-
-	os << "    left end point 1 = ("
-	   << leftEndPoint1[0] << ", "
-	   << leftEndPoint1[1] << ", "
-	   << leftEndPoint1[2] << "), "
-	   << "left end point 2 = ("
-	   << leftEndPoint2[0] << ", "
-	   << leftEndPoint2[1] << ", "
-	   << leftEndPoint2[2] << "), radius = "
-	   << r1 << std::endl;
-
-	os << "    right end point 1 = ("
-	   << rightEndPoint1[0] << ", "
-	   << rightEndPoint1[1] << ", "
-	   << rightEndPoint1[2] << "), "
-	   << "right end point 2 = ("
-	   << rightEndPoint2[0] << ", "
-	   << rightEndPoint2[1] << ", "
-	   << rightEndPoint2[2] << "), radius = "
-	   << r2 << std::endl;
-      }
-
-    return os;
-  }
+  /// \brief Compute square distance between two segments.
+  ///
+  /// \param leftEndPoint1 left segment first end point
+  /// \param leftEndPoint1 left segment second end point
+  /// \param leftEndPoint1 right segment first end point
+  /// \param leftEndPoint1 right segment second end point
+  /// \return squareDistance square distance between the two segments
+  /// \return leftSegmentClosest closest point on left segment
+  /// \return rightSegmentClosest closest point on right segment
+  void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
+					    const CkcdPoint& leftEndPoint2,
+					    const CkcdPoint& rightEndPoint1,
+					    const CkcdPoint& rightEndPoint2,
+					    kcdReal& squareDistance,
+					    CkcdPoint& leftSegmentClosest,
+					    CkcdPoint& rightSegmentClosest);
 
 } // end of namespace kcd.
 #endif //! KCD_UTIL_HH_
