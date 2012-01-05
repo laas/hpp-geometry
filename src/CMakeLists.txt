@@ -7,6 +7,10 @@ ADD_LIBRARY(${LIBRARY_NAME}
   kcd/poly-capsule.cc
   kcd/test-tree-capsule.cc
   kcd/detector-capsule-capsule.cc
+  kcd/segment.cc
+  kcd/poly-segment.cc
+  kcd/test-tree-segment.cc
+  kcd/detector-segment-segment.cc
   )
 
 SET_TARGET_PROPERTIES(${LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION})

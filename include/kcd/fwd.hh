@@ -28,6 +28,10 @@ namespace kcd
   KIT_PREDEF_CLASS (PolyCapsule);
   KIT_PREDEF_CLASS (Capsule);
   KIT_PREDEF_CLASS (DetectorCapsuleCapsule);
+  KIT_PREDEF_CLASS (TestTreeSegment);
+  KIT_PREDEF_CLASS (PolySegment);
+  KIT_PREDEF_CLASS (Segment);
+  KIT_PREDEF_CLASS (DetectorSegmentSegment);
 } // end of namespace kcd.
 
 #endif //! KCD_FWD_HH
