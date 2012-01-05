@@ -31,6 +31,9 @@ ENDMACRO(ADD_TESTCASE)
 ADD_TESTCASE(collision-detection-capsule)
 KINEO_STANDALONE(collision-detection-capsule)
 
+ADD_TESTCASE(collision-detection-capsule-obb)
+KINEO_STANDALONE(collision-detection-capsule-obb)
+
 ADD_TESTCASE(proximity-query-capsule)
 KINEO_STANDALONE(proximity-query-capsule)
 
