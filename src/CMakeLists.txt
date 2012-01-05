@@ -2,10 +2,11 @@ SET(LIBRARY_NAME ${PROJECT_NAME})
 
 ADD_LIBRARY(${LIBRARY_NAME}
   SHARED
-  capsule.cc
-  poly-capsule.cc
-  test-tree-capsule.cc
-  detector-capsule-capsule.cc)
+  kcd/capsule.cc
+  kcd/poly-capsule.cc
+  kcd/test-tree-capsule.cc
+  kcd/detector-capsule-capsule.cc
+  )
 
 SET_TARGET_PROPERTIES(${LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION})
 

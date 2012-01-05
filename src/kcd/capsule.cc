@@ -17,7 +17,7 @@
 
 
 /**
- * \file src/capsule.cc
+ * \file src/kcd/capsule.cc
  *
  * \brief Implementation of Capsule.
  */

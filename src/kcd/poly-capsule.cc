@@ -17,7 +17,7 @@
 
 
 /**
- * \file src/poly-capsule.cc
+ * \file src/kcd/poly-capsule.cc
  *
  * \brief Implementation of PolyCapsule.
  */

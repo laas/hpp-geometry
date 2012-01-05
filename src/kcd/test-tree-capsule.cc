@@ -17,7 +17,7 @@
 
 
 /**
- * \file src/test-tree-capsule.cc
+ * \file src/kcd/test-tree-capsule.cc
  *
  * \brief Implementation of TestTreeCapsule.
  */

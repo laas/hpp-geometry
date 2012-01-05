@@ -17,7 +17,7 @@
 
 
 /**
- * \file src/detector-capsule-capsule.cc
+ * \file src/kcd/detector-capsule-capsule.cc
  *
  * \brief Implementation of DetectorCapsuleCapsule.
  */
@@ -149,7 +149,7 @@ namespace kcd
 	  }
 	else
 	  {
-	    // if it is a leaf, report a collision
+	    // if it is a leaf, report a collision.
 	    testAnswer = query.reportCollision (left, right, testData);
 	  }
       }
