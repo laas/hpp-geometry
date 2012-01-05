@@ -28,8 +28,8 @@ MACRO(ADD_TESTCASE NAME)
 ENDMACRO(ADD_TESTCASE)
 
 # Generated test.
-ADD_TESTCASE(collision-detection)
-#KINEO_STANDALONE(collision-detection)
+ADD_TESTCASE(collision-detection-capsule)
+KINEO_STANDALONE(collision-detection-capsule)
 
-ADD_TESTCASE(proximity-query)
-KINEO_STANDALONE(proximity-query)
+ADD_TESTCASE(proximity-query-capsule)
+KINEO_STANDALONE(proximity-query-capsule)
