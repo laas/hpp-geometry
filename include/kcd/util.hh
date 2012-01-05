@@ -52,8 +52,8 @@ namespace kcd
   ///
   /// \param leftEndPoint1 left segment first end point
   /// \param leftEndPoint1 left segment second end point
-  /// \param leftEndPoint1 right segment first end point
-  /// \param leftEndPoint1 right segment second end point
+  /// \param rightEndPoint1 right segment first end point
+  /// \param rightEndPoint1 right segment second end point
   /// \return squareDistance square distance between the two segments
   /// \return leftSegmentClosest closest point on left segment
   /// \return rightSegmentClosest closest point on right segment
