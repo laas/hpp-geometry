@@ -21,6 +21,8 @@
  */
 
 #include <geometric-tools/Wm5DistSegment3Segment3.h>
+#include <geometric-tools/Wm5DistSegment3Box3.h>
+#include <geometric-tools/Wm5DistSegment3Triangle3.h>
 
 #include "kcd/util.hh"
 
@@ -63,7 +65,7 @@ namespace kcd
     Segment3<kcdReal> s1 (rightP0, rightP1);
 
     DistSegment3Segment3<kcdReal> distance (s0, s1);
-
+    
     squareDistance = distance.GetSquared ();
 
     Vector3<kcdReal> wm5LeftSegmentClosest = s0.Center
@@ -73,6 +75,88 @@ namespace kcd
 
     convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
     convertVector3ToKcdPoint (rightSegmentClosest, wm5RightSegmentClosest);
+  }
+
+  void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
+					const CkcdPoint& leftEndPoint2,
+					const CkcdBoundingBoxShPtr& rightBoundingBox,
+					kcdReal& squareDistance)
+  {
+    using namespace Wm5;
+
+    // Define segment from left capsule axis.
+    Vector3<kcdReal> leftP0;
+    Vector3<kcdReal> leftP1;
+    convertKcdPointToVector3 (leftP0, leftEndPoint1);
+    convertKcdPointToVector3 (leftP1, leftEndPoint2);
+
+    Segment3<kcdReal> s0 (leftP0, leftP1);
+
+    // Define box from right bounding box.
+    Vector3<kcdReal> center;
+    convertKcdPointToVector3 (center, rightBoundingBox->center ());
+
+    CkcdMat4 position;
+    rightBoundingBox->getRelativePosition (position);
+    Vector3<kcdReal> axis0 (position(0, 0), position(1, 0), position(2, 0));
+    Vector3<kcdReal> axis1 (position(0, 1), position(1, 1), position(2, 1));
+    Vector3<kcdReal> axis2 (position(0, 2), position(1, 2), position(2, 2));
+
+    kcdReal extent0;
+    kcdReal extent1;
+    kcdReal extent2;
+    rightBoundingBox->getHalfLengths (extent0, extent1, extent2);
+
+    Box3<kcdReal> box (center, axis0, axis1, axis2, extent0, extent1, extent2);
+
+    // Define distance and compute squared distance.
+    DistSegment3Box3<kcdReal> distance (s0, box);
+
+    squareDistance = distance.GetSquared ();
+  }
+
+  void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
+					     const CkcdPoint& leftEndPoint2,
+					     const CkcdPoint rightTriangle[3],
+					     kcdReal& squareDistance,
+					     CkcdPoint& leftSegmentClosest,
+					     CkcdPoint& rightTriangleClosest)
+  {
+    using namespace Wm5;
+
+    // Define segment.
+    Vector3<kcdReal> leftP0;
+    Vector3<kcdReal> leftP1;
+    convertKcdPointToVector3 (leftP0, leftEndPoint1);
+    convertKcdPointToVector3 (leftP1, leftEndPoint2);
+
+    Segment3<kcdReal> s0 (leftP0, leftP1);
+
+    // Define triangle.
+    Vector3<kcdReal> rightV0;
+    Vector3<kcdReal> rightV1;
+    Vector3<kcdReal> rightV2;
+    convertKcdPointToVector3 (rightV0, rightTriangle[0]);
+    convertKcdPointToVector3 (rightV1, rightTriangle[1]);
+    convertKcdPointToVector3 (rightV2, rightTriangle[2]);
+    
+    Triangle3<kcdReal> triangle (rightV0, rightV1, rightV2);
+
+    // Define distance.
+    DistSegment3Triangle3<kcdReal> distance (s0, triangle);
+
+    // Compute distance and closest points.
+    squareDistance = distance.GetSquared ();
+
+    Vector3<kcdReal> wm5LeftSegmentClosest = s0.Center
+      + distance.GetSegmentParameter () * s0.Direction;
+    Vector3<kcdReal> wm5RightSegmentClosest 
+      = distance.GetTriangleBary (0) * rightV0
+      + distance.GetTriangleBary (1) * rightV1
+      + distance.GetTriangleBary (2) * rightV2;
+
+    convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
+    convertVector3ToKcdPoint (rightTriangleClosest, wm5RightSegmentClosest);
   }
 
 } // end of namespace kcd.

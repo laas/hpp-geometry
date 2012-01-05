@@ -65,5 +65,32 @@ namespace kcd
 					    CkcdPoint& leftSegmentClosest,
 					    CkcdPoint& rightSegmentClosest);
 
+  /// \brief Compute square distance between a segment and a box.
+  ///
+  /// \param leftEndPoint1 left segment first end point
+  /// \param leftEndPoint1 left segment second end point
+  /// \param rightBoundingBox right bounding box
+  /// \return squareDistance square distance between segment and box
+  void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
+					const CkcdPoint& leftEndPoint2,
+					const CkcdBoundingBoxShPtr&
+					rightBoundingBox,
+					kcdReal& squareDistance);
+
+  /// \brief Compute square distance between a segment and a box.
+  ///
+  /// \param leftEndPoint1 left segment first end point
+  /// \param leftEndPoint1 left segment second end point
+  /// \param rightTriangle right triangle, array of 3 vertices
+  /// \return squareDistance square distance between segment and triangle
+  /// \return leftSegmentClosest closest point on left segment
+  /// \return rightTriangleClosest closest point on right triangle
+  void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
+					     const CkcdPoint& leftEndPoint2,
+					     const CkcdPoint rightTriangle[3],
+					     kcdReal& squareDistance,
+					     CkcdPoint& leftSegmentClosest,
+					     CkcdPoint& rightTriangleClosest);
+
 } // end of namespace kcd.
 #endif //! KCD_UTIL_HH_
