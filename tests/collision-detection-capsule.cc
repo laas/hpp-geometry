@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with kcd-capsule.  If not, see <http://www.gnu.org/licenses/>.
 
-#define BOOST_TEST_MODULE collision-detection
+#define BOOST_TEST_MODULE collision-detection-capsule
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/output_test_stream.hpp>
@@ -31,7 +31,7 @@
 using boost::test_tools::output_test_stream;
 using namespace kcd;
 
-BOOST_AUTO_TEST_CASE (collision_detection)
+BOOST_AUTO_TEST_CASE (collision_detection_capsule)
 {
   // Validate Kineo license.
   if (!CkppLicense::initialize ())
