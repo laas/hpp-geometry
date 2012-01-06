@@ -42,3 +42,9 @@ KINEO_STANDALONE(proximity-query-capsule-obb)
 
 ADD_TESTCASE(proximity-query-segment)
 KINEO_STANDALONE(proximity-query-segment)
+
+ADD_TESTCASE(proximity-query-segment-obb)
+KINEO_STANDALONE(proximity-query-segment-obb)
+
+ADD_TESTCASE(component-capsule)
+KINEO_STANDALONE(component-capsule)
