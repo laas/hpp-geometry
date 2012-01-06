@@ -73,8 +73,8 @@ namespace kcd
   /// \return squareDistance square distance between segment and box
   void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
 					const CkcdPoint& leftEndPoint2,
-					const CkcdBoundingBoxShPtr&
-					rightBoundingBox,
+					const CkcdTestTreeOBB::CkcdPolyOBBCache&
+					rightPolyOBBCache,
 					kcdReal& squareDistance);
 
   /// \brief Compute square distance between a segment and a box.
@@ -87,7 +87,9 @@ namespace kcd
   /// \return rightTriangleClosest closest point on right triangle
   void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
 					     const CkcdPoint& leftEndPoint2,
-					     const CkcdPoint rightTriangle[3],
+					     const CkcdTestTreeOBB::
+					     CkcdTriangleCache<CkcdPoint>&
+					     rightTriangleCache,
 					     kcdReal& squareDistance,
 					     CkcdPoint& leftSegmentClosest,
 					     CkcdPoint& rightTriangleClosest);

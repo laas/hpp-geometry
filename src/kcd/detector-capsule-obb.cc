@@ -77,79 +77,46 @@ namespace kcd
       = static_cast<CkcdTestTreePolyBV*> (right.testTree ());
     CkcdPoint leftEndPoint1, leftEndPoint2;
     kcdReal leftRadius;
-    CkcdBoundingBoxShPtr rightBoundingBox;
+    CkcdTestTreeOBB::CkcdPolyOBBCache rightPolyOBBCache;
 
     leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
-    rightBoundingBox = rightTree->boundingBox ();
+    rightTree->fillOBBCache (right, true, rightPolyOBBCache);
 
     // Apply transformation to have both positions in the same frame.
-    CkcdMat4 currentRelativePosition;
-    rightBoundingBox->getRelativePosition (currentRelativePosition);
-    rightBoundingBox->setRelativePosition (testData->rightToLeftTransformation ()
-					   * currentRelativePosition);
+    rightPolyOBBCache.m_matrix = testData->rightToLeftTransformation ()
+      * rightPolyOBBCache.m_matrix;
 
-    // Compute Distance between the capsules axis and the bounding box.
+    // Compute Distance between the capsules axis and the OBB.
     kcdReal squareDistance;
 
     computeSquareDistanceSegmentBox (leftEndPoint1,
-				     leftEndPoint2,
-				     rightBoundingBox,
-				     squareDistance);
+    				     leftEndPoint2,
+    				     rightPolyOBBCache,
+    				     squareDistance);
 
     // depending on the result, we will call one of the 4 report
     // functions of CkcdProximityQuery
     if (squareDistance < leftRadius * leftRadius)
       {
-	if (left.countChildren () > 0 || right.countChildren () > 0)
-	  {
-	    // if it is not a leaf, report an overlap (of bounding volumes)
-	    testAnswer = query.reportOverlap (left, right, testData);
-	  }
-	else
-	  {
-	    // if it is a leaf, report a collision.
-	    testAnswer = query.reportCollision (left, right, testData);
-	  }
+    	if (left.countChildren () > 0)
+    	  {
+    	    // if it is not a leaf, report an overlap (of bounding volumes)
+    	    testAnswer = query.reportOverlap (left, right, testData);
+    	  }
+    	else
+    	  {
+    	    // if it is a leaf, report a collision.
+    	    testAnswer = query.reportCollision (left, right, testData);
+    	  }
       }
     else
       {
-	if (left.countChildren () > 0 || right.countChildren () > 0)
-	  {
-	    // if it is not a leaf, report an estimated distance
-	    testAnswer
-	      = query.reportEstimatedDistance (left,
-					       right,
-					       testData,
-					       sqrt (squareDistance) - leftRadius);
-	  }
-	else
-	  {
-	    CkcdPoint triangle[3];
-	    rightTree->getTriangle (0, triangle);
-	    CkcdPoint leftSegmentClosest;
-	    CkcdPoint rightTriangleClosest;
-	    
-	    computeSquareDistanceSegmentTriangle (leftEndPoint1,
-						  leftEndPoint2,
-						  triangle,
-						  squareDistance,
-						  leftSegmentClosest,
-						  rightTriangleClosest);
-
-	    // if it is a leaf, report an exact distance
-	    CkitVect3 axis = rightTriangleClosest - leftSegmentClosest;
-	    axis.normalize ();
-	    CkcdPoint leftCapsuleClosest = leftSegmentClosest
-	      + axis * leftRadius;
-
-	    testAnswer = query.reportExactDistance (left,
-						    right,
-						    testData,
-						    sqrt (squareDistance)
-						    - leftRadius,
-						    leftCapsuleClosest,
-						    rightTriangleClosest);
-	  }
+	// if it is not a leaf, report an estimated distance
+	testAnswer
+	  = query.reportEstimatedDistance (left,
+					   right,
+					   testData,
+					   sqrt (squareDistance) - leftRadius);
       }
 
     return testAnswer;
@@ -159,7 +126,7 @@ namespace kcd
   canHandle (unsigned int leftID, unsigned int rightID) const
   {
     return ((leftID == TestTreeCapsule::capsuleDispatchID ()) &&
-	    (rightID == CkcdTestTreeOBB::boundingBoxDispatchID ()));
+	    (rightID == CkcdTestTreeOBB::polyOBBDispatchID ()));
   }
   
   ktStatus DetectorCapsuleOBB::

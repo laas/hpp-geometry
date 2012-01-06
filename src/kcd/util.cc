@@ -79,7 +79,8 @@ namespace kcd
 
   void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
 					const CkcdPoint& leftEndPoint2,
-					const CkcdBoundingBoxShPtr& rightBoundingBox,
+					const CkcdTestTreeOBB::CkcdPolyOBBCache&
+					rightPolyOBBCache,
 					kcdReal& squareDistance)
   {
     using namespace Wm5;
@@ -92,20 +93,22 @@ namespace kcd
 
     Segment3<kcdReal> s0 (leftP0, leftP1);
 
-    // Define box from right bounding box.
-    Vector3<kcdReal> center;
-    convertKcdPointToVector3 (center, rightBoundingBox->center ());
+    // Define box from right OBB.
+    CkcdMat4 position = rightPolyOBBCache.m_matrix;
 
-    CkcdMat4 position;
-    rightBoundingBox->getRelativePosition (position);
+    CkcdPoint rightPolyOBBCacheCenter (position(0, 3),
+				       position(1, 3),
+				       position(2, 3));
+    Vector3<kcdReal> center;
+    convertKcdPointToVector3 (center, rightPolyOBBCacheCenter);
+
     Vector3<kcdReal> axis0 (position(0, 0), position(1, 0), position(2, 0));
     Vector3<kcdReal> axis1 (position(0, 1), position(1, 1), position(2, 1));
     Vector3<kcdReal> axis2 (position(0, 2), position(1, 2), position(2, 2));
 
-    kcdReal extent0;
-    kcdReal extent1;
-    kcdReal extent2;
-    rightBoundingBox->getHalfLengths (extent0, extent1, extent2);
+    kcdReal extent0 = rightPolyOBBCache.m_halfLength[0];
+    kcdReal extent1 = rightPolyOBBCache.m_halfLength[1];
+    kcdReal extent2 = rightPolyOBBCache.m_halfLength[2];
 
     Box3<kcdReal> box (center, axis0, axis1, axis2, extent0, extent1, extent2);
 
@@ -117,7 +120,9 @@ namespace kcd
 
   void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
 					     const CkcdPoint& leftEndPoint2,
-					     const CkcdPoint rightTriangle[3],
+					     const CkcdTestTreeOBB::
+					     CkcdTriangleCache<CkcdPoint>&
+					     rightTriangleCache,
 					     kcdReal& squareDistance,
 					     CkcdPoint& leftSegmentClosest,
 					     CkcdPoint& rightTriangleClosest)
@@ -136,9 +141,9 @@ namespace kcd
     Vector3<kcdReal> rightV0;
     Vector3<kcdReal> rightV1;
     Vector3<kcdReal> rightV2;
-    convertKcdPointToVector3 (rightV0, rightTriangle[0]);
-    convertKcdPointToVector3 (rightV1, rightTriangle[1]);
-    convertKcdPointToVector3 (rightV2, rightTriangle[2]);
+    convertKcdPointToVector3 (rightV0, rightTriangleCache.m_vertex[0]);
+    convertKcdPointToVector3 (rightV1, rightTriangleCache.m_vertex[1]);
+    convertKcdPointToVector3 (rightV2, rightTriangleCache.m_vertex[2]);
     
     Triangle3<kcdReal> triangle (rightV0, rightV1, rightV2);
 
