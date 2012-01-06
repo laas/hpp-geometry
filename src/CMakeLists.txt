@@ -8,7 +8,9 @@ ADD_LIBRARY(${LIBRARY_NAME}
   kcd/test-tree-capsule.cc
   kcd/detector-capsule-capsule.cc
   kcd/detector-capsule-triangle.cc
+  kcd/detector-triangle-capsule.cc
   kcd/detector-capsule-obb.cc
+  kcd/detector-obb-capsule.cc
   kcd/segment.cc
   kcd/poly-segment.cc
   kcd/test-tree-segment.cc

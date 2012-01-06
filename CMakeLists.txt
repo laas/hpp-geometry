@@ -21,7 +21,9 @@ SET(${PROJECT_NAME}_HEADERS
   include/kcd/test-tree-capsule.hh
   include/kcd/detector-capsule-capsule.hh
   include/kcd/detector-capsule-obb.hh
+  include/kcd/detector-obb-capsule.hh
   include/kcd/detector-capsule-triangle.hh
+  include/kcd/detector-triangle-capsule.hh
   include/kcd/segment.hh
   include/kcd/poly-segment.hh
   include/kcd/test-tree-segment.hh
