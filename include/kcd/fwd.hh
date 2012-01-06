@@ -36,6 +36,10 @@ namespace kcd
   KIT_PREDEF_CLASS (PolySegment);
   KIT_PREDEF_CLASS (Segment);
   KIT_PREDEF_CLASS (DetectorSegmentSegment);
+  KIT_PREDEF_CLASS (DetectorSegmentOBB);
+  KIT_PREDEF_CLASS (DetectorOBBSegment);
+  KIT_PREDEF_CLASS (DetectorSegmentTriangle);
+  KIT_PREDEF_CLASS (DetectorTriangleSegment);
 } // end of namespace kcd.
 
 #endif //! KCD_FWD_HH

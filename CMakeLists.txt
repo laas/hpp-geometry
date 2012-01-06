@@ -28,6 +28,10 @@ SET(${PROJECT_NAME}_HEADERS
   include/kcd/poly-segment.hh
   include/kcd/test-tree-segment.hh
   include/kcd/detector-segment-segment.hh
+  include/kcd/detector-segment-obb.hh
+  include/kcd/detector-obb-segment.hh
+  include/kcd/detector-segment-triangle.hh
+  include/kcd/detector-triangle-segment.hh
 )
 
 SETUP_PROJECT()

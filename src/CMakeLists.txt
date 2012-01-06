@@ -15,6 +15,10 @@ ADD_LIBRARY(${LIBRARY_NAME}
   kcd/poly-segment.cc
   kcd/test-tree-segment.cc
   kcd/detector-segment-segment.cc
+  kcd/detector-segment-obb.cc
+  kcd/detector-obb-segment.cc
+  kcd/detector-segment-triangle.cc
+  kcd/detector-triangle-segment.cc
   )
 
 SET_TARGET_PROPERTIES(${LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION})
