@@ -14,7 +14,7 @@ SET(PROJECT_URL "")
 # Where to compile shared objects
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-SET(${PROJECT_NAME}_HEADERS
+SET(${PROJECT_NAME}_KCD_HEADERS
   include/kcd/fwd.hh
   include/kcd/capsule.hh
   include/kcd/poly-capsule.hh
@@ -32,7 +32,11 @@ SET(${PROJECT_NAME}_HEADERS
   include/kcd/detector-obb-segment.hh
   include/kcd/detector-segment-triangle.hh
   include/kcd/detector-triangle-segment.hh
-)
+  )
+
+INSTALL(FILES ${${PROJECT_NAME}_KCD_HEADERS}
+  DESTINATION include/kcd
+  )
 
 SETUP_PROJECT()
 
