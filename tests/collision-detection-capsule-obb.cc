@@ -26,7 +26,9 @@
 #include "kcd/poly-capsule.hh"
 #include "kcd/test-tree-capsule.hh"
 #include "kcd/detector-capsule-obb.hh"
+#include "kcd/detector-obb-capsule.hh"
 #include "kcd/detector-capsule-triangle.hh"
+#include "kcd/detector-triangle-capsule.hh"
 #include "kcd/util.hh"
 
 using boost::test_tools::output_test_stream;
@@ -47,7 +49,11 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
   CkcdGlobal::instance ().registerDetector
     (&CkcdGlobal::createDetector<DetectorCapsuleOBB>);
   CkcdGlobal::instance ().registerDetector
+    (&CkcdGlobal::createDetector<DetectorOBBCapsule>);
+  CkcdGlobal::instance ().registerDetector
     (&CkcdGlobal::createDetector<DetectorCapsuleTriangle>);
+  CkcdGlobal::instance ().registerDetector
+    (&CkcdGlobal::createDetector<DetectorTriangleCapsule>);
 
   // Build poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
@@ -89,21 +95,30 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
   polyhedron->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
 
   // Build analysis with poly capsule and polyhedron.
-  CkcdAnalysisShPtr analysis = CkcdAnalysis::create ();
-  analysis->leftObject (polyCapsule);
-  analysis->rightObject (polyhedron);
-  analysis->analysisData ()->analysisType (CkcdAnalysisType::FAST_BOOLEAN_COLLISION);
+  CkcdAnalysisShPtr analysis1 = CkcdAnalysis::create ();
+  analysis1->leftObject (polyCapsule);
+  analysis1->rightObject (polyhedron);
+  analysis1->analysisData ()->analysisType (CkcdAnalysisType::FAST_BOOLEAN_COLLISION);
+
+  CkcdAnalysisShPtr analysis2 = CkcdAnalysis::create ();
+  analysis2->leftObject (polyhedron);
+  analysis2->rightObject (polyCapsule);
+  analysis2->analysisData ()->analysisType (CkcdAnalysisType::FAST_BOOLEAN_COLLISION);
 
   polyCapsule->setAbsolutePosition (CkcdMat4 ().translate (0.f, 0.f, 0.f));
 
-  // Translate polyhedron on the x axis and compute analysis.
+  // Translate polyhedron on the x axis and compute analysis1.
   kcdReal distance = 0;
   while (distance < 2.0f)
     {
       polyhedron->setAbsolutePosition (CkcdMat4 ().translate (distance, 0.f, 0.f));
-      analysis->compute ();
+      analysis1->compute ();
+      analysis2->compute ();
       if (distance < (radius + halfLength ))
-  	BOOST_CHECK_EQUAL (analysis->countCollisionReports (), 1);
+	{
+	  BOOST_CHECK_EQUAL (analysis1->countCollisionReports (), 1);
+	  BOOST_CHECK_EQUAL (analysis2->countCollisionReports (), 1);
+	}
       distance += 0.01f;
     }
 }
