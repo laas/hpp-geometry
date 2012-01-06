@@ -79,7 +79,7 @@ namespace kcd
     kcdReal rightRadius;
     CkcdTestTreeOBB::CkcdTriangleCache<CkcdPoint> leftTriangleCache;
 
-    leftTree->fillTriangleCache (left, rightTriangleCache);
+    leftTree->fillTriangleCache (left, leftTriangleCache);
     rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
 
     // Apply transformation to have both positions in the same frame.
