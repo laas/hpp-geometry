@@ -26,6 +26,7 @@
 #include "kcd/poly-capsule.hh"
 #include "kcd/test-tree-capsule.hh"
 #include "kcd/detector-capsule-obb.hh"
+#include "kcd/detector-capsule-triangle.hh"
 #include "kcd/util.hh"
 
 using boost::test_tools::output_test_stream;
@@ -45,6 +46,8 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
     (&CkcdGlobal::createTestTreeLocked<TestTreeCapsule>);
   CkcdGlobal::instance ().registerDetector
     (&CkcdGlobal::createDetector<DetectorCapsuleOBB>);
+  CkcdGlobal::instance ().registerDetector
+    (&CkcdGlobal::createDetector<DetectorCapsuleTriangle>);
 
   // Build poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
