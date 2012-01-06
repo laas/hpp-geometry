@@ -56,7 +56,7 @@ namespace kcd
     ///
     /// Should return true only if left ID equals
     ///	TestTreeCapsule::capsuleDispatchID() and right ID equals
-    ///	CkcdTestTreeOBB::boundingBoxDispatchID().
+    ///	CkcdTestTreeOBB::PolyOBBDispatchID().
     virtual bool canHandle (unsigned int leftID, unsigned int rightID) const;
 
   protected:
