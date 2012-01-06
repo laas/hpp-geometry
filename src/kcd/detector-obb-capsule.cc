@@ -72,9 +72,9 @@ namespace kcd
 
     // Retrieve capsule and OBB information.
     const CkcdTestTreePolyBV* leftTree
-      = static_cast<CkcdTestTreePolyBV*> (right.testTree ());
+      = static_cast<CkcdTestTreePolyBV*> (left.testTree ());
     const TestTreeCapsule* rightTree
-      = static_cast<TestTreeCapsule*> (left.testTree ());
+      = static_cast<TestTreeCapsule*> (right.testTree ());
     CkcdPoint rightEndPoint1, rightEndPoint2;
     kcdReal rightRadius;
     CkcdTestTreeOBB::CkcdPolyOBBCache leftPolyOBBCache;
