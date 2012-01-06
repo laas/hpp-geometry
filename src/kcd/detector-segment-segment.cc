@@ -101,7 +101,8 @@ namespace kcd
 
     // depending on the result, we will call one of the 4 report
     // functions of CkcdProximityQuery
-    if (squareDistance < std::numeric_limits<kcdReal>::epsilon ())
+    if (squareDistance < std::numeric_limits<kcdReal>::epsilon ()
+	* std::numeric_limits<kcdReal>::epsilon ())
       {
 	if (left.countChildren () > 0 || right.countChildren () > 0)
 	  {
