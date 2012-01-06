@@ -7,6 +7,7 @@ ADD_LIBRARY(${LIBRARY_NAME}
   kcd/poly-capsule.cc
   kcd/test-tree-capsule.cc
   kcd/detector-capsule-capsule.cc
+  kcd/detector-capsule-triangle.cc
   kcd/detector-capsule-obb.cc
   kcd/segment.cc
   kcd/poly-segment.cc
