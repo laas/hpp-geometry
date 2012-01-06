@@ -29,7 +29,9 @@ namespace kcd
   KIT_PREDEF_CLASS (Capsule);
   KIT_PREDEF_CLASS (DetectorCapsuleCapsule);
   KIT_PREDEF_CLASS (DetectorCapsuleOBB);
+  KIT_PREDEF_CLASS (DetectorOBBCapsule);
   KIT_PREDEF_CLASS (DetectorCapsuleTriangle);
+  KIT_PREDEF_CLASS (DetectorTriangleCapsule);
   KIT_PREDEF_CLASS (TestTreeSegment);
   KIT_PREDEF_CLASS (PolySegment);
   KIT_PREDEF_CLASS (Segment);
