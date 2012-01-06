@@ -68,7 +68,6 @@ namespace kcd
 	   const CkcdDetectorElementaryTestDataShPtr& testData,
 	   CkcdProximityQuery& query) const
   {
-    std::cout << "Analyzing" << std::endl;
     CkcdDetectorTestAnswer testAnswer;
 
     // Retrieve capsule and OBB information.
