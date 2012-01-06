@@ -34,8 +34,17 @@ SET(${PROJECT_NAME}_KCD_HEADERS
   include/kcd/detector-triangle-segment.hh
   )
 
+SET(${PROJECT_NAME}_KPP_COMPONENT_HEADERS
+  include/kpp/component/fwd.hh
+  include/kpp/component/capsule.hh
+  )
+
 INSTALL(FILES ${${PROJECT_NAME}_KCD_HEADERS}
   DESTINATION include/kcd
+  )
+
+INSTALL(FILES ${${PROJECT_NAME}_KPP_COMPONENT_HEADERS}
+  DESTINATION include/kpp/component
   )
 
 SETUP_PROJECT()
