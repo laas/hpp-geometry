@@ -37,5 +37,8 @@ KINEO_STANDALONE(collision-detection-capsule-obb)
 ADD_TESTCASE(proximity-query-capsule)
 KINEO_STANDALONE(proximity-query-capsule)
 
+ADD_TESTCASE(proximity-query-capsule-obb)
+KINEO_STANDALONE(proximity-query-capsule-obb)
+
 ADD_TESTCASE(proximity-query-segment)
 KINEO_STANDALONE(proximity-query-segment)
