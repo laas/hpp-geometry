@@ -26,182 +26,185 @@
 
 namespace kpp
 {
-  double Capsule::
-  height () const
+  namespace component
   {
-    return heightProperty_->value ();
-  }
+    double Capsule::
+    height () const
+    {
+      return heightProperty_->value ();
+    }
 
-  void Capsule::
-  height (const double& height)
-  {
-    heightProperty_->value (height);
-  }
+    void Capsule::
+    height (const double& height)
+    {
+      heightProperty_->value (height);
+    }
 
-  double Capsule::
-  radius () const
-  {
-    return radiusProperty_->value ();
-  }
+    double Capsule::
+    radius () const
+    {
+      return radiusProperty_->value ();
+    }
       
-  void Capsule::
-  radius (const double& radius)
-  {
-    radiusProperty_->value (radius);
-  }
+    void Capsule::
+    radius (const double& radius)
+    {
+      radiusProperty_->value (radius);
+    }
 
-  unsigned int Capsule::
-  baseVertices () const
-  {
-    return baseVerticesProperty_->value ();
-  }
+    unsigned int Capsule::
+    baseVertices () const
+    {
+      return baseVerticesProperty_->value ();
+    }
 
-  void Capsule::
-  baseVertices (const unsigned int baseVertices)
-  {
-    baseVerticesProperty_->value (baseVertices);
-  }
+    void Capsule::
+    baseVertices (const unsigned int baseVertices)
+    {
+      baseVerticesProperty_->value (baseVertices);
+    }
 
-  unsigned int Capsule::
-  parallels () const
-  {
-    return parallelsProperty_->value ();
-  }
+    unsigned int Capsule::
+    parallels () const
+    {
+      return parallelsProperty_->value ();
+    }
 
-  void Capsule::
-  parallels (const unsigned int parallels)
-  {
-    parallelsProperty_->value (parallels);
-  }
+    void Capsule::
+    parallels (const unsigned int parallels)
+    {
+      parallelsProperty_->value (parallels);
+    }
 
-  Capsule::
-  ~Capsule ()
-  {
-  }
+    Capsule::
+    ~Capsule ()
+    {
+    }
   
-  CkppComponentShPtr Capsule::
-  cloneComponent () const
-  {
-    CkppComponentShPtr shPtr = CkppComponent::create ("");
-    return shPtr;
-  }
+    CkppComponentShPtr Capsule::
+    cloneComponent () const
+    {
+      CkppComponentShPtr shPtr = CkppComponent::create ("");
+      return shPtr;
+    }
 
-  bool Capsule::
-  isComponentClonable () const
-  {
-    return false;
-  }
+    bool Capsule::
+    isComponentClonable () const
+    {
+      return false;
+    }
 
-  CapsuleShPtr Capsule::
-  create (const std::string& name,
+    CapsuleShPtr Capsule::
+    create (const std::string& name,
+	    const double& height,
+	    const double& radius,
+	    const unsigned int baseVertices,
+	    const unsigned int parallels)
+    {
+      Capsule* ptr = new Capsule ();
+      CapsuleShPtr ptrShPtr (ptr);
+      
+      if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels) 
+	  != KD_OK)
+	{
+	  ptrShPtr.reset ();
+	}
+      
+      return ptrShPtr;
+    }
+
+    Capsule::
+    Capsule ()
+      : CkppKCDAssembly ()
+    {
+    }
+
+    ktStatus Capsule::
+    init (const CapsuleWkPtr weakPtr,
+	  const std::string& name,
 	  const double& height,
 	  const double& radius,
 	  const unsigned int baseVertices,
 	  const unsigned int parallels)
-  {
-    Capsule* ptr = new Capsule ();
-    CapsuleShPtr ptrShPtr (ptr);
-      
-    if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels) 
-	!= KD_OK)
-      {
-	ptrShPtr.reset ();
-      }
-      
-    return ptrShPtr;
-  }
+    {
+      ktStatus success = CkppKCDAssembly::init (weakPtr, weakPtr, name);
 
-  Capsule::
-  Capsule ()
-    : CkppKCDAssembly ()
-  {
-  }
+      if (KD_OK == success)
+	{
+	  // Set attributes.
+	  weakPtr_ = weakPtr;
+	  heightProperty_ = CkppDoubleProperty::create ("height",
+							weakPtr.lock (),
+							0,
+							"height",
+							height);
+	  radiusProperty_ = CkppDoubleProperty::create ("radius",
+							weakPtr.lock (),
+							0,
+							"radius",
+							radius);
+	  baseVerticesProperty_ = CkppIntegerProperty::create ("base vertices",
+							       weakPtr.lock (),
+							       0,
+							       "base vertices",
+							       baseVertices);
+	  parallelsProperty_ = CkppIntegerProperty::create ("parallels",
+							    weakPtr.lock (),
+							    0,
+							    "parallels",
+							    parallels);
 
-  ktStatus Capsule::
-  init (const CapsuleWkPtr weakPtr,
-	const std::string& name,
-	const double& height,
-	const double& radius,
-	const unsigned int baseVertices,
-	const unsigned int parallels)
-  {
-    ktStatus success = CkppKCDAssembly::init (weakPtr, weakPtr, name);
-
-    if (KD_OK == success)
-      {
-	// Set attributes.
-	weakPtr_ = weakPtr;
-	heightProperty_ = CkppDoubleProperty::create ("height",
-						      weakPtr.lock (),
-						      0,
-						      "height",
-						      height);
-	radiusProperty_ = CkppDoubleProperty::create ("radius",
-						      weakPtr.lock (),
-						      0,
-						      "radius",
-						      radius);
-	baseVerticesProperty_ = CkppIntegerProperty::create ("base vertices",
-							     weakPtr.lock (),
-							     0,
-							     "base vertices",
-							     baseVertices);
-	parallelsProperty_ = CkppIntegerProperty::create ("parallels",
-							  weakPtr.lock (),
-							  0,
-							  "parallels",
-							  parallels);
-
-	// Define geometry components and insert them in assembly.
-	CkppComponentShPtr cylinder = CkppKCDCylinder::create ("cylinder",
-							       radius,
-							       radius,
-							       height,
-							       baseVertices,
-							       false,
-							       false);
-
-	CkppComponentShPtr topSphere = CkppKCDSphere::create ("top sphere",
-							      radius,
-							      baseVertices,
-							      parallels);
-
-	CkppComponentShPtr bottomSphere = CkppKCDSphere::create ("top sphere",
+	  // Define geometry components and insert them in assembly.
+	  CkppComponentShPtr cylinder = CkppKCDCylinder::create ("cylinder",
 								 radius,
+								 radius,
+								 height,
 								 baseVertices,
-								 parallels);
-	insertChildComponent (cylinder, 0);
-	insertChildComponent (topSphere, 1);
-	insertChildComponent (bottomSphere, 2);
-      }
+								 false,
+								 false);
+
+	  CkppComponentShPtr topSphere = CkppKCDSphere::create ("top sphere",
+								radius,
+								baseVertices,
+								parallels);
+
+	  CkppComponentShPtr bottomSphere = CkppKCDSphere::create ("top sphere",
+								   radius,
+								   baseVertices,
+								   parallels);
+	  insertChildComponent (cylinder, 0);
+	  insertChildComponent (topSphere, 1);
+	  insertChildComponent (bottomSphere, 2);
+	}
     
-    return success;
-  }
+      return success;
+    }
 
-  void Capsule::
-  fillPropertyVector (std::vector<CkppPropertyShPtr>& propertyVector) const
-  {
-    CkppKCDAssembly::fillPropertyVector (propertyVector);
+    void Capsule::
+    fillPropertyVector (std::vector<CkppPropertyShPtr>& propertyVector) const
+    {
+      CkppKCDAssembly::fillPropertyVector (propertyVector);
       
-    propertyVector.push_back (heightProperty_);
-    propertyVector.push_back (radiusProperty_);
-    propertyVector.push_back (baseVerticesProperty_);
-    propertyVector.push_back (parallelsProperty_);
-  }
+      propertyVector.push_back (heightProperty_);
+      propertyVector.push_back (radiusProperty_);
+      propertyVector.push_back (baseVerticesProperty_);
+      propertyVector.push_back (parallelsProperty_);
+    }
 
-  bool Capsule::
-  modifiedProperty (const CkppPropertyShPtr& property)
-  {
-    if (!CkppKCDAssembly::modifiedProperty (property))
-      return false;
+    bool Capsule::
+    modifiedProperty (const CkppPropertyShPtr& property)
+    {
+      if (!CkppKCDAssembly::modifiedProperty (property))
+	return false;
 
-    return true;
-  }
+      return true;
+    }
 
-  void Capsule::
-  updateProperty (const CkppPropertyShPtr& property)
-  {
-    CkppKCDAssembly::updateProperty (property);
-  }
+    void Capsule::
+    updateProperty (const CkppPropertyShPtr& property)
+    {
+      CkppKCDAssembly::updateProperty (property);
+    }
 
+  } // end of namespace component.
 } // end of namespace kpp.

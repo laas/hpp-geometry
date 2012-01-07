@@ -25,7 +25,7 @@
 #include <kpp/component/capsule.hh>
 
 using boost::test_tools::output_test_stream;
-using namespace kpp;
+using namespace kpp::component;
 
 BOOST_AUTO_TEST_CASE (component_capsule)
 {

@@ -24,7 +24,10 @@
 
 namespace kpp
 {
-  KIT_PREDEF_CLASS (Capsule);
-} // end of namespace kcd.
+  namespace component
+  {
+    KIT_PREDEF_CLASS (Capsule);
+  } // end of namespace component.
+} // end of namespace kpp.
   
 #endif //! KPP_COMPONENT_FWD_HH
