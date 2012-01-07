@@ -17,7 +17,7 @@
 
 
 /**
- * \file src/kpp/capsule.cc
+ * \file src/kpp/component/capsule.cc
  *
  * \brief Implementation of Capsule.
  */
