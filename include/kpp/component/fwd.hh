@@ -19,12 +19,12 @@
  * \brief Forward declarations.
  */
 
-#ifndef KPP_FWD_HH
-# define KPP_FWD_HH
+#ifndef KPP_COMPONENT_FWD_HH
+# define KPP_COMPONENT_FWD_HH
 
 namespace kpp
 {
   KIT_PREDEF_CLASS (Capsule);
 } // end of namespace kcd.
   
-#endif //! KPP_FWD_HH
+#endif //! KPP_COMPONENT_FWD_HH
