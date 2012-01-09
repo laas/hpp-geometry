@@ -16,6 +16,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 SET(${PROJECT_NAME}_KCD_HEADERS
   include/kcd/fwd.hh
+  include/kcd/util.hh
   include/kcd/capsule.hh
   include/kcd/poly-capsule.hh
   include/kcd/test-tree-capsule.hh
