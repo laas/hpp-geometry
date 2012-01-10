@@ -48,6 +48,9 @@ namespace kcd
   /// \brief Print kcdMat4 matrix.
   std::ostream& operator<< (std::ostream& os, const CkcdMat4& kcdMat4);
 
+  /// \brief Print kcdPoint vector.
+  std::ostream&  operator<< (std::ostream& os, const CkcdPoint& kcdPoint);
+
   /// \brief Compute square distance between two segments.
   ///
   /// \param leftEndPoint1 left segment first end point

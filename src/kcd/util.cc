@@ -41,6 +41,18 @@ namespace kcd
     return os;
   }
 
+  std::ostream&
+  operator<< (std::ostream& os, const CkcdPoint& kcdPoint)
+  {
+    os << "["
+       << kcdPoint[0] << ", "
+       << kcdPoint[1] << ", "
+       << kcdPoint[2]
+       << "]";
+
+    return os;
+  }
+
   void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
 					    const CkcdPoint& leftEndPoint2,
 					    const CkcdPoint& rightEndPoint1,
