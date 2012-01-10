@@ -97,5 +97,20 @@ namespace kcd
 					     CkcdPoint& leftSegmentClosest,
 					     CkcdPoint& rightTriangleClosest);
 
+  /// \brief Compute bounding capsule of a polyhedron.
+  ///
+  /// Compute axis of capsule segment using least-squares fit. Radius
+  /// is maximum distance from points to axis. Hemispherical caps are
+  /// chosen as close together as possible.
+  ///
+  /// \param polyhedron polyhedron that contains the points
+  /// \return endPoint1 bounding capsule segment first end point
+  /// \return endPoint2 bounding capsule segment second end point
+  /// \return radius bounding capsule radius
+  void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
+					 CkcdPoint& endPoint1,
+					 CkcdPoint& endPoint2,
+					 kcdReal& radius);
+ 
 } // end of namespace kcd.
 #endif //! KCD_UTIL_HH_

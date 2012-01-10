@@ -23,6 +23,7 @@
 #include <geometric-tools/Wm5DistSegment3Segment3.h>
 #include <geometric-tools/Wm5DistSegment3Box3.h>
 #include <geometric-tools/Wm5DistSegment3Triangle3.h>
+#include <geometric-tools/Wm5ContCapsule3.h>
 
 #include "kcd/util.hh"
 
@@ -174,6 +175,44 @@ namespace kcd
 
     convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
     convertVector3ToKcdPoint (rightTriangleClosest, wm5RightSegmentClosest);
+  }
+
+  void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
+					 CkcdPoint& endPoint1,
+					 CkcdPoint& endPoint2,
+					 kcdReal& radius)
+  {
+    assert (!!polyhedron && "Null pointer to polyhedron.");
+    assert (polyhedron->countPoints () != 0
+	    && "Polyhedron is empty.");
+
+    using namespace Wm5;
+
+    // Retrieve vector of points from polyhedron.
+    Vector3<kcdReal> wm5Points[polyhedron->countPoints ()];
+
+    for (unsigned i = 0; i < polyhedron->countPoints (); ++i)
+      {
+	CkcdPoint point;
+	polyhedron->getPoint (i, point);
+
+	Vector3<kcdReal> wm5Point;
+	convertKcdPointToVector3 (wm5Point, point);
+
+	wm5Points[i] = wm5Point;
+      }
+
+    // Compute bounding capsule of points.
+    Capsule3<kcdReal> wm5Capsule = ContCapsule (polyhedron->countPoints (),
+						wm5Points);
+
+    // Get capsule parameters.
+    Vector3<kcdReal> wm5EndPoint1 = wm5Capsule.Segment.P0;
+    Vector3<kcdReal> wm5EndPoint2 = wm5Capsule.Segment.P1;
+
+    convertVector3ToKcdPoint (endPoint1, wm5EndPoint1);
+    convertVector3ToKcdPoint (endPoint2, wm5EndPoint2);
+    radius = wm5Capsule.Radius;
   }
 
 } // end of namespace kcd.
