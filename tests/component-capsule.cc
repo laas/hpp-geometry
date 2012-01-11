@@ -38,9 +38,9 @@ BOOST_AUTO_TEST_CASE (component_capsule)
 
   // Create capsule component.
   double height = 1.;
-  double radius = 0.1;
-  unsigned int baseVertices = 10;
-  unsigned int parallels = 5;
+  double radius = 0.3;
+  unsigned int baseVertices = 32;
+  unsigned int parallels = 32;
 
   CapsuleShPtr capsule
     = Capsule::create ("capsule",height, radius, baseVertices, parallels);
