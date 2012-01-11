@@ -32,7 +32,7 @@ namespace kpp
 {
   namespace component
   {
-    class Capsule : public CkppKCDAssembly
+    class Capsule : public CkppKCDPolyhedron
     {
     public:
       KPP_DECLARE_PROPERTY(HEIGHT);
