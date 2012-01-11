@@ -45,7 +45,7 @@ namespace kpp
     {
       return radiusProperty_->value ();
     }
-      
+
     void Capsule::
     radius (const double& radius)
     {
@@ -80,7 +80,7 @@ namespace kpp
     ~Capsule ()
     {
     }
-  
+
     CkppComponentShPtr Capsule::
     cloneComponent () const
     {
@@ -103,13 +103,13 @@ namespace kpp
     {
       Capsule* ptr = new Capsule ();
       CapsuleShPtr ptrShPtr (ptr);
-      
-      if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels) 
+
+      if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels)
 	  != KD_OK)
 	{
 	  ptrShPtr.reset ();
 	}
-      
+
       return ptrShPtr;
     }
 
