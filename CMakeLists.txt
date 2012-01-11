@@ -37,6 +37,7 @@ SET(${PROJECT_NAME}_KCD_HEADERS
 
 SET(${PROJECT_NAME}_KPP_COMPONENT_HEADERS
   include/kpp/component/fwd.hh
+  include/kpp/util.hh
   include/kpp/component/capsule.hh
   )
 

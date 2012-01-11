@@ -24,6 +24,7 @@
 
 #include <kcd2/kcdInterface.h>
 
+#include "kpp/util.hh"
 #include "kpp/component/capsule.hh"
 
 namespace kpp
@@ -156,130 +157,15 @@ namespace kpp
 							    "parallels",
 							    parallels);
 
-	  // Retrieve points and facets vectors corresponding to a whole sphere.
-	  std::vector<CkcdPoint> vertices;
-	  std::vector<std::vector<unsigned int> > facets;
+	  CkcdPolyhedronDataShPtr polyData = CkcdPolyhedronData::create ();
 
-	  CkcdPolyhedronFactory::convertSphereToIndexedFaceSet (radius,
-								baseVertices,
-								parallels,
-								vertices,
-								facets);
+	  convertCapsuleToPolyhedronData (height,
+					  radius,
+					  baseVertices,
+					  parallels,
+					  polyData);
 
-	  unsigned hsPointsRange = (vertices.size () + baseVertices) / 2 - 1;
-	  unsigned hsLowerPtId = vertices.size () - 2;
-
-	  reserveNPoints (vertices.size () + baseVertices);
-
-	  // Apply transformation on sphere lower half and add points
-	  // to form first cap.
-	  CkcdMat4 hsFirstTransform;
-	  hsFirstTransform.rotateY (M_PI / 2);
-	  hsFirstTransform(0, 3) = - height / 2;
-
-	  for (unsigned i = 0; i < hsPointsRange; ++i)
-	    addPoint (hsFirstTransform * vertices[i]);
-
-	  // Apply opposite transformation on sphere lower half and
-	  // add points to form second cap.
-	  CkcdMat4 hsSecondTransform;
-	  hsSecondTransform.rotateY (- M_PI / 2);
-	  hsSecondTransform(0, 3) = height / 2;
-
-	  for (unsigned i = 0; i < hsPointsRange; ++i)
-	    addPoint (hsSecondTransform * vertices[i]);
-
-	  // Apply transformations on remanining single top and bottom
-	  // points of sphere.
-	  unsigned hsFirstPtRank;
-	  CkcdPolyhedron::addPoint (hsFirstTransform * vertices[hsLowerPtId],
-				    hsFirstPtRank);
-
-	  unsigned hsSecondPtRank;
-	  CkcdPolyhedron::addPoint (hsSecondTransform * vertices[hsLowerPtId],
-	  			    hsSecondPtRank);
-
-	  reserveNTriangles (facets.size () + 2 * baseVertices);
-
-	  // Add facets to form first cap.
-	  for (unsigned i = 0; i < facets.size (); ++i)
-	    if (facets[i][0] < hsPointsRange
-		&& facets[i][1] < hsPointsRange
-		&& facets[i][2] < hsPointsRange)
-	      addTriangle (facets[i][0], facets[i][1], facets[i][2]);
-
-	  for (unsigned i = 0; i < baseVertices - 1; ++i)
-	    addTriangle (i, i + 1, hsFirstPtRank);
-	  addTriangle (0, baseVertices - 1, hsFirstPtRank);
-
-	  // Add facets to form cylinder and stitch the two caps together.
-	  const unsigned firstEquatorStartId
-	    = hsPointsRange - baseVertices;
-	  const unsigned secondEquatorFinishId
-	    = 2 * hsPointsRange - 1;
-
-	  for (unsigned i = 0; i < baseVertices / 2; ++i)
-	    {
-	      addTriangle (firstEquatorStartId + i,
-			   firstEquatorStartId + i + 1,
-			   secondEquatorFinishId - i + 1 - baseVertices / 2);
-	      addTriangle (firstEquatorStartId + i + 1,
-			   secondEquatorFinishId - i + 1 - baseVertices / 2,
-			   secondEquatorFinishId - i - baseVertices / 2);
-	    }
-
-	  for (unsigned i = baseVertices / 2; i < baseVertices - 1; ++i)
-	    {
-	      addTriangle (firstEquatorStartId + i,
-			   firstEquatorStartId + i + 1,
-			   secondEquatorFinishId - i + baseVertices / 2);
-	      addTriangle (firstEquatorStartId + i + 1,
-			   secondEquatorFinishId - i + baseVertices / 2,
-			   secondEquatorFinishId - i - 1 + baseVertices / 2);
-	    }
-
-	  addTriangle (firstEquatorStartId + baseVertices - 1,
-		       firstEquatorStartId,
-		       secondEquatorFinishId - baseVertices + 1
-		       + baseVertices / 2);
-	  addTriangle (firstEquatorStartId + baseVertices / 2,
-		       secondEquatorFinishId - baseVertices + 1,
-		       secondEquatorFinishId);
-
-	  // Add facets to form second cap.
-	  for (unsigned i = 0; i < facets.size (); ++i)
-	    if ((facets[i][0] >= hsPointsRange
-		 && facets[i][0] < 2 * hsPointsRange - baseVertices)
-		&& (facets[i][1] >= hsPointsRange
-		    && facets[i][1] < 2 * hsPointsRange - baseVertices)
-		&& (facets[i][2] >= hsPointsRange
-		    && facets[i][2] < 2 * hsPointsRange - baseVertices))
-	      addTriangle (facets[i][0], facets[i][1], facets[i][2]);
-
-	  const unsigned secondEquatorStartId
-	    = 2 * hsPointsRange - baseVertices;
-
-	  for (unsigned i = 2 * (hsPointsRange - baseVertices);
-	       i < secondEquatorStartId - 1;
-	       ++i)
-	    {
-	      addTriangle (i, i + 1, i + baseVertices + 1);
-	      addTriangle (i, i + baseVertices, i + baseVertices + 1);
-	    }
-	  addTriangle (secondEquatorStartId - 1,
-		       2 * (hsPointsRange - baseVertices),
-		       secondEquatorStartId);
-	  addTriangle (secondEquatorStartId - 1,
-		       secondEquatorStartId - 1 + baseVertices,
-		       secondEquatorStartId);
-
-	  for (unsigned i = hsPointsRange;
-	       i < hsPointsRange + baseVertices - 1;
-	       ++i)
-	    addTriangle (i, i + 1, hsSecondPtRank);
-	  addTriangle (hsPointsRange,
-		       hsPointsRange + baseVertices - 1,
-		       hsSecondPtRank);
+	  this->polyData (polyData);
 	}
 
       return success;

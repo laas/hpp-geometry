@@ -19,6 +19,7 @@ ADD_LIBRARY(${LIBRARY_NAME}
   kcd/detector-obb-segment.cc
   kcd/detector-segment-triangle.cc
   kcd/detector-triangle-segment.cc
+  kpp/util.cc
   kpp/component/capsule.cc
   )
 
