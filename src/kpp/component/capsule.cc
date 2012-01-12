@@ -24,7 +24,7 @@
 
 #include <kcd2/kcdInterface.h>
 
-#include "kpp/util.hh"
+#include "kpp/component/util.hh"
 #include "kpp/component/capsule.hh"
 
 namespace kpp
