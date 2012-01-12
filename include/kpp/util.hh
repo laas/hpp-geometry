@@ -38,6 +38,15 @@ namespace kpp
 				       const unsigned baseVertices,
 				       const unsigned parallels,
 				       CkcdPolyhedronDataShPtr& polyData);
+
+  /// \brief convert capsule axis to a matrix transform.
+  ///
+  /// \param endPoint1 capsule segment first end point.
+  /// \param endPoint2 capsule segment second end point.
+  /// \return transform matrix transform of capsule.
+  void convertCapsuleAxisToTransform (const CkcdPoint& endPoint1,
+				      const CkcdPoint& endPoint2,
+				      CkcdMat4& transform);
 } // end of namespace kpp.
 
 #endif //! KPP_UTIL_HH_

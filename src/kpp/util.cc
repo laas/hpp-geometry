@@ -167,4 +167,33 @@ namespace kpp
 			   hsSecondPtRank,
 			   rank);
   }
+
+  void convertCapsuleAxisToTransform (const CkcdPoint& endPoint1,
+				      const CkcdPoint& endPoint2,
+				      CkcdMat4& transform)
+  {
+    transform = CkcdMat4 ();
+
+    // Compute translation component.
+    CkcdPoint center = (endPoint1 + endPoint2) / 2;
+
+    transform(0, 3) = center[0];
+    transform(1, 3) = center[1];
+    transform(2, 3) = center[2];
+
+    // Compute rotation part.
+    CkcdPoint axis = endPoint2 - endPoint1;
+    
+    kcdReal alpha = atan2 (axis[1], axis[0]);
+    kcdReal beta = atan2 (axis[2],
+			  sqrt (axis[0] * axis[0] +  axis[1] * axis[1]));
+
+    CkcdMat4 rotAlpha;
+    rotAlpha.rotateZ (alpha);
+    CkcdMat4 rotBeta;
+    rotBeta.rotateY (- beta);
+
+    transform = rotBeta * rotAlpha * transform;
+  }
+
 } // end of namespace kpp.
