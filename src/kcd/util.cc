@@ -191,10 +191,14 @@ namespace kcd
     // Retrieve vector of points from polyhedron.
     Vector3<kcdReal> wm5Points[polyhedron->countPoints ()];
 
+    CkcdMat4 transform;
+    polyhedron->getAbsolutePosition (transform);
+
     for (unsigned i = 0; i < polyhedron->countPoints (); ++i)
       {
 	CkcdPoint point;
 	polyhedron->getPoint (i, point);
+	point = transform * point;
 
 	Vector3<kcdReal> wm5Point;
 	convertKcdPointToVector3 (wm5Point, point);
