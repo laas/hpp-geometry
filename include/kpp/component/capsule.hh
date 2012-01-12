@@ -83,8 +83,8 @@ namespace kpp
       static CapsuleShPtr create (const std::string& name,
 				  const double& height,
 				  const double& radius,
-				  const unsigned int baseVertices,
-				  const unsigned int parallels);
+				  const unsigned int baseVertices = 32,
+				  const unsigned int parallels = 32);
 
       /// \brief Create a copy of the component.
       virtual CkppComponentShPtr cloneComponent () const;
