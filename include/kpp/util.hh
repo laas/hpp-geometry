@@ -23,6 +23,16 @@
 
 namespace kpp
 {
+  /// \brief Convert capsule parameters to polyhedron data.
+  ///
+  /// Returned polyhedron data corresponds to a capsule with its axis
+  /// center in (0, 0, 0) and the main axis oriented along X.
+  ///
+  /// \param height capsule height
+  /// \param capsule radius
+  /// \param baseVertices number of vertices on cylindrical base.
+  /// \param parallels number of parallels on sphere used to form caps.
+  /// \return polyData polyhedron data that contains a list of points and triangles.
   void convertCapsuleToPolyhedronData (const double& height,
 				       const double& radius,
 				       const unsigned baseVertices,
