@@ -118,7 +118,11 @@ namespace kpp
 
     Capsule::
     Capsule ()
-      : CkppKCDPolyhedron ()
+      : CkppKCDPolyhedron (),
+	heightProperty_ (),
+	radiusProperty_ (),
+	baseVerticesProperty_ (),
+	parallelsProperty_ ()
     {
     }
 
