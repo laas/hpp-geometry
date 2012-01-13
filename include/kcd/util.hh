@@ -51,6 +51,19 @@ namespace kcd
   /// \brief Print kcdPoint vector.
   std::ostream&  operator<< (std::ostream& os, const CkcdPoint& kcdPoint);
 
+  /// \brief Compute square distance between a segment and a point.
+  ///
+  /// \param leftEndPoint1 left segment first end point
+  /// \param leftEndPoint2 left segment second end point
+  /// \param rightdPoint right point
+  /// \return squareDistance square distance between segment and point
+  /// \return leftSegmentClosest closest point on left segment
+  void computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
+					  const CkcdPoint& leftEndPoint2,
+					  const CkcdPoint& rightPoint,
+					  kcdReal& squareDistance,
+					  CkcdPoint& leftSegmentClosest);
+
   /// \brief Compute square distance between two segments.
   ///
   /// \param leftEndPoint1 left segment first end point

@@ -20,6 +20,7 @@
  * \file src/kcd/util.cc
  */
 
+#include <geometric-tools/Wm5DistPoint3Segment3.h>
 #include <geometric-tools/Wm5DistSegment3Segment3.h>
 #include <geometric-tools/Wm5DistSegment3Box3.h>
 #include <geometric-tools/Wm5DistSegment3Triangle3.h>
@@ -52,6 +53,34 @@ namespace kcd
        << "]";
 
     return os;
+  }
+
+  void computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
+					  const CkcdPoint& leftEndPoint2,
+					  const CkcdPoint& rightPoint,
+					  kcdReal& squareDistance,
+					  CkcdPoint& leftSegmentClosest)
+  {
+    using namespace Wm5;
+
+    Vector3<kcdReal> leftP0;
+    Vector3<kcdReal> leftP1;
+    Vector3<kcdReal> rightP;
+
+    convertKcdPointToVector3 (leftP0, leftEndPoint1);
+    convertKcdPointToVector3 (leftP1, leftEndPoint2);
+    convertKcdPointToVector3 (rightP, rightPoint);
+
+    Segment3<kcdReal> s0 (leftP0, leftP1);
+
+    DistPoint3Segment3<kcdReal> distance (rightP, s0);
+
+    squareDistance = distance.GetSquared ();
+
+    Vector3<kcdReal> wm5LeftSegmentClosest = s0.Center
+      + distance.GetSegmentParameter () * s0.Direction;
+
+    convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
   }
 
   void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
