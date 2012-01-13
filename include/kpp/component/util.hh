@@ -16,8 +16,8 @@
 // along with kcd-capsule.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#ifndef KPP_UTIL_HH_
-# define KPP_UTIL_HH_
+#ifndef KPP_COMPONENT_UTIL_HH_
+# define KPP_COMPONENT_UTIL_HH_
 
 # include <kcd2/kcdInterface.h>
 
@@ -53,4 +53,4 @@ namespace kpp
   } // end of namespace component.
 } // end of namespace kpp.
 
-#endif //! KPP_UTIL_HH_
+#endif //! KPP_COMPONENT_UTIL_HH_
