@@ -34,21 +34,21 @@ namespace kpp
     /// \param capsule radius
     /// \param baseVertices number of vertices on cylindrical base.
     /// \param parallels number of parallels on sphere used to form caps.
-    /// \return polyData polyhedron data that contains a list of points and triangles.
-    void convertCapsuleToPolyhedronData (const double& height,
+    /// \return dst polyhedron data that contains a list of points and triangles.
+    void convertCapsuleToPolyhedronData (CkcdPolyhedronDataShPtr& dst,
+					 const double& height,
 					 const double& radius,
 					 const unsigned baseVertices,
-					 const unsigned parallels,
-					 CkcdPolyhedronDataShPtr& polyData);
+					 const unsigned parallels);
 
     /// \brief convert capsule axis to a matrix transform.
     ///
     /// \param endPoint1 capsule segment first end point.
     /// \param endPoint2 capsule segment second end point.
-    /// \return transform matrix transform of capsule.
-    void convertCapsuleAxisToTransform (const CkcdPoint& endPoint1,
-					const CkcdPoint& endPoint2,
-					CkcdMat4& transform);
+    /// \return dst matrix transform of capsule.
+    void convertCapsuleAxisToTransform (CkcdMat4& dst,
+					const CkcdPoint& endPoint1,
+					const CkcdPoint& endPoint2);
 
   } // end of namespace component.
 } // end of namespace kpp.

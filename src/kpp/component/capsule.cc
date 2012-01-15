@@ -163,11 +163,11 @@ namespace kpp
 
 	  CkcdPolyhedronDataShPtr polyData = CkcdPolyhedronData::create ();
 
-	  convertCapsuleToPolyhedronData (height,
+	  convertCapsuleToPolyhedronData (polyData,
+					  height,
 					  radius,
 					  baseVertices,
-					  parallels,
-					  polyData);
+					  parallels);
 
 	  this->polyData (polyData);
 	}
