@@ -56,7 +56,7 @@ SEARCH_FOR_BOOST()
 ADD_REQUIRED_DEPENDENCY("KineoController >= 2.06")
 
 # Search for GeometricTools library.
-SET(GEOMETRIC_TOOLS_INSTALL_PREFIX "" CACHE PATH "GeometricTools installation prefix")
+SET(GEOMETRIC_TOOLS_INSTALL_PREFIX "" CACHE PATH "geometric-tools installation prefix")
 SET(LIB_GEOMETRIC_TOOLS_CORE LIB_GEOMETRIC_TOOLS_CORE-NOTFOUND)
 SET(LIB_GEOMETRIC_TOOLS_MATH LIB_GEOMETRIC_TOOLS_MATH-NOTFOUND)
 FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_CORE
@@ -65,7 +65,7 @@ FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_CORE
   ${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib)
 IF (NOT LIB_GEOMETRIC_TOOLS_CORE)
   MESSAGE(FATAL_ERROR
-    "Failed to find GeometricTools Core library, check that GeometricTools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
+    "Failed to find geometric-tools Core library, check that geometric-tools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
 ENDIF()
 FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_MATH
   libWm5Mathematics.so
@@ -73,7 +73,7 @@ FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_MATH
   ${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib)
 IF (NOT LIB_GEOMETRIC_TOOLS_MATH)
   MESSAGE(FATAL_ERROR
-    "Failed to find GeometricTools Mathematics library, check that GeometricTools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
+    "Failed to find geometric-tools Mathematics library, check that geometric-tools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
 ENDIF()
 SET(GEOMETRIC_TOOLS_H GEOMETRIC_TOOLS-NOTFOUND)
 FIND_PATH (GEOMETRIC_TOOLS_H
@@ -81,7 +81,7 @@ FIND_PATH (GEOMETRIC_TOOLS_H
   "${GEOMETRIC_TOOLS_INSTALL_PREFIX}/include/geometric-tools")
 IF (NOT GEOMETRIC_TOOLS_H)
   MESSAGE(FATAL_ERROR
-    "Failed to find geometric-tools/Wm5DistSegment3Segment3.h, check that Ipopt is installed.")
+    "Failed to find geometric-tools/Wm5DistSegment3Segment3.h, check that geometric-tools is installed.")
 ENDIF()
 INCLUDE_DIRECTORIES("${GEOMETRIC_TOOLS_INSTALL_PREFIX}/include")
 LINK_DIRECTORIES("${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib")
