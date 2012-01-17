@@ -1,4 +1,4 @@
-// Copyright (C) 2011 by Antonio El Khoury.
+// Copyright (C) 2011, 2012 by Antonio El Khoury.
 //
 // This file is part of the kcd-segment.
 //
