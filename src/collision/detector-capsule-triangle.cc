@@ -32,6 +32,9 @@ namespace hpp
   {
     namespace collision
     {
+      // this line registers the detector in the global detector dispatcher
+      KCD_REGISTER_DETECTOR(DetectorCapsuleTriangle);
+
       DetectorCapsuleTriangleShPtr DetectorCapsuleTriangle::
       create ()
       {

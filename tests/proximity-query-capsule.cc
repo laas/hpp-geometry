@@ -22,10 +22,7 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "hpp/geometry/collision/capsule.hh"
 #include "hpp/geometry/collision/poly-capsule.hh"
-#include "hpp/geometry/collision/test-tree-capsule.hh"
-#include "hpp/geometry/collision/detector-capsule-capsule.hh"
 #include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
@@ -39,12 +36,6 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule)
       std::cout << "Failed to validate Kineo license." << std::endl;
       return;
     }
-
-  // Register capsule test tree and detector.
-  CkcdGlobal::instance ().registerTestTreeLocked
-    (&CkcdGlobal::createTestTreeLocked<TestTreeCapsule>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorCapsuleCapsule>);
 
   // Build first poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);

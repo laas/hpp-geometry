@@ -22,13 +22,7 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "hpp/geometry/collision/capsule.hh"
 #include "hpp/geometry/collision/poly-capsule.hh"
-#include "hpp/geometry/collision/test-tree-capsule.hh"
-#include "hpp/geometry/collision/detector-capsule-obb.hh"
-#include "hpp/geometry/collision/detector-obb-capsule.hh"
-#include "hpp/geometry/collision/detector-capsule-triangle.hh"
-#include "hpp/geometry/collision/detector-triangle-capsule.hh"
 #include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
@@ -42,18 +36,6 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule_obb)
       std::cout << "Failed to validate Kineo license." << std::endl;
       return;
     }
-
-  // Register capsule test tree and detector.
-  CkcdGlobal::instance ().registerTestTreeLocked
-    (&CkcdGlobal::createTestTreeLocked<TestTreeCapsule>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorCapsuleOBB>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorOBBCapsule>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorCapsuleTriangle>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorTriangleCapsule>);
 
   // Build poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);

@@ -22,13 +22,7 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "hpp/geometry/collision/segment.hh"
 #include "hpp/geometry/collision/poly-segment.hh"
-#include "hpp/geometry/collision/test-tree-segment.hh"
-#include "hpp/geometry/collision/detector-segment-obb.hh"
-#include "hpp/geometry/collision/detector-obb-segment.hh"
-#include "hpp/geometry/collision/detector-segment-triangle.hh"
-#include "hpp/geometry/collision/detector-triangle-segment.hh"
 #include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
@@ -42,18 +36,6 @@ BOOST_AUTO_TEST_CASE (proximity_query_segment_obb)
       std::cout << "Failed to validate Kineo license." << std::endl;
       return;
     }
-
-  // Register segment test tree and detector.
-  CkcdGlobal::instance ().registerTestTreeLocked
-    (&CkcdGlobal::createTestTreeLocked<TestTreeSegment>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorSegmentOBB>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorOBBSegment>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorSegmentTriangle>);
-  CkcdGlobal::instance ().registerDetector
-    (&CkcdGlobal::createDetector<DetectorTriangleSegment>);
 
   // Build poly segment.
   CkcdPoint e1 (0.f, 0.f, -1.f);

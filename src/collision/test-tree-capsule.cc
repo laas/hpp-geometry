@@ -30,6 +30,9 @@ namespace hpp
   {
     namespace collision
     {
+      // this line registers the test tree in the global locked test tree list
+      KCD_REGISTER_TEST_TREE_LOCKED(TestTreeCapsule);
+
       // this line gets a new unique dispatch ID from CkcdGlobal
       unsigned int TestTreeCapsule::capsuleDispatchID_ = CkcdGlobal::getNewDispatchID ();
 
