@@ -28,7 +28,7 @@
 
 #include "hpp/geometry/collision/util.hh"
 
-namespace kcd
+namespace hpp
 {
   std::ostream&
   operator<< (std::ostream& os, const CkcdMat4& kcdMat4)
@@ -248,4 +248,4 @@ namespace kcd
     radius = wm5Capsule.Radius;
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.

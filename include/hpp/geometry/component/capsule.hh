@@ -28,7 +28,7 @@
 
 # include "hpp/geometry/component/fwd.hh"
 
-namespace kpp
+namespace hpp
 {
   namespace component
   {
@@ -127,6 +127,6 @@ namespace kpp
       CkppIntegerPropertyShPtr parallelsProperty_;
     };
   } // end of namespace component.    
-} // end of namespace kpp.
+} // end of namespace hpp.
 
 #endif //! KPP_COMPONENT_CAPSULE_HH_

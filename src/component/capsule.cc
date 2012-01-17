@@ -27,7 +27,7 @@
 #include "hpp/geometry/component/util.hh"
 #include "hpp/geometry/component/capsule.hh"
 
-namespace kpp
+namespace hpp
 {
   namespace component
   {
@@ -202,4 +202,4 @@ namespace kpp
     }
 
   } // end of namespace component.
-} // end of namespace kpp.
+} // end of namespace hpp.

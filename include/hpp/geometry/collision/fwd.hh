@@ -22,7 +22,7 @@
 #ifndef KCD_FWD_HH
 # define KCD_FWD_HH
 
-namespace kcd
+namespace hpp
 {
   KIT_PREDEF_CLASS (TestTreeCapsule);
   KIT_PREDEF_CLASS (PolyCapsule);
@@ -40,6 +40,6 @@ namespace kcd
   KIT_PREDEF_CLASS (DetectorOBBSegment);
   KIT_PREDEF_CLASS (DetectorSegmentTriangle);
   KIT_PREDEF_CLASS (DetectorTriangleSegment);
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_FWD_HH

@@ -27,7 +27,7 @@
 
 # include "hpp/geometry/collision/fwd.hh"
 
-namespace kcd
+namespace hpp
 {
   class Capsule : public CkcdGeometrySubElement
   {
@@ -96,6 +96,6 @@ namespace kcd
     kcdReal radius_;
   };
 
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_CAPSULE_HH_

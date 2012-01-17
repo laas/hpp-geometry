@@ -29,7 +29,7 @@
 #include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
-using namespace kcd;
+using namespace hpp;
 
 BOOST_AUTO_TEST_CASE (proximity_query_capsule)
 {

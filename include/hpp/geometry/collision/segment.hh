@@ -27,7 +27,7 @@
 
 # include "hpp/geometry/collision/fwd.hh"
 
-namespace kcd
+namespace hpp
 {
   class Segment : public CkcdGeometrySubElement
   {
@@ -87,6 +87,6 @@ namespace kcd
     CkcdPoint endPoint2_;
   };
 
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_SEGMENT_HH_

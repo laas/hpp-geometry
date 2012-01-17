@@ -22,12 +22,12 @@
 #ifndef KPP_COMPONENT_FWD_HH
 # define KPP_COMPONENT_FWD_HH
 
-namespace kpp
+namespace hpp
 {
   namespace component
   {
     KIT_PREDEF_CLASS (Capsule);
   } // end of namespace component.
-} // end of namespace kpp.
+} // end of namespace hpp.
   
 #endif //! KPP_COMPONENT_FWD_HH

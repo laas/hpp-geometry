@@ -28,7 +28,7 @@
 #include "hpp/geometry/collision/test-tree-segment.hh"
 #include "hpp/geometry/collision/util.hh"
 
-namespace kcd
+namespace hpp
 {
   DetectorSegmentSegmentShPtr DetectorSegmentSegment::
   create ()
@@ -175,4 +175,4 @@ namespace kcd
   {
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.

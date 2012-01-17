@@ -24,7 +24,7 @@
 
 #include "hpp/geometry/collision/test-tree-capsule.hh"
 
-namespace kcd
+namespace hpp
 {
   // this line gets a new unique dispatch ID from CkcdGlobal
   unsigned int TestTreeCapsule::capsuleDispatchID_ = CkcdGlobal::getNewDispatchID ();
@@ -621,4 +621,4 @@ namespace kcd
     return bb;
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.

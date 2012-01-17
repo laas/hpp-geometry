@@ -25,7 +25,7 @@
 #include "hpp/geometry/collision/capsule.hh"
 #include "hpp/geometry/collision/test-tree-capsule.hh"
 
-namespace kcd
+namespace hpp
 {
   CapsuleShPtr Capsule::
   create (const TestTreeCapsuleShPtr testTree,
@@ -121,4 +121,4 @@ namespace kcd
       }
   }
   
-} // end of namespace kcd.
+} // end of namespace hpp.

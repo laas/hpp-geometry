@@ -21,7 +21,7 @@
 
 # include <kcd2/kcdInterface.h>
 
-namespace kpp
+namespace hpp
 {
   namespace component
   {
@@ -51,6 +51,6 @@ namespace kpp
 					const CkcdPoint& endPoint2);
 
   } // end of namespace component.
-} // end of namespace kpp.
+} // end of namespace hpp.
 
 #endif //! KPP_COMPONENT_UTIL_HH_

@@ -24,7 +24,7 @@
 
 #include "hpp/geometry/collision/poly-capsule.hh"
 
-namespace kcd
+namespace hpp
 {
   PolyCapsuleShPtr PolyCapsule::
   create ()
@@ -148,4 +148,4 @@ namespace kcd
     radiusScale_ = 1.;
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.

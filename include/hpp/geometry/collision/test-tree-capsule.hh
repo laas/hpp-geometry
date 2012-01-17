@@ -31,7 +31,7 @@
 # include "hpp/geometry/collision/capsule.hh"
 # include "hpp/geometry/collision/poly-capsule.hh"
 
-namespace kcd
+namespace hpp
 {
   class TestTreeCapsule : public CkcdTestTreeLocked
   {
@@ -188,6 +188,6 @@ namespace kcd
     std::vector<CapsuleBoudingVolume> capsuleBoundingVolumes_;
   };
   
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_TEST_TREE_CAPSULE_HH_

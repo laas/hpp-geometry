@@ -27,7 +27,7 @@
 
 # include "hpp/geometry/collision/fwd.hh"
 
-namespace kcd
+namespace hpp
 {
   class DetectorSegmentSegment : public CkcdDetector
   {
@@ -72,6 +72,6 @@ namespace kcd
     DetectorSegmentSegmentWkPtr weakPtr_;
   };
 
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_DETECTOR_SEGMENT_SEGMENT_HH_

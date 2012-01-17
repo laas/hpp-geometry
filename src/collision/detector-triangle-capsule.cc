@@ -26,7 +26,7 @@
 #include "hpp/geometry/collision/test-tree-capsule.hh"
 #include "hpp/geometry/collision/util.hh"
 
-namespace kcd
+namespace hpp
 {
   DetectorTriangleCapsuleShPtr DetectorTriangleCapsule::
   create ()
@@ -179,4 +179,4 @@ namespace kcd
   {
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.

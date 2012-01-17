@@ -25,7 +25,7 @@
 
 # include <kcd2/kcdInterface.h>
 
-namespace kcd
+namespace hpp
 {
   /// \brief Convert CkcdPoint to Geometric Tools Vector3.
   inline void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst,
@@ -125,5 +125,5 @@ namespace kcd
 					 CkcdPoint& endPoint2,
 					 kcdReal& radius);
  
-} // end of namespace kcd.
+} // end of namespace hpp.
 #endif //! KCD_UTIL_HH_

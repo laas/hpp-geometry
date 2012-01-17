@@ -29,7 +29,7 @@
 
 # include "hpp/geometry/collision/fwd.hh"
 
-namespace kcd
+namespace hpp
 {
   class PolyCapsule : public CkcdGeometry
   {
@@ -90,6 +90,6 @@ namespace kcd
     kcdReal radiusScale_;
   };
 
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_POLY_CAPSULE_HH_

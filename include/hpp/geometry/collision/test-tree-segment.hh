@@ -31,7 +31,7 @@
 # include "hpp/geometry/collision/segment.hh"
 # include "hpp/geometry/collision/poly-segment.hh"
 
-namespace kcd
+namespace hpp
 {
   class TestTreeSegment : public CkcdTestTreeLocked
   {
@@ -185,6 +185,6 @@ namespace kcd
     std::vector<SegmentBoudingVolume> segmentBoundingVolumes_;
   };
   
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_TEST_TREE_SEGMENT_HH_

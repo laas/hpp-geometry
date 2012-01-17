@@ -29,7 +29,7 @@
 
 # include "hpp/geometry/collision/fwd.hh"
 
-namespace kcd
+namespace hpp
 {
   class PolySegment : public CkcdGeometry
   {
@@ -83,6 +83,6 @@ namespace kcd
     CkcdMat4 moveMatrix_;
   };
 
-} // end of namespace kcd.
+} // end of namespace hpp.
 
 #endif //! KCD_POLY_SEGMENT_HH_

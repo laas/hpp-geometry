@@ -25,7 +25,7 @@
 #include "hpp/geometry/collision/util.hh"
 #include "hpp/geometry/component/util.hh";
 
-namespace kpp
+namespace hpp
 {
   namespace component
   {
@@ -175,7 +175,7 @@ namespace kpp
 					const CkcdPoint& endPoint1,
 					const CkcdPoint& endPoint2)
     {
-      using namespace kcd;
+      using namespace hpp;
       dst = CkcdMat4 ();
 
       // Compute rotation part.
@@ -201,4 +201,4 @@ namespace kpp
     }
 
   } // end of namespace component.
-} // end of namespace kpp.
+} // end of namespace hpp.

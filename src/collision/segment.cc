@@ -25,7 +25,7 @@
 #include "hpp/geometry/collision/segment.hh"
 #include "hpp/geometry/collision/test-tree-segment.hh"
 
-namespace kcd
+namespace hpp
 {
   SegmentShPtr Segment::
   create (const TestTreeSegmentShPtr testTree,
@@ -112,4 +112,4 @@ namespace kcd
       }
   }
   
-} // end of namespace kcd.
+} // end of namespace hpp.

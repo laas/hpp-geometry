@@ -24,7 +24,7 @@
 
 #include "hpp/geometry/collision/poly-segment.hh"
 
-namespace kcd
+namespace hpp
 {
   PolySegmentShPtr PolySegment::
   create ()
@@ -134,4 +134,4 @@ namespace kcd
     moveMatrix_.identity ();
   }
 
-} // end of namespace kcd.
+} // end of namespace hpp.
