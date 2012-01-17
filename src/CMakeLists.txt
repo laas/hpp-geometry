@@ -2,25 +2,25 @@ SET(LIBRARY_NAME ${PROJECT_NAME})
 
 ADD_LIBRARY(${LIBRARY_NAME}
   SHARED
-  kcd/util.cc
-  kcd/capsule.cc
-  kcd/poly-capsule.cc
-  kcd/test-tree-capsule.cc
-  kcd/detector-capsule-capsule.cc
-  kcd/detector-capsule-triangle.cc
-  kcd/detector-triangle-capsule.cc
-  kcd/detector-capsule-obb.cc
-  kcd/detector-obb-capsule.cc
-  kcd/segment.cc
-  kcd/poly-segment.cc
-  kcd/test-tree-segment.cc
-  kcd/detector-segment-segment.cc
-  kcd/detector-segment-obb.cc
-  kcd/detector-obb-segment.cc
-  kcd/detector-segment-triangle.cc
-  kcd/detector-triangle-segment.cc
-  kpp/component/util.cc
-  kpp/component/capsule.cc
+  collision/util.cc
+  collision/capsule.cc
+  collision/poly-capsule.cc
+  collision/test-tree-capsule.cc
+  collision/detector-capsule-capsule.cc
+  collision/detector-capsule-triangle.cc
+  collision/detector-triangle-capsule.cc
+  collision/detector-capsule-obb.cc
+  collision/detector-obb-capsule.cc
+  collision/segment.cc
+  collision/poly-segment.cc
+  collision/test-tree-segment.cc
+  collision/detector-segment-segment.cc
+  collision/detector-segment-obb.cc
+  collision/detector-obb-segment.cc
+  collision/detector-segment-triangle.cc
+  collision/detector-triangle-segment.cc
+  component/util.cc
+  component/capsule.cc
   )
 
 SET_TARGET_PROPERTIES(${LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION})

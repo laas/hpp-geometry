@@ -22,14 +22,14 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "kcd/segment.hh"
-#include "kcd/poly-segment.hh"
-#include "kcd/test-tree-segment.hh"
-#include "kcd/detector-segment-obb.hh"
-#include "kcd/detector-obb-segment.hh"
-#include "kcd/detector-segment-triangle.hh"
-#include "kcd/detector-triangle-segment.hh"
-#include "kcd/util.hh"
+#include "hpp/geometry/collision/segment.hh"
+#include "hpp/geometry/collision/poly-segment.hh"
+#include "hpp/geometry/collision/test-tree-segment.hh"
+#include "hpp/geometry/collision/detector-segment-obb.hh"
+#include "hpp/geometry/collision/detector-obb-segment.hh"
+#include "hpp/geometry/collision/detector-segment-triangle.hh"
+#include "hpp/geometry/collision/detector-triangle-segment.hh"
+#include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
 using namespace kcd;

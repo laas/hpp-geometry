@@ -22,11 +22,11 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "kcd/capsule.hh"
-#include "kcd/poly-capsule.hh"
-#include "kcd/test-tree-capsule.hh"
-#include "kcd/detector-capsule-capsule.hh"
-#include "kcd/util.hh"
+#include "hpp/geometry/collision/capsule.hh"
+#include "hpp/geometry/collision/poly-capsule.hh"
+#include "hpp/geometry/collision/test-tree-capsule.hh"
+#include "hpp/geometry/collision/detector-capsule-capsule.hh"
+#include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
 using namespace kcd;

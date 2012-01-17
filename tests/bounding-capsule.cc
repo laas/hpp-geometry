@@ -22,7 +22,7 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include <kcd/util.hh>
+#include <hpp/geometry/collision/util.hh>
 
 using boost::test_tools::output_test_stream;
 

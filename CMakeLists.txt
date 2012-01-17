@@ -14,38 +14,38 @@ SET(PROJECT_URL "")
 # Where to compile shared objects
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-SET(${PROJECT_NAME}_KCD_HEADERS
-  include/kcd/fwd.hh
-  include/kcd/util.hh
-  include/kcd/capsule.hh
-  include/kcd/poly-capsule.hh
-  include/kcd/test-tree-capsule.hh
-  include/kcd/detector-capsule-capsule.hh
-  include/kcd/detector-capsule-obb.hh
-  include/kcd/detector-obb-capsule.hh
-  include/kcd/detector-capsule-triangle.hh
-  include/kcd/detector-triangle-capsule.hh
-  include/kcd/segment.hh
-  include/kcd/poly-segment.hh
-  include/kcd/test-tree-segment.hh
-  include/kcd/detector-segment-segment.hh
-  include/kcd/detector-segment-obb.hh
-  include/kcd/detector-obb-segment.hh
-  include/kcd/detector-segment-triangle.hh
-  include/kcd/detector-triangle-segment.hh
+SET(${PROJECT_NAME}_COLLISION_HEADERS
+  include/hpp/geometry/collision/fwd.hh
+  include/hpp/geometry/collision/util.hh
+  include/hpp/geometry/collision/capsule.hh
+  include/hpp/geometry/collision/poly-capsule.hh
+  include/hpp/geometry/collision/test-tree-capsule.hh
+  include/hpp/geometry/collision/detector-capsule-capsule.hh
+  include/hpp/geometry/collision/detector-capsule-obb.hh
+  include/hpp/geometry/collision/detector-obb-capsule.hh
+  include/hpp/geometry/collision/detector-capsule-triangle.hh
+  include/hpp/geometry/collision/detector-triangle-capsule.hh
+  include/hpp/geometry/collision/segment.hh
+  include/hpp/geometry/collision/poly-segment.hh
+  include/hpp/geometry/collision/test-tree-segment.hh
+  include/hpp/geometry/collision/detector-segment-segment.hh
+  include/hpp/geometry/collision/detector-segment-obb.hh
+  include/hpp/geometry/collision/detector-obb-segment.hh
+  include/hpp/geometry/collision/detector-segment-triangle.hh
+  include/hpp/geometry/collision/detector-triangle-segment.hh
   )
 
-SET(${PROJECT_NAME}_KPP_COMPONENT_HEADERS
-  include/kpp/component/fwd.hh
-  include/kpp/component/util.hh
-  include/kpp/component/capsule.hh
+SET(${PROJECT_NAME}_COMPONENT_HEADERS
+  include/hpp/geometry/component/component/fwd.hh
+  include/hpp/geometry/component/component/util.hh
+  include/hpp/geometry/component/component/capsule.hh
   )
 
-INSTALL(FILES ${${PROJECT_NAME}_KCD_HEADERS}
+INSTALL(FILES ${${PROJECT_NAME}_COLLISION_HEADERS}
   DESTINATION include/kcd
   )
 
-INSTALL(FILES ${${PROJECT_NAME}_KPP_COMPONENT_HEADERS}
+INSTALL(FILES ${${PROJECT_NAME}_COMPONENT_HEADERS}
   DESTINATION include/kpp/component
   )
 

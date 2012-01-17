@@ -22,14 +22,14 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include "kcd/capsule.hh"
-#include "kcd/poly-capsule.hh"
-#include "kcd/test-tree-capsule.hh"
-#include "kcd/detector-capsule-obb.hh"
-#include "kcd/detector-obb-capsule.hh"
-#include "kcd/detector-capsule-triangle.hh"
-#include "kcd/detector-triangle-capsule.hh"
-#include "kcd/util.hh"
+#include "hpp/geometry/collision/capsule.hh"
+#include "hpp/geometry/collision/poly-capsule.hh"
+#include "hpp/geometry/collision/test-tree-capsule.hh"
+#include "hpp/geometry/collision/detector-capsule-obb.hh"
+#include "hpp/geometry/collision/detector-obb-capsule.hh"
+#include "hpp/geometry/collision/detector-capsule-triangle.hh"
+#include "hpp/geometry/collision/detector-triangle-capsule.hh"
+#include "hpp/geometry/collision/util.hh"
 
 using boost::test_tools::output_test_stream;
 using namespace kcd;

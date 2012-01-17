@@ -22,7 +22,7 @@
 
 #include <KineoModel/kppLicense.h>
 
-#include <kpp/component/capsule.hh>
+#include <hpp/geometry/component/capsule.hh>
 
 using boost::test_tools::output_test_stream;
 using namespace kpp::component;
