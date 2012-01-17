@@ -42,11 +42,11 @@ SET(${PROJECT_NAME}_COMPONENT_HEADERS
   )
 
 INSTALL(FILES ${${PROJECT_NAME}_COLLISION_HEADERS}
-  DESTINATION include/kcd
+  DESTINATION include/hpp/geometry/collision
   )
 
 INSTALL(FILES ${${PROJECT_NAME}_COMPONENT_HEADERS}
-  DESTINATION include/kpp/component
+  DESTINATION include/hpp/geometry/component
   )
 
 SETUP_PROJECT()
