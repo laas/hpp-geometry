@@ -35,133 +35,133 @@ namespace hpp
       // this line registers the detector in the global detector dispatcher
       KCD_REGISTER_DETECTOR(DetectorOBBCapsule);
 
-  DetectorOBBCapsuleShPtr DetectorOBBCapsule::
-  create ()
-  {
-    DetectorOBBCapsule* ptr = new DetectorOBBCapsule ();
-    DetectorOBBCapsuleShPtr shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
+      DetectorOBBCapsuleShPtr DetectorOBBCapsule::
+      create ()
       {
-	shPtr.reset();
+	DetectorOBBCapsule* ptr = new DetectorOBBCapsule ();
+	DetectorOBBCapsuleShPtr shPtr (ptr);
+
+	if (KD_OK != ptr->init (shPtr))
+	  {
+	    shPtr.reset();
+	  }
+
+	return shPtr;
       }
 
-    return shPtr;
-  }
-
-  DetectorOBBCapsuleShPtr DetectorOBBCapsule::
-  createCopy (const DetectorOBBCapsuleConstShPtr& detector)
-  {
-    DetectorOBBCapsule* ptr = new DetectorOBBCapsule (*detector);
-    DetectorOBBCapsuleShPtr shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
+      DetectorOBBCapsuleShPtr DetectorOBBCapsule::
+      createCopy (const DetectorOBBCapsuleConstShPtr& detector)
       {
-	shPtr.reset ();
+	DetectorOBBCapsule* ptr = new DetectorOBBCapsule (*detector);
+	DetectorOBBCapsuleShPtr shPtr (ptr);
+
+	if (KD_OK != ptr->init (shPtr))
+	  {
+	    shPtr.reset ();
+	  }
+
+	return shPtr;
       }
 
-    return shPtr;
-  }
+      CkcdDetectorShPtr DetectorOBBCapsule::
+      clone () const
+      {
+	return DetectorOBBCapsule::createCopy (weakPtr_.lock ());
+      }
 
-  CkcdDetectorShPtr DetectorOBBCapsule::
-  clone () const
-  {
-    return DetectorOBBCapsule::createCopy (weakPtr_.lock ());
-  }
+      CkcdDetectorTestAnswer DetectorOBBCapsule::
+      analyze (const CkcdTreeIterator& left, 
+	       const CkcdTreeIterator& right,
+	       const CkcdDetectorElementaryTestDataShPtr& testData,
+	       CkcdProximityQuery& query) const
+      {
+	CkcdDetectorTestAnswer testAnswer;
 
-  CkcdDetectorTestAnswer DetectorOBBCapsule::
-  analyze (const CkcdTreeIterator& left, 
-	   const CkcdTreeIterator& right,
-	   const CkcdDetectorElementaryTestDataShPtr& testData,
-	   CkcdProximityQuery& query) const
-  {
-    CkcdDetectorTestAnswer testAnswer;
-
-    // Retrieve capsule and OBB information.
-    const CkcdTestTreePolyBV* leftTree
-      = static_cast<CkcdTestTreePolyBV*> (left.testTree ());
-    const TestTreeCapsule* rightTree
-      = static_cast<TestTreeCapsule*> (right.testTree ());
-    CkcdPoint rightEndPoint1, rightEndPoint2;
-    kcdReal rightRadius;
-    CkcdTestTreeOBB::CkcdPolyOBBCache leftPolyOBBCache;
+	// Retrieve capsule and OBB information.
+	const CkcdTestTreePolyBV* leftTree
+	  = static_cast<CkcdTestTreePolyBV*> (left.testTree ());
+	const TestTreeCapsule* rightTree
+	  = static_cast<TestTreeCapsule*> (right.testTree ());
+	CkcdPoint rightEndPoint1, rightEndPoint2;
+	kcdReal rightRadius;
+	CkcdTestTreeOBB::CkcdPolyOBBCache leftPolyOBBCache;
     
-    leftTree->fillOBBCache (left, false, leftPolyOBBCache);
-    rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
+	leftTree->fillOBBCache (left, false, leftPolyOBBCache);
+	rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
     
-    // Apply transformation to have both positions in the same frame.
-    rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;
-    rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
+	// Apply transformation to have both positions in the same frame.
+	rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;
+	rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
 
-    // Compute Distance between the capsules axis and the OBB.
-    kcdReal squareDistance;
+	// Compute Distance between the capsules axis and the OBB.
+	kcdReal squareDistance;
 
-    computeSquareDistanceSegmentBox (rightEndPoint1,
-    				     rightEndPoint2,
-    				     leftPolyOBBCache,
-    				     squareDistance);
+	computeSquareDistanceSegmentBox (rightEndPoint1,
+					 rightEndPoint2,
+					 leftPolyOBBCache,
+					 squareDistance);
 
-    // depending on the result, we will call one of the 4 report
-    // functions of CkcdProximityQuery
-    if (squareDistance < rightRadius * rightRadius)
-      {
-    	if (right.countChildren () > 0)
-    	  {
-    	    // if it is not a leaf, report an overlap (of bounding volumes)
-    	    testAnswer = query.reportOverlap (left, right, testData);
-    	  }
-    	else
-    	  {
-    	    // if it is a leaf, report a collision.
-    	    testAnswer = query.reportCollision (left, right, testData);
-    	  }
+	// depending on the result, we will call one of the 4 report
+	// functions of CkcdProximityQuery
+	if (squareDistance < rightRadius * rightRadius)
+	  {
+	    if (right.countChildren () > 0)
+	      {
+		// if it is not a leaf, report an overlap (of bounding volumes)
+		testAnswer = query.reportOverlap (left, right, testData);
+	      }
+	    else
+	      {
+		// if it is a leaf, report a collision.
+		testAnswer = query.reportCollision (left, right, testData);
+	      }
+	  }
+	else
+	  {
+	    // if it is not a leaf, report an estimated distance
+	    testAnswer
+	      = query.reportEstimatedDistance (left,
+					       right,
+					       testData,
+					       sqrt (squareDistance) - rightRadius);
+	  }
+
+	return testAnswer;
       }
-    else
+
+      bool DetectorOBBCapsule::
+      canHandle (unsigned int leftID, unsigned int rightID) const
       {
-	// if it is not a leaf, report an estimated distance
-	testAnswer
-	  = query.reportEstimatedDistance (left,
-					   right,
-					   testData,
-					   sqrt (squareDistance) - rightRadius);
+	return ((leftID == CkcdTestTreeOBB::polyOBBDispatchID ()) &&
+		(rightID == TestTreeCapsule::capsuleDispatchID ()));
       }
-
-    return testAnswer;
-  }
-
-  bool DetectorOBBCapsule::
-  canHandle (unsigned int leftID, unsigned int rightID) const
-  {
-    return ((leftID == CkcdTestTreeOBB::polyOBBDispatchID ()) &&
-	    (rightID == TestTreeCapsule::capsuleDispatchID ()));
-  }
   
-  ktStatus DetectorOBBCapsule::
-  init (const DetectorOBBCapsuleWkPtr& weakPtr)
-  {
-    ktStatus success = KD_OK;
-
-    success = CkcdDetector::init (weakPtr);
-
-    if (KD_OK == success)
+      ktStatus DetectorOBBCapsule::
+      init (const DetectorOBBCapsuleWkPtr& weakPtr)
       {
-	weakPtr_ = weakPtr;
+	ktStatus success = KD_OK;
+
+	success = CkcdDetector::init (weakPtr);
+
+	if (KD_OK == success)
+	  {
+	    weakPtr_ = weakPtr;
+	  }
+
+	return success;
       }
 
-    return success;
-  }
+      DetectorOBBCapsule::
+      DetectorOBBCapsule ()
+	: CkcdDetector ()
+      {
+      }
 
-  DetectorOBBCapsule::
-  DetectorOBBCapsule ()
-    : CkcdDetector ()
-  {
-  }
-
-  DetectorOBBCapsule::
-  DetectorOBBCapsule (const DetectorOBBCapsule& detector)
-    : CkcdDetector (detector)
-  {
-  }
+      DetectorOBBCapsule::
+      DetectorOBBCapsule (const DetectorOBBCapsule& detector)
+	: CkcdDetector (detector)
+      {
+      }
 
     } // end of namespace collision.
   } // end of namespace geometry.
