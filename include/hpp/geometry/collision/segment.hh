@@ -29,64 +29,70 @@
 
 namespace hpp
 {
-  class Segment : public CkcdGeometrySubElement
+  namespace geometry
   {
-  public:
-    /// Create a new segment.
-    ///
-    /// \param tree Tree to which the element belongs
-    ///	\param index Sphere index within the tree
-    /// \param endPoint1 First end point of the segment axis
-    ///	\param endPoint2 Second end point of the segment axis
-    ///
-    /// \return New segment
-    static SegmentShPtr create (const TestTreeSegmentShPtr testTree,
-				unsigned int index,
-				const CkcdPoint& endPoint1,
-				const CkcdPoint& endPoint2);
+    namespace collision
+    {
+      class Segment : public CkcdGeometrySubElement
+      {
+      public:
+	/// Create a new segment.
+	///
+	/// \param tree Tree to which the element belongs
+	///	\param index Sphere index within the tree
+	/// \param endPoint1 First end point of the segment axis
+	///	\param endPoint2 Second end point of the segment axis
+	///
+	/// \return New segment
+	static SegmentShPtr create (const TestTreeSegmentShPtr testTree,
+				    unsigned int index,
+				    const CkcdPoint& endPoint1,
+				    const CkcdPoint& endPoint2);
     
-    /// Destructor.
-    virtual ~Segment ();
+	/// Destructor.
+	virtual ~Segment ();
 
-    /// Get the parent geometry.
-    virtual CkcdGeometryConstShPtr geometry () const;
+	/// Get the parent geometry.
+	virtual CkcdGeometryConstShPtr geometry () const;
 
-    /// Get index in test tree.
-    unsigned int index () const;
+	/// Get index in test tree.
+	unsigned int index () const;
 
-    /// Get the coordinates of the segment's axis first end point
-    /// relative to the root of the tree.
-    ///
-    /// \return center coordinate
-    CkcdPoint endPoint1 () const;
+	/// Get the coordinates of the segment's axis first end point
+	/// relative to the root of the tree.
+	///
+	/// \return center coordinate
+	CkcdPoint endPoint1 () const;
 
-    /// Get the coordinates of the segment's axis second end point
-    /// relative to the root of the tree.
-    ///
-    /// \return center coordinate
-    CkcdPoint endPoint2 () const;
+	/// Get the coordinates of the segment's axis second end point
+	/// relative to the root of the tree.
+	///
+	/// \return center coordinate
+	CkcdPoint endPoint2 () const;
 
-  protected:
-    /// Constructor.
-    Segment (TestTreeSegmentShPtr testTree);
+      protected:
+	/// Constructor.
+	Segment (TestTreeSegmentShPtr testTree);
 
-    /// Initialize.
-    ktStatus init (const SegmentWkPtr& weakPtr,
-		   unsigned int index,
-		   const CkcdPoint& endPoint1,
-		   const CkcdPoint& endPoint2);
+	/// Initialize.
+	ktStatus init (const SegmentWkPtr& weakPtr,
+		       unsigned int index,
+		       const CkcdPoint& endPoint1,
+		       const CkcdPoint& endPoint2);
 
-    /// Get segment test tree.
-    TestTreeSegmentShPtr testTreeSegment () const;
+	/// Get segment test tree.
+	TestTreeSegmentShPtr testTreeSegment () const;
 
-  private:
-    SegmentWkPtr weakPtr_;
+      private:
+	SegmentWkPtr weakPtr_;
 
-    unsigned int index_;
-    CkcdPoint endPoint1_;
-    CkcdPoint endPoint2_;
-  };
+	unsigned int index_;
+	CkcdPoint endPoint1_;
+	CkcdPoint endPoint2_;
+      };
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_SEGMENT_HH_

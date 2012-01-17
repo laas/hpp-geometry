@@ -27,89 +27,95 @@
 
 namespace hpp
 {
-  SegmentShPtr Segment::
-  create (const TestTreeSegmentShPtr testTree,
-	  unsigned int index,
-	  const CkcdPoint& endPoint1,
-	  const CkcdPoint& endPoint2)
+  namespace geometry
   {
-    Segment* ptr = new Segment (testTree);
-    SegmentShPtr ptrShPtr (ptr);
-
-    if (ptr->init (ptrShPtr, index, endPoint1, endPoint2) != KD_OK)
+    namespace collision
+    {
+      SegmentShPtr Segment::
+      create (const TestTreeSegmentShPtr testTree,
+	      unsigned int index,
+	      const CkcdPoint& endPoint1,
+	      const CkcdPoint& endPoint2)
       {
-	ptrShPtr.reset ();
+	Segment* ptr = new Segment (testTree);
+	SegmentShPtr ptrShPtr (ptr);
+
+	if (ptr->init (ptrShPtr, index, endPoint1, endPoint2) != KD_OK)
+	  {
+	    ptrShPtr.reset ();
+	  }
+
+	return ptrShPtr;
       }
 
-    return ptrShPtr;
-  }
-
-  Segment::~Segment()
-  {
-  }
-
-  CkcdGeometryConstShPtr Segment::
-  geometry () const
-  {
-    return testTreeSegment ()->getPolySegment (index_);
-  }
-
-  unsigned int Segment::
-  index () const
-  {
-    return index_;
-  }
-
-  CkcdPoint Segment::
-  endPoint1 () const
-  {
-    return endPoint1_;
-  }
-
-  CkcdPoint Segment::
-  endPoint2 () const
-  {
-    return endPoint2_;
-  }
-
-  Segment::
-  Segment(TestTreeSegmentShPtr testTree)
-    : CkcdGeometrySubElement(testTree),
-      index_ (-1)
-  {
-  }
-
-  ktStatus Segment::
-  init (const SegmentWkPtr& weakPtr,
-	unsigned int index,
-	const CkcdPoint& endPoint1,
-	const CkcdPoint& endPoint2)
-  {
-    ktStatus success = CkcdGeometrySubElement::init (weakPtr);
-
-    if (KD_OK == success)
+      Segment::~Segment()
       {
-	index_ = index;
-	endPoint1_ = endPoint1;
-	endPoint2_ = endPoint2;
-	weakPtr_ = weakPtr;
       }
+
+      CkcdGeometryConstShPtr Segment::
+      geometry () const
+      {
+	return testTreeSegment ()->getPolySegment (index_);
+      }
+
+      unsigned int Segment::
+      index () const
+      {
+	return index_;
+      }
+
+      CkcdPoint Segment::
+      endPoint1 () const
+      {
+	return endPoint1_;
+      }
+
+      CkcdPoint Segment::
+      endPoint2 () const
+      {
+	return endPoint2_;
+      }
+
+      Segment::
+      Segment(TestTreeSegmentShPtr testTree)
+	: CkcdGeometrySubElement(testTree),
+	  index_ (-1)
+      {
+      }
+
+      ktStatus Segment::
+      init (const SegmentWkPtr& weakPtr,
+	    unsigned int index,
+	    const CkcdPoint& endPoint1,
+	    const CkcdPoint& endPoint2)
+      {
+	ktStatus success = CkcdGeometrySubElement::init (weakPtr);
+
+	if (KD_OK == success)
+	  {
+	    index_ = index;
+	    endPoint1_ = endPoint1;
+	    endPoint2_ = endPoint2;
+	    weakPtr_ = weakPtr;
+	  }
     
-    return success;
-  }
+	return success;
+      }
 
-  TestTreeSegmentShPtr Segment::
-  testTreeSegment () const
-  {
-    if (CkcdGeometrySubElement::testTree ())
+      TestTreeSegmentShPtr Segment::
+      testTreeSegment () const
       {
-  	return KIT_STATIC_PTR_CAST (TestTreeSegment,
-				    CkcdGeometrySubElement::testTree ());
+	if (CkcdGeometrySubElement::testTree ())
+	  {
+	    return KIT_STATIC_PTR_CAST (TestTreeSegment,
+					CkcdGeometrySubElement::testTree ());
+	  }
+	else
+	  {
+	    return TestTreeSegmentShPtr ();
+	  }
       }
-    else
-      {
-  	return TestTreeSegmentShPtr ();
-      }
-  }
   
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.

@@ -29,50 +29,56 @@
 
 namespace hpp
 {
-  class DetectorSegmentTriangle : public CkcdDetector
+  namespace geometry
   {
-  public:
-    /// \brief Create a new detector.
-    static DetectorSegmentTriangleShPtr create ();
+    namespace collision
+    {
+      class DetectorSegmentTriangle : public CkcdDetector
+      {
+      public:
+	/// \brief Create a new detector.
+	static DetectorSegmentTriangleShPtr create ();
 
-    /// \brief Create a copy of the detector.
-    static DetectorSegmentTriangleShPtr
-    createCopy (const DetectorSegmentTriangleConstShPtr& detector);
+	/// \brief Create a copy of the detector.
+	static DetectorSegmentTriangleShPtr
+	createCopy (const DetectorSegmentTriangleConstShPtr& detector);
 
-    /// \brief Clones the detector.
-    ///	All detectors must be clonable
-    virtual CkcdDetectorShPtr clone () const;
+	/// \brief Clones the detector.
+	///	All detectors must be clonable
+	virtual CkcdDetectorShPtr clone () const;
 
-    /// \brief Analyse collision between the bounding volume / geometry elements.
-    ///	See CkcdDetector::analyze() for details
-    virtual CkcdDetectorTestAnswer
-    analyze (const CkcdTreeIterator& left, 
-	     const CkcdTreeIterator& right,
-	     const CkcdDetectorElementaryTestDataShPtr& testData,
-	     CkcdProximityQuery& query) const;
+	/// \brief Analyse collision between the bounding volume / geometry elements.
+	///	See CkcdDetector::analyze() for details
+	virtual CkcdDetectorTestAnswer
+	analyze (const CkcdTreeIterator& left, 
+		 const CkcdTreeIterator& right,
+		 const CkcdDetectorElementaryTestDataShPtr& testData,
+		 CkcdProximityQuery& query) const;
 
-    /// Should return true if the detector knows how to test
-    ///	collisions between dispatchID.
-    ///
-    /// Should return true only if left ID equals
-    ///	TestTreeSegment::segmentDispatchID() and right ID equals
-    ///	CkcdTestTreeOBB::triangleDispatchID().
-    virtual bool canHandle (unsigned int leftID, unsigned int rightID) const;
+	/// Should return true if the detector knows how to test
+	///	collisions between dispatchID.
+	///
+	/// Should return true only if left ID equals
+	///	TestTreeSegment::segmentDispatchID() and right ID equals
+	///	CkcdTestTreeOBB::triangleDispatchID().
+	virtual bool canHandle (unsigned int leftID, unsigned int rightID) const;
 
-  protected:
-    /// \brief Initialize detector.
-    ktStatus init (const DetectorSegmentTriangleWkPtr& weakPtr);
+      protected:
+	/// \brief Initialize detector.
+	ktStatus init (const DetectorSegmentTriangleWkPtr& weakPtr);
 
-    /// \brief Constructor
-    DetectorSegmentTriangle ();
+	/// \brief Constructor
+	DetectorSegmentTriangle ();
 
-    /// \brief Copy constructor
-    DetectorSegmentTriangle (const DetectorSegmentTriangle& detector);
+	/// \brief Copy constructor
+	DetectorSegmentTriangle (const DetectorSegmentTriangle& detector);
 
-  private:
-    DetectorSegmentTriangleWkPtr weakPtr_;
-  };
+      private:
+	DetectorSegmentTriangleWkPtr weakPtr_;
+      };
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_DETECTOR_SEGMENT_TRIANGLE_HH_

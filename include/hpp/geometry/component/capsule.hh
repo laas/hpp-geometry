@@ -30,103 +30,107 @@
 
 namespace hpp
 {
-  namespace component
+  namespace geometry
   {
-    class Capsule : public CkppKCDPolyhedron
+    namespace component
     {
-    public:
-      KPP_DECLARE_PROPERTY(HEIGHT);
-      KPP_DECLARE_PROPERTY(RADIUS);
-      KPP_DECLARE_PROPERTY(BASE_VERTICES);
-      KPP_DECLARE_PROPERTY(PARALLELS);
+      class Capsule : public CkppKCDPolyhedron
+      {
+      public:
+	KPP_DECLARE_PROPERTY(HEIGHT);
+	KPP_DECLARE_PROPERTY(RADIUS);
+	KPP_DECLARE_PROPERTY(BASE_VERTICES);
+	KPP_DECLARE_PROPERTY(PARALLELS);
 
-      /// \brief Get height of the capsule.
-      double height () const;
+	/// \brief Get height of the capsule.
+	double height () const;
 
-      /// \brief Set height of the capsule.
-      void height (const double& height);
+	/// \brief Set height of the capsule.
+	void height (const double& height);
 
-      /// \brief Get raidus of the capsule.
-      double radius () const;
+	/// \brief Get raidus of the capsule.
+	double radius () const;
       
-      /// \brief Set radius of the capsule.
-      void radius (const double& radius);
+	/// \brief Set radius of the capsule.
+	void radius (const double& radius);
 
-      /// \brief Get number of base vertices around the cylindrical
-      /// base of the capsule.
-      unsigned int baseVertices () const;
+	/// \brief Get number of base vertices around the cylindrical
+	/// base of the capsule.
+	unsigned int baseVertices () const;
 
-      /// \brief Set number of base vertices.
-      void baseVertices (const unsigned int baseVertices);
+	/// \brief Set number of base vertices.
+	void baseVertices (const unsigned int baseVertices);
 
-      /// \brief Get number of parallels on the half-spheres of the
-      /// capsule.
-      unsigned int parallels () const;
+	/// \brief Get number of parallels on the half-spheres of the
+	/// capsule.
+	unsigned int parallels () const;
 
-      /// \brief Set number of parallels on half-spheres.
-      void parallels (const unsigned int parallels);
+	/// \brief Set number of parallels on half-spheres.
+	void parallels (const unsigned int parallels);
 
-      /// \brief Destructor
-      virtual ~Capsule ();
+	/// \brief Destructor
+	virtual ~Capsule ();
 
-      /// \brief Create a capsule.
-      ///
-      /// \param name name of the capsule
-      /// \param height height of the cylindrical base of the capsule
-      /// \param radius radius of the capsule
-      ///
-      /// \param baseVertices number of base vertices on the
-      /// cylindrical base of the capsule
-      ///
-      /// \param parallels number of parallels on each half-sphere of
-      /// the capsule
-      static CapsuleShPtr create (const std::string& name,
-				  const double& height,
-				  const double& radius,
-				  const unsigned int baseVertices = 32,
-				  const unsigned int parallels = 32);
+	/// \brief Create a capsule.
+	///
+	/// \param name name of the capsule
+	/// \param height height of the cylindrical base of the capsule
+	/// \param radius radius of the capsule
+	///
+	/// \param baseVertices number of base vertices on the
+	/// cylindrical base of the capsule
+	///
+	/// \param parallels number of parallels on each half-sphere of
+	/// the capsule
+	static CapsuleShPtr create (const std::string& name,
+				    const double& height,
+				    const double& radius,
+				    const unsigned int baseVertices = 32,
+				    const unsigned int parallels = 32);
 
-      /// \brief Create a copy of the component.
-      virtual CkppComponentShPtr cloneComponent () const;
+	/// \brief Create a copy of the component.
+	virtual CkppComponentShPtr cloneComponent () const;
 
-      /// \brief Tell whether the component can be cloned using
-      /// cloneComponent().
-      virtual bool isComponentClonable () const;
+	/// \brief Tell whether the component can be cloned using
+	/// cloneComponent().
+	virtual bool isComponentClonable () const;
       
-    protected:
-      /// \brief Constructor.
-      Capsule ();
+      protected:
+	/// \brief Constructor.
+	Capsule ();
 
-      /// \brief Initialize capsule.
-      ktStatus init (const CapsuleWkPtr weakPtr,
-		     const std::string& name,
-		     const double& height,
-		     const double& radius,
-		     const unsigned int baseVertices,
-		     const unsigned int parallels);
+	/// \brief Initialize capsule.
+	ktStatus init (const CapsuleWkPtr weakPtr,
+		       const std::string& name,
+		       const double& height,
+		       const double& radius,
+		       const unsigned int baseVertices,
+		       const unsigned int parallels);
 
-      /// \brief Allow the component to return its user-visible
-      /// properties.
-      virtual void fillPropertyVector (std::vector<CkppPropertyShPtr>&
-				       propertyVector) const;
+	/// \brief Allow the component to return its user-visible
+	/// properties.
+	virtual void fillPropertyVector (std::vector<CkppPropertyShPtr>&
+					 propertyVector) const;
 
-      /// \brief Notify a component that the value of one of its
-      /// properties has changed.
-      virtual bool modifiedProperty (const CkppPropertyShPtr& property);
+	/// \brief Notify a component that the value of one of its
+	/// properties has changed.
+	virtual bool modifiedProperty (const CkppPropertyShPtr& property);
 
-      /// \brief Let the component know that the value of one of its
-      /// properties is about to be retrieved.
-      virtual void updateProperty (const CkppPropertyShPtr& property);
+	/// \brief Let the component know that the value of one of its
+	/// properties is about to be retrieved.
+	virtual void updateProperty (const CkppPropertyShPtr& property);
 
-    private:
-      CapsuleWkPtr weakPtr_;
+      private:
+	CapsuleWkPtr weakPtr_;
 
-      CkppDoublePropertyShPtr heightProperty_;
-      CkppDoublePropertyShPtr radiusProperty_;
-      CkppIntegerPropertyShPtr baseVerticesProperty_;
-      CkppIntegerPropertyShPtr parallelsProperty_;
-    };
-  } // end of namespace component.    
+	CkppDoublePropertyShPtr heightProperty_;
+	CkppDoublePropertyShPtr radiusProperty_;
+	CkppIntegerPropertyShPtr baseVerticesProperty_;
+	CkppIntegerPropertyShPtr parallelsProperty_;
+      };
+
+    } // end of namespace component.    
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KPP_COMPONENT_CAPSULE_HH_

@@ -26,112 +26,118 @@
 
 namespace hpp
 {
-  PolySegmentShPtr PolySegment::
-  create ()
+  namespace geometry
   {
-    PolySegment* ptr = new PolySegment ();
-    PolySegmentShPtr shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
+    namespace collision
+    {
+      PolySegmentShPtr PolySegment::
+      create ()
       {
-	shPtr.reset();
+	PolySegment* ptr = new PolySegment ();
+	PolySegmentShPtr shPtr (ptr);
+
+	if (KD_OK != ptr->init (shPtr))
+	  {
+	    shPtr.reset();
+	  }
+
+	return shPtr;
       }
 
-    return shPtr;
-  }
-
-  PolySegment::
-  ~PolySegment ()
-  {
-  }
-
-  unsigned int PolySegment::
-  countSubElements () const
-  {
-    return segmentVector_.size ();
-  }
-
-  void PolySegment::
-  addSegment (const CkcdPoint& endPoint1,
-	      const CkcdPoint& endPoint2)
-  {
-    segmentVector_.push_back(segment_t (endPoint1, endPoint2));
-  }
-
-  ktStatus PolySegment::
-  setSegment (unsigned int index,
-	      const CkcdPoint& endPoint1,
-	      const CkcdPoint& endPoint2)
-  {
-    ktStatus result = KD_OK;
-
-    if (index < segmentVector_.size())
+      PolySegment::
+      ~PolySegment ()
       {
-	segmentVector_[index] = segment_t (endPoint1, endPoint2);
       }
-    else if (index == segmentVector_.size())
+
+      unsigned int PolySegment::
+      countSubElements () const
+      {
+	return segmentVector_.size ();
+      }
+
+      void PolySegment::
+      addSegment (const CkcdPoint& endPoint1,
+		  const CkcdPoint& endPoint2)
       {
 	segmentVector_.push_back(segment_t (endPoint1, endPoint2));
       }
-    else
+
+      ktStatus PolySegment::
+      setSegment (unsigned int index,
+		  const CkcdPoint& endPoint1,
+		  const CkcdPoint& endPoint2)
       {
-	result = KD_ERROR;
+	ktStatus result = KD_OK;
+
+	if (index < segmentVector_.size())
+	  {
+	    segmentVector_[index] = segment_t (endPoint1, endPoint2);
+	  }
+	else if (index == segmentVector_.size())
+	  {
+	    segmentVector_.push_back(segment_t (endPoint1, endPoint2));
+	  }
+	else
+	  {
+	    result = KD_ERROR;
+	  }
+	return result;
       }
-    return result;
-  }
 
-  ktStatus PolySegment::
-  getSegment (unsigned int index,
-	      CkcdPoint& endPoint1,
-	      CkcdPoint& endPoint2) const
-  {
-    using namespace boost;
-
-    ktStatus result = KD_ERROR;
-    if (index < segmentVector_.size ())
+      ktStatus PolySegment::
+      getSegment (unsigned int index,
+		  CkcdPoint& endPoint1,
+		  CkcdPoint& endPoint2) const
       {
-	endPoint1 = moveMatrix_ * get<0> (segmentVector_[index]);
-	endPoint2 = moveMatrix_ * get<1> (segmentVector_[index]);
-	result = KD_OK;
+	using namespace boost;
+
+	ktStatus result = KD_ERROR;
+	if (index < segmentVector_.size ())
+	  {
+	    endPoint1 = moveMatrix_ * get<0> (segmentVector_[index]);
+	    endPoint2 = moveMatrix_ * get<1> (segmentVector_[index]);
+	    result = KD_OK;
+	  }
+	return result;
       }
-    return result;
-  }
   
-  CkcdPoint PolySegment::
-  getSegmentFirstEndPoint (unsigned int index) const
-  {
-    using namespace boost;
+      CkcdPoint PolySegment::
+      getSegmentFirstEndPoint (unsigned int index) const
+      {
+	using namespace boost;
 
-    KCD_ASSERT(index < segmentVector_.size());
-    return moveMatrix_ * get<0> (segmentVector_[index]);
-  }
+	KCD_ASSERT(index < segmentVector_.size());
+	return moveMatrix_ * get<0> (segmentVector_[index]);
+      }
   
-  CkcdPoint PolySegment::
-  getSegmentSecondEndPoint (unsigned int index) const
-  {
-    using namespace boost;
+      CkcdPoint PolySegment::
+      getSegmentSecondEndPoint (unsigned int index) const
+      {
+	using namespace boost;
 
-    KCD_ASSERT(index < segmentVector_.size());
-    return moveMatrix_ * get<1> (segmentVector_[index]);
-  }
+	KCD_ASSERT(index < segmentVector_.size());
+	return moveMatrix_ * get<1> (segmentVector_[index]);
+      }
   
-  ktStatus PolySegment::
-  init (const PolySegmentWkPtr& weakPtr)
-  {
-    ktStatus status = CkcdGeometry::init (weakPtr);
+      ktStatus PolySegment::
+      init (const PolySegmentWkPtr& weakPtr)
+      {
+	ktStatus status = CkcdGeometry::init (weakPtr);
     
-    if (KD_OK == status)
-      {
-	weakPtr_ = weakPtr;
-      }
+	if (KD_OK == status)
+	  {
+	    weakPtr_ = weakPtr;
+	  }
     
-    return status;
-  }
+	return status;
+      }
 
-  PolySegment::
-  PolySegment ()
-  {
-    moveMatrix_.identity ();
-  }
+      PolySegment::
+      PolySegment ()
+      {
+	moveMatrix_.identity ();
+      }
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.

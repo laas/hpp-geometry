@@ -28,6 +28,10 @@
 
 namespace hpp
 {
+  namespace geometry
+  {
+    namespace collision
+    {
   DetectorOBBCapsuleShPtr DetectorOBBCapsule::
   create ()
   {
@@ -156,4 +160,6 @@ namespace hpp
   {
   }
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.

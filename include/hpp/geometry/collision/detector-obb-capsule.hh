@@ -29,50 +29,56 @@
 
 namespace hpp
 {
-  class DetectorOBBCapsule : public CkcdDetector
+  namespace geometry
   {
-  public:
-    /// \brief Create a new detector.
-    static DetectorOBBCapsuleShPtr create ();
+    namespace collision
+    {
+      class DetectorOBBCapsule : public CkcdDetector
+      {
+      public:
+	/// \brief Create a new detector.
+	static DetectorOBBCapsuleShPtr create ();
 
-    /// \brief Create a copy of the detector.
-    static DetectorOBBCapsuleShPtr
-    createCopy (const DetectorOBBCapsuleConstShPtr& detector);
+	/// \brief Create a copy of the detector.
+	static DetectorOBBCapsuleShPtr
+	createCopy (const DetectorOBBCapsuleConstShPtr& detector);
 
-    /// \brief Clones the detector.
-    ///	All detectors must be clonable
-    virtual CkcdDetectorShPtr clone () const;
+	/// \brief Clones the detector.
+	///	All detectors must be clonable
+	virtual CkcdDetectorShPtr clone () const;
 
-    /// \brief Analyse collision between the bounding volume / geometry elements.
-    ///	See CkcdDetector::analyze() for details
-    virtual CkcdDetectorTestAnswer
-    analyze (const CkcdTreeIterator& left, 
-	     const CkcdTreeIterator& right,
-	     const CkcdDetectorElementaryTestDataShPtr& testData,
-	     CkcdProximityQuery& query) const;
+	/// \brief Analyse collision between the bounding volume / geometry elements.
+	///	See CkcdDetector::analyze() for details
+	virtual CkcdDetectorTestAnswer
+	analyze (const CkcdTreeIterator& left, 
+		 const CkcdTreeIterator& right,
+		 const CkcdDetectorElementaryTestDataShPtr& testData,
+		 CkcdProximityQuery& query) const;
 
-    /// Should return true if the detector knows how to test
-    ///	collisions between dispatchID.
-    ///
-    /// Should return true only if left ID equals
-    ///	CkcdTestTreeOBB::PolyOBBDispatchID() and right ID equals
-    ///	TestTreeCapsule::capsuleDispatchID().
-    virtual bool canHandle (unsigned int leftID, unsigned int rightID) const;
+	/// Should return true if the detector knows how to test
+	///	collisions between dispatchID.
+	///
+	/// Should return true only if left ID equals
+	///	CkcdTestTreeOBB::PolyOBBDispatchID() and right ID equals
+	///	TestTreeCapsule::capsuleDispatchID().
+	virtual bool canHandle (unsigned int leftID, unsigned int rightID) const;
 
-  protected:
-    /// \brief Initialize detector.
-    ktStatus init (const DetectorOBBCapsuleWkPtr& weakPtr);
+      protected:
+	/// \brief Initialize detector.
+	ktStatus init (const DetectorOBBCapsuleWkPtr& weakPtr);
 
-    /// \brief Constructor
-    DetectorOBBCapsule ();
+	/// \brief Constructor
+	DetectorOBBCapsule ();
 
-    /// \brief Copy constructor
-    DetectorOBBCapsule (const DetectorOBBCapsule& detector);
+	/// \brief Copy constructor
+	DetectorOBBCapsule (const DetectorOBBCapsule& detector);
 
-  private:
-    DetectorOBBCapsuleWkPtr weakPtr_;
-  };
+      private:
+	DetectorOBBCapsuleWkPtr weakPtr_;
+      };
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_DETECTOR_OBB_CAPSULE_HH_

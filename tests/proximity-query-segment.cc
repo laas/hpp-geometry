@@ -29,7 +29,7 @@
 #include "hpp/geometry/collision/detector-segment-segment.hh"
 
 using boost::test_tools::output_test_stream;
-using namespace hpp;
+using namespace hpp::geometry::collision;
 
 BOOST_AUTO_TEST_CASE (proximity_query_segment)
 {

@@ -29,73 +29,79 @@
 
 namespace hpp
 {
-  class Capsule : public CkcdGeometrySubElement
+  namespace geometry
   {
-  public:
-    /// Create a new capsule.
-    ///
-    /// \param tree Tree to which the element belongs
-    ///	\param index Sphere index within the tree
-    /// \param endPoint1 First end point of the capsule axis
-    ///	\param endPoint2 Second end point of the capsule axis
-    ///	\param radius Radius of the capsule
-    ///
-    /// \return New capsule
-    static CapsuleShPtr create (const TestTreeCapsuleShPtr testTree,
-				unsigned int index,
-				const CkcdPoint& endPoint1,
-				const CkcdPoint& endPoint2,
-				kcdReal radius);
+    namespace collision
+    {
+      class Capsule : public CkcdGeometrySubElement
+      {
+      public:
+	/// Create a new capsule.
+	///
+	/// \param tree Tree to which the element belongs
+	///	\param index Sphere index within the tree
+	/// \param endPoint1 First end point of the capsule axis
+	///	\param endPoint2 Second end point of the capsule axis
+	///	\param radius Radius of the capsule
+	///
+	/// \return New capsule
+	static CapsuleShPtr create (const TestTreeCapsuleShPtr testTree,
+				    unsigned int index,
+				    const CkcdPoint& endPoint1,
+				    const CkcdPoint& endPoint2,
+				    kcdReal radius);
     
-    /// Destructor.
-    virtual ~Capsule ();
+	/// Destructor.
+	virtual ~Capsule ();
 
-    /// Get the parent geometry.
-    virtual CkcdGeometryConstShPtr geometry () const;
+	/// Get the parent geometry.
+	virtual CkcdGeometryConstShPtr geometry () const;
 
-    /// Get index in test tree.
-    unsigned int index () const;
+	/// Get index in test tree.
+	unsigned int index () const;
 
-    /// Get the coordinates of the capsule's axis first end point
-    /// relative to the root of the tree.
-    ///
-    /// \return center coordinate
-    CkcdPoint endPoint1 () const;
+	/// Get the coordinates of the capsule's axis first end point
+	/// relative to the root of the tree.
+	///
+	/// \return center coordinate
+	CkcdPoint endPoint1 () const;
 
-    /// Get the coordinates of the capsule's axis second end point
-    /// relative to the root of the tree.
-    ///
-    /// \return center coordinate
-    CkcdPoint endPoint2 () const;
+	/// Get the coordinates of the capsule's axis second end point
+	/// relative to the root of the tree.
+	///
+	/// \return center coordinate
+	CkcdPoint endPoint2 () const;
 
-    /// Retrieves the radius of the capsule.
-    ///
-    /// \return radius
-    kcdReal radius () const;
+	/// Retrieves the radius of the capsule.
+	///
+	/// \return radius
+	kcdReal radius () const;
 
-  protected:
-    /// Constructor.
-    Capsule (TestTreeCapsuleShPtr testTree);
+      protected:
+	/// Constructor.
+	Capsule (TestTreeCapsuleShPtr testTree);
 
-    /// Initialize.
-    ktStatus init (const CapsuleWkPtr& weakPtr,
-		   unsigned int index,
-		   const CkcdPoint& endPoint1,
-		   const CkcdPoint& endPoint2,
-		   kcdReal radius);
+	/// Initialize.
+	ktStatus init (const CapsuleWkPtr& weakPtr,
+		       unsigned int index,
+		       const CkcdPoint& endPoint1,
+		       const CkcdPoint& endPoint2,
+		       kcdReal radius);
 
-    /// Get capsule test tree.
-    TestTreeCapsuleShPtr testTreeCapsule () const;
+	/// Get capsule test tree.
+	TestTreeCapsuleShPtr testTreeCapsule () const;
 
-  private:
-    CapsuleWkPtr weakPtr_;
+      private:
+	CapsuleWkPtr weakPtr_;
 
-    unsigned int index_;
-    CkcdPoint endPoint1_;
-    CkcdPoint endPoint2_;
-    kcdReal radius_;
-  };
+	unsigned int index_;
+	CkcdPoint endPoint1_;
+	CkcdPoint endPoint2_;
+	kcdReal radius_;
+      };
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_CAPSULE_HH_

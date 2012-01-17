@@ -26,126 +26,132 @@
 
 namespace hpp
 {
-  PolyCapsuleShPtr PolyCapsule::
-  create ()
+  namespace geometry
   {
-    PolyCapsule* ptr = new PolyCapsule ();
-    PolyCapsuleShPtr shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
+    namespace collision
+    {
+      PolyCapsuleShPtr PolyCapsule::
+      create ()
       {
-	shPtr.reset();
+	PolyCapsule* ptr = new PolyCapsule ();
+	PolyCapsuleShPtr shPtr (ptr);
+
+	if (KD_OK != ptr->init (shPtr))
+	  {
+	    shPtr.reset();
+	  }
+
+	return shPtr;
       }
 
-    return shPtr;
-  }
-
-  PolyCapsule::
-  ~PolyCapsule ()
-  {
-  }
-
-  unsigned int PolyCapsule::
-  countSubElements () const
-  {
-    return capsuleVector_.size ();
-  }
-
-  void PolyCapsule::
-  addCapsule (const CkcdPoint& endPoint1,
-	      const CkcdPoint& endPoint2,
-	      kcdReal radius)
-  {
-    capsuleVector_.push_back(capsule_t (endPoint1, endPoint2, radius));
-  }
-
-  ktStatus PolyCapsule::
-  setCapsule (unsigned int index,
-	      const CkcdPoint& endPoint1,
-	      const CkcdPoint& endPoint2,
-	      kcdReal radius)
-  {
-    ktStatus result = KD_OK;
-
-    if (index < capsuleVector_.size())
+      PolyCapsule::
+      ~PolyCapsule ()
       {
-	capsuleVector_[index] = capsule_t (endPoint1, endPoint2, radius);
       }
-    else if (index == capsuleVector_.size())
+
+      unsigned int PolyCapsule::
+      countSubElements () const
+      {
+	return capsuleVector_.size ();
+      }
+
+      void PolyCapsule::
+      addCapsule (const CkcdPoint& endPoint1,
+		  const CkcdPoint& endPoint2,
+		  kcdReal radius)
       {
 	capsuleVector_.push_back(capsule_t (endPoint1, endPoint2, radius));
       }
-    else
+
+      ktStatus PolyCapsule::
+      setCapsule (unsigned int index,
+		  const CkcdPoint& endPoint1,
+		  const CkcdPoint& endPoint2,
+		  kcdReal radius)
       {
-	result = KD_ERROR;
+	ktStatus result = KD_OK;
+
+	if (index < capsuleVector_.size())
+	  {
+	    capsuleVector_[index] = capsule_t (endPoint1, endPoint2, radius);
+	  }
+	else if (index == capsuleVector_.size())
+	  {
+	    capsuleVector_.push_back(capsule_t (endPoint1, endPoint2, radius));
+	  }
+	else
+	  {
+	    result = KD_ERROR;
+	  }
+	return result;
       }
-    return result;
-  }
 
-  ktStatus PolyCapsule::
-  getCapsule (unsigned int index,
-	      CkcdPoint& endPoint1,
-	      CkcdPoint& endPoint2,
-	      kcdReal& radius) const
-  {
-    using namespace boost;
-
-    ktStatus result = KD_ERROR;
-    if (index < capsuleVector_.size ())
+      ktStatus PolyCapsule::
+      getCapsule (unsigned int index,
+		  CkcdPoint& endPoint1,
+		  CkcdPoint& endPoint2,
+		  kcdReal& radius) const
       {
-	endPoint1 = moveMatrix_ * get<0> (capsuleVector_[index]);
-	endPoint2 = moveMatrix_ * get<1> (capsuleVector_[index]);
-	radius = radiusScale_ * get<2> (capsuleVector_[index]);
-	result = KD_OK;
+	using namespace boost;
+
+	ktStatus result = KD_ERROR;
+	if (index < capsuleVector_.size ())
+	  {
+	    endPoint1 = moveMatrix_ * get<0> (capsuleVector_[index]);
+	    endPoint2 = moveMatrix_ * get<1> (capsuleVector_[index]);
+	    radius = radiusScale_ * get<2> (capsuleVector_[index]);
+	    result = KD_OK;
+	  }
+	return result;
       }
-    return result;
-  }
   
-  CkcdPoint PolyCapsule::
-  getCapsuleFirstEndPoint (unsigned int index) const
-  {
-    using namespace boost;
-
-    KCD_ASSERT(index < capsuleVector_.size());
-    return moveMatrix_ * get<0> (capsuleVector_[index]);
-  }
-  
-  CkcdPoint PolyCapsule::
-  getCapsuleSecondEndPoint (unsigned int index) const
-  {
-    using namespace boost;
-
-    KCD_ASSERT(index < capsuleVector_.size());
-    return moveMatrix_ * get<1> (capsuleVector_[index]);
-  }
-  
-  kcdReal PolyCapsule::
-  getCapsuleRadius (unsigned int index) const
-  {
-    using namespace boost;
-    
-    KCD_ASSERT(index < capsuleVector_.size());
-    return radiusScale_ * get<2> (capsuleVector_[index]);
-  }
-  
-  ktStatus PolyCapsule::
-  init (const PolyCapsuleWkPtr& weakPtr)
-  {
-    ktStatus status = CkcdGeometry::init (weakPtr);
-    
-    if (KD_OK == status)
+      CkcdPoint PolyCapsule::
+      getCapsuleFirstEndPoint (unsigned int index) const
       {
-	weakPtr_ = weakPtr;
+	using namespace boost;
+
+	KCD_ASSERT(index < capsuleVector_.size());
+	return moveMatrix_ * get<0> (capsuleVector_[index]);
       }
+  
+      CkcdPoint PolyCapsule::
+      getCapsuleSecondEndPoint (unsigned int index) const
+      {
+	using namespace boost;
+
+	KCD_ASSERT(index < capsuleVector_.size());
+	return moveMatrix_ * get<1> (capsuleVector_[index]);
+      }
+  
+      kcdReal PolyCapsule::
+      getCapsuleRadius (unsigned int index) const
+      {
+	using namespace boost;
     
-    return status;
-  }
+	KCD_ASSERT(index < capsuleVector_.size());
+	return radiusScale_ * get<2> (capsuleVector_[index]);
+      }
+  
+      ktStatus PolyCapsule::
+      init (const PolyCapsuleWkPtr& weakPtr)
+      {
+	ktStatus status = CkcdGeometry::init (weakPtr);
+    
+	if (KD_OK == status)
+	  {
+	    weakPtr_ = weakPtr;
+	  }
+    
+	return status;
+      }
 
-  PolyCapsule::
-  PolyCapsule ()
-  {
-    moveMatrix_.identity ();
-    radiusScale_ = 1.;
-  }
+      PolyCapsule::
+      PolyCapsule ()
+      {
+	moveMatrix_.identity ();
+	radiusScale_ = 1.;
+      }
 
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.

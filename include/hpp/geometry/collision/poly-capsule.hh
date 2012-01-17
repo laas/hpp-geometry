@@ -31,65 +31,71 @@
 
 namespace hpp
 {
-  class PolyCapsule : public CkcdGeometry
+  namespace geometry
   {
-  public:
-    typedef boost::tuple<CkcdPoint, CkcdPoint, kcdReal> capsule_t;
-    typedef std::vector<capsule_t> capsuleVector_t;
+    namespace collision
+    {
+      class PolyCapsule : public CkcdGeometry
+      {
+      public:
+	typedef boost::tuple<CkcdPoint, CkcdPoint, kcdReal> capsule_t;
+	typedef std::vector<capsule_t> capsuleVector_t;
 
-    // Create new capsule polygon.
-    static PolyCapsuleShPtr create ();
+	// Create new capsule polygon.
+	static PolyCapsuleShPtr create ();
 
-    // Destructor.
-    virtual ~PolyCapsule ();
+	// Destructor.
+	virtual ~PolyCapsule ();
 
-    /// @name CkcdObject inherited functions
-    ///	the sub elements are the capsules
-    ///@{
-    virtual unsigned int countSubElements () const;
-    //@}
+	/// @name CkcdObject inherited functions
+	///	the sub elements are the capsules
+	///@{
+	virtual unsigned int countSubElements () const;
+	//@}
 
-    /// @name additionnal functions
-    ///	Used to fill the PolyCapsule and retrieve informations
-    void addCapsule (const CkcdPoint& endPoint1,
-		     const CkcdPoint& endPoint2,
-		     kcdReal radius);
-
-    ktStatus setCapsule (unsigned int index,
-			 const CkcdPoint& endPoint1,
+	/// @name additionnal functions
+	///	Used to fill the PolyCapsule and retrieve informations
+	void addCapsule (const CkcdPoint& endPoint1,
 			 const CkcdPoint& endPoint2,
 			 kcdReal radius);
 
-    ktStatus getCapsule (unsigned int index,
-			 CkcdPoint& endPoint1,
-			 CkcdPoint& endPoint2,
-			 kcdReal& radius) const;
+	ktStatus setCapsule (unsigned int index,
+			     const CkcdPoint& endPoint1,
+			     const CkcdPoint& endPoint2,
+			     kcdReal radius);
 
-    CkcdPoint getCapsuleFirstEndPoint (unsigned int index) const;
+	ktStatus getCapsule (unsigned int index,
+			     CkcdPoint& endPoint1,
+			     CkcdPoint& endPoint2,
+			     kcdReal& radius) const;
 
-    CkcdPoint getCapsuleSecondEndPoint (unsigned int index) const;
+	CkcdPoint getCapsuleFirstEndPoint (unsigned int index) const;
 
-    kcdReal getCapsuleRadius (unsigned int index) const;
-    //@}
+	CkcdPoint getCapsuleSecondEndPoint (unsigned int index) const;
 
-  protected:
-    // Initialization function
-    ktStatus init (const PolyCapsuleWkPtr& weakPtr);
+	kcdReal getCapsuleRadius (unsigned int index) const;
+	//@}
 
-    // Constructor
-    PolyCapsule ();
+      protected:
+	// Initialization function
+	ktStatus init (const PolyCapsuleWkPtr& weakPtr);
 
-  private:
-    // weak pointer to ( *this )
-    PolyCapsuleWkPtr weakPtr_;
+	// Constructor
+	PolyCapsule ();
 
-    capsuleVector_t capsuleVector_;
+      private:
+	// weak pointer to ( *this )
+	PolyCapsuleWkPtr weakPtr_;
 
-    CkcdMat4 moveMatrix_;
+	capsuleVector_t capsuleVector_;
 
-    kcdReal radiusScale_;
-  };
+	CkcdMat4 moveMatrix_;
 
+	kcdReal radiusScale_;
+      };
+
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_POLY_CAPSULE_HH_

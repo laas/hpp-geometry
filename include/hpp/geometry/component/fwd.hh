@@ -24,10 +24,13 @@
 
 namespace hpp
 {
-  namespace component
+  namespace geometry
   {
-    KIT_PREDEF_CLASS (Capsule);
-  } // end of namespace component.
+    namespace component
+    {
+      KIT_PREDEF_CLASS (Capsule);
+    } // end of namespace component.
+  } // end of namespace geometry.
 } // end of namespace hpp.
   
 #endif //! KPP_COMPONENT_FWD_HH

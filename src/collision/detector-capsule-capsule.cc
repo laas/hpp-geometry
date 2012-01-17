@@ -28,159 +28,165 @@
 
 namespace hpp
 {
-  DetectorCapsuleCapsuleShPtr DetectorCapsuleCapsule::
-  create ()
+  namespace geometry
   {
-    DetectorCapsuleCapsule* ptr = new DetectorCapsuleCapsule ();
-    DetectorCapsuleCapsuleShPtr	shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
+    namespace collision
+    {
+      DetectorCapsuleCapsuleShPtr DetectorCapsuleCapsule::
+      create ()
       {
-	shPtr.reset();
-      }
+	DetectorCapsuleCapsule* ptr = new DetectorCapsuleCapsule ();
+	DetectorCapsuleCapsuleShPtr	shPtr (ptr);
 
-    return shPtr;
-  }
-
-  DetectorCapsuleCapsuleShPtr DetectorCapsuleCapsule::
-  createCopy (const DetectorCapsuleCapsuleConstShPtr& detector)
-  {
-    DetectorCapsuleCapsule* ptr = new DetectorCapsuleCapsule (*detector);
-    DetectorCapsuleCapsuleShPtr shPtr (ptr);
-
-    if (KD_OK != ptr->init (shPtr))
-      {
-	shPtr.reset ();
-      }
-
-    return shPtr;
-  }
-
-  CkcdDetectorShPtr DetectorCapsuleCapsule::
-  clone () const
-  {
-    return DetectorCapsuleCapsule::createCopy (weakPtr_.lock ());
-  }
-
-  CkcdDetectorTestAnswer DetectorCapsuleCapsule::
-  analyze (const CkcdTreeIterator& left, 
-	   const CkcdTreeIterator& right,
-	   const CkcdDetectorElementaryTestDataShPtr& testData,
-	   CkcdProximityQuery& query) const
-  {
-    CkcdDetectorTestAnswer testAnswer;
-
-    // Retrieve capsules information.
-    const TestTreeCapsule* leftTree
-      = static_cast<TestTreeCapsule*> (left.testTree ());
-    const TestTreeCapsule* rightTree
-      = static_cast<TestTreeCapsule*> (right.testTree ());
-    CkcdPoint leftEndPoint1, leftEndPoint2, rightEndPoint1, rightEndPoint2;
-    kcdReal leftRadius, rightRadius;
-
-    leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
-    rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
-
-    // Apply transformation to have both positions in the same frame.
-    rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;
-    rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
-
-    // Compute Distance between the two capsules axes.
-    kcdReal squareDistance;
-    CkcdPoint leftSegmentClosest;
-    CkcdPoint rightSegmentClosest;
-
-    computeSquareDistanceSegmentSegment (leftEndPoint1,
-					 leftEndPoint2,
-					 rightEndPoint1,
-					 rightEndPoint2,
-					 squareDistance,
-					 leftSegmentClosest,
-					 rightSegmentClosest);
-
-    kcdReal radiusSum = leftRadius + rightRadius;
-
-    // depending on the result, we will call one of the 4 report
-    // functions of CkcdProximityQuery
-    if (squareDistance < radiusSum * radiusSum)
-      {
-	if (left.countChildren () > 0 || right.countChildren () > 0)
+	if (KD_OK != ptr->init (shPtr))
 	  {
-	    // if it is not a leaf, report an overlap (of bounding volumes)
-	    testAnswer = query.reportOverlap (left, right, testData);
+	    shPtr.reset();
+	  }
+
+	return shPtr;
+      }
+
+      DetectorCapsuleCapsuleShPtr DetectorCapsuleCapsule::
+      createCopy (const DetectorCapsuleCapsuleConstShPtr& detector)
+      {
+	DetectorCapsuleCapsule* ptr = new DetectorCapsuleCapsule (*detector);
+	DetectorCapsuleCapsuleShPtr shPtr (ptr);
+
+	if (KD_OK != ptr->init (shPtr))
+	  {
+	    shPtr.reset ();
+	  }
+
+	return shPtr;
+      }
+
+      CkcdDetectorShPtr DetectorCapsuleCapsule::
+      clone () const
+      {
+	return DetectorCapsuleCapsule::createCopy (weakPtr_.lock ());
+      }
+
+      CkcdDetectorTestAnswer DetectorCapsuleCapsule::
+      analyze (const CkcdTreeIterator& left, 
+	       const CkcdTreeIterator& right,
+	       const CkcdDetectorElementaryTestDataShPtr& testData,
+	       CkcdProximityQuery& query) const
+      {
+	CkcdDetectorTestAnswer testAnswer;
+
+	// Retrieve capsules information.
+	const TestTreeCapsule* leftTree
+	  = static_cast<TestTreeCapsule*> (left.testTree ());
+	const TestTreeCapsule* rightTree
+	  = static_cast<TestTreeCapsule*> (right.testTree ());
+	CkcdPoint leftEndPoint1, leftEndPoint2, rightEndPoint1, rightEndPoint2;
+	kcdReal leftRadius, rightRadius;
+
+	leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
+	rightTree->getCapsule (right, rightEndPoint1, rightEndPoint2, rightRadius);
+
+	// Apply transformation to have both positions in the same frame.
+	rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;
+	rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
+
+	// Compute Distance between the two capsules axes.
+	kcdReal squareDistance;
+	CkcdPoint leftSegmentClosest;
+	CkcdPoint rightSegmentClosest;
+
+	computeSquareDistanceSegmentSegment (leftEndPoint1,
+					     leftEndPoint2,
+					     rightEndPoint1,
+					     rightEndPoint2,
+					     squareDistance,
+					     leftSegmentClosest,
+					     rightSegmentClosest);
+
+	kcdReal radiusSum = leftRadius + rightRadius;
+
+	// depending on the result, we will call one of the 4 report
+	// functions of CkcdProximityQuery
+	if (squareDistance < radiusSum * radiusSum)
+	  {
+	    if (left.countChildren () > 0 || right.countChildren () > 0)
+	      {
+		// if it is not a leaf, report an overlap (of bounding volumes)
+		testAnswer = query.reportOverlap (left, right, testData);
+	      }
+	    else
+	      {
+		// if it is a leaf, report a collision.
+		testAnswer = query.reportCollision (left, right, testData);
+	      }
 	  }
 	else
 	  {
-	    // if it is a leaf, report a collision.
-	    testAnswer = query.reportCollision (left, right, testData);
+	    if (left.countChildren () > 0 || right.countChildren () > 0)
+	      {
+		// if it is not a leaf, report an estimated distance
+		testAnswer
+		  = query.reportEstimatedDistance (left,
+						   right,
+						   testData,
+						   sqrt (squareDistance) - radiusSum);
+	      }
+	    else
+	      {
+		// if it is a leaf, report an exact distance
+		CkitVect3 axis = rightSegmentClosest - leftSegmentClosest;
+		axis.normalize ();
+		CkcdPoint leftClosest = leftSegmentClosest
+		  + axis * leftRadius;
+		CkcdPoint rightClosest = rightSegmentClosest
+		  - axis * rightRadius;
+
+		testAnswer = query.reportExactDistance (left,
+							right,
+							testData,
+							sqrt(squareDistance)
+							- radiusSum,
+							leftClosest,
+							rightClosest);
+	      }
 	  }
+
+	return testAnswer;
       }
-    else
+
+      bool DetectorCapsuleCapsule::
+      canHandle (unsigned int leftID, unsigned int rightID) const
       {
-	if (left.countChildren () > 0 || right.countChildren () > 0)
-	  {
-	    // if it is not a leaf, report an estimated distance
-	    testAnswer
-	      = query.reportEstimatedDistance (left,
-					       right,
-					       testData,
-					       sqrt (squareDistance) - radiusSum);
-	  }
-	else
-	  {
-	    // if it is a leaf, report an exact distance
-	    CkitVect3 axis = rightSegmentClosest - leftSegmentClosest;
-	    axis.normalize ();
-	    CkcdPoint leftClosest = leftSegmentClosest
-	      + axis * leftRadius;
-	    CkcdPoint rightClosest = rightSegmentClosest
-	      - axis * rightRadius;
-
-	    testAnswer = query.reportExactDistance (left,
-						    right,
-						    testData,
-						    sqrt(squareDistance)
-						    - radiusSum,
-						    leftClosest,
-						    rightClosest);
-	  }
+	return ((leftID == TestTreeCapsule::capsuleDispatchID ()) &&
+		(rightID == TestTreeCapsule::capsuleDispatchID ()));
       }
-
-    return testAnswer;
-  }
-
-  bool DetectorCapsuleCapsule::
-  canHandle (unsigned int leftID, unsigned int rightID) const
-  {
-    return ((leftID == TestTreeCapsule::capsuleDispatchID ()) &&
-	    (rightID == TestTreeCapsule::capsuleDispatchID ()));
-  }
   
-  ktStatus DetectorCapsuleCapsule::
-  init (const DetectorCapsuleCapsuleWkPtr& weakPtr)
-  {
-    ktStatus success = KD_OK;
-
-    success = CkcdDetector::init (weakPtr);
-
-    if (KD_OK == success)
+      ktStatus DetectorCapsuleCapsule::
+      init (const DetectorCapsuleCapsuleWkPtr& weakPtr)
       {
-	weakPtr_ = weakPtr;
+	ktStatus success = KD_OK;
+
+	success = CkcdDetector::init (weakPtr);
+
+	if (KD_OK == success)
+	  {
+	    weakPtr_ = weakPtr;
+	  }
+
+	return success;
       }
 
-    return success;
-  }
+      DetectorCapsuleCapsule::
+      DetectorCapsuleCapsule ()
+	: CkcdDetector ()
+      {
+      }
 
-  DetectorCapsuleCapsule::
-  DetectorCapsuleCapsule ()
-    : CkcdDetector ()
-  {
-  }
+      DetectorCapsuleCapsule::
+      DetectorCapsuleCapsule (const DetectorCapsuleCapsule& detector)
+	: CkcdDetector (detector)
+      {
+      }
 
-  DetectorCapsuleCapsule::
-  DetectorCapsuleCapsule (const DetectorCapsuleCapsule& detector)
-    : CkcdDetector (detector)
-  {
-  }
-
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.

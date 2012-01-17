@@ -29,177 +29,180 @@
 
 namespace hpp
 {
-  namespace component
+  namespace geometry
   {
-    double Capsule::
-    height () const
+    namespace component
     {
-      return heightProperty_->value ();
-    }
+      double Capsule::
+      height () const
+      {
+	return heightProperty_->value ();
+      }
 
-    void Capsule::
-    height (const double& height)
-    {
-      heightProperty_->value (height);
-    }
+      void Capsule::
+      height (const double& height)
+      {
+	heightProperty_->value (height);
+      }
 
-    double Capsule::
-    radius () const
-    {
-      return radiusProperty_->value ();
-    }
+      double Capsule::
+      radius () const
+      {
+	return radiusProperty_->value ();
+      }
 
-    void Capsule::
-    radius (const double& radius)
-    {
-      radiusProperty_->value (radius);
-    }
+      void Capsule::
+      radius (const double& radius)
+      {
+	radiusProperty_->value (radius);
+      }
 
-    unsigned int Capsule::
-    baseVertices () const
-    {
-      return baseVerticesProperty_->value ();
-    }
+      unsigned int Capsule::
+      baseVertices () const
+      {
+	return baseVerticesProperty_->value ();
+      }
 
-    void Capsule::
-    baseVertices (const unsigned int baseVertices)
-    {
-      baseVerticesProperty_->value (baseVertices);
-    }
+      void Capsule::
+      baseVertices (const unsigned int baseVertices)
+      {
+	baseVerticesProperty_->value (baseVertices);
+      }
 
-    unsigned int Capsule::
-    parallels () const
-    {
-      return parallelsProperty_->value ();
-    }
+      unsigned int Capsule::
+      parallels () const
+      {
+	return parallelsProperty_->value ();
+      }
 
-    void Capsule::
-    parallels (const unsigned int parallels)
-    {
-      parallelsProperty_->value (parallels);
-    }
+      void Capsule::
+      parallels (const unsigned int parallels)
+      {
+	parallelsProperty_->value (parallels);
+      }
 
-    Capsule::
-    ~Capsule ()
-    {
-    }
+      Capsule::
+      ~Capsule ()
+      {
+      }
 
-    CkppComponentShPtr Capsule::
-    cloneComponent () const
-    {
-      CkppComponentShPtr shPtr = CkppComponent::create ("");
-      return shPtr;
-    }
+      CkppComponentShPtr Capsule::
+      cloneComponent () const
+      {
+	CkppComponentShPtr shPtr = CkppComponent::create ("");
+	return shPtr;
+      }
 
-    bool Capsule::
-    isComponentClonable () const
-    {
-      return false;
-    }
+      bool Capsule::
+      isComponentClonable () const
+      {
+	return false;
+      }
 
-    CapsuleShPtr Capsule::
-    create (const std::string& name,
+      CapsuleShPtr Capsule::
+      create (const std::string& name,
+	      const double& height,
+	      const double& radius,
+	      const unsigned int baseVertices,
+	      const unsigned int parallels)
+      {
+	Capsule* ptr = new Capsule ();
+	CapsuleShPtr ptrShPtr (ptr);
+
+	if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels)
+	    != KD_OK)
+	  {
+	    ptrShPtr.reset ();
+	  }
+
+	return ptrShPtr;
+      }
+
+      Capsule::
+      Capsule ()
+	: CkppKCDPolyhedron (),
+	  heightProperty_ (),
+	  radiusProperty_ (),
+	  baseVerticesProperty_ (),
+	  parallelsProperty_ ()
+      {
+      }
+
+      ktStatus Capsule::
+      init (const CapsuleWkPtr weakPtr,
+	    const std::string& name,
 	    const double& height,
 	    const double& radius,
 	    const unsigned int baseVertices,
 	    const unsigned int parallels)
-    {
-      Capsule* ptr = new Capsule ();
-      CapsuleShPtr ptrShPtr (ptr);
+      {
+	ktStatus success = CkppKCDPolyhedron::init (weakPtr, name);
 
-      if (ptr->init (ptrShPtr, name, height, radius, baseVertices, parallels)
-	  != KD_OK)
-	{
-	  ptrShPtr.reset ();
-	}
+	if (KD_OK == success)
+	  {
+	    // Set attributes.
+	    weakPtr_ = weakPtr;
+	    heightProperty_ = CkppDoubleProperty::create ("height",
+							  weakPtr.lock (),
+							  0,
+							  "height",
+							  height);
+	    radiusProperty_ = CkppDoubleProperty::create ("radius",
+							  weakPtr.lock (),
+							  0,
+							  "radius",
+							  radius);
+	    baseVerticesProperty_ = CkppIntegerProperty::create ("base vertices",
+								 weakPtr.lock (),
+								 0,
+								 "base vertices",
+								 baseVertices);
+	    parallelsProperty_ = CkppIntegerProperty::create ("parallels",
+							      weakPtr.lock (),
+							      0,
+							      "parallels",
+							      parallels);
 
-      return ptrShPtr;
-    }
+	    CkcdPolyhedronDataShPtr polyData = CkcdPolyhedronData::create ();
 
-    Capsule::
-    Capsule ()
-      : CkppKCDPolyhedron (),
-	heightProperty_ (),
-	radiusProperty_ (),
-	baseVerticesProperty_ (),
-	parallelsProperty_ ()
-    {
-    }
+	    convertCapsuleToPolyhedronData (polyData,
+					    height,
+					    radius,
+					    baseVertices,
+					    parallels);
 
-    ktStatus Capsule::
-    init (const CapsuleWkPtr weakPtr,
-	  const std::string& name,
-	  const double& height,
-	  const double& radius,
-	  const unsigned int baseVertices,
-	  const unsigned int parallels)
-    {
-      ktStatus success = CkppKCDPolyhedron::init (weakPtr, name);
+	    this->polyData (polyData);
+	  }
 
-      if (KD_OK == success)
-	{
-	  // Set attributes.
-	  weakPtr_ = weakPtr;
-	  heightProperty_ = CkppDoubleProperty::create ("height",
-							weakPtr.lock (),
-							0,
-							"height",
-							height);
-	  radiusProperty_ = CkppDoubleProperty::create ("radius",
-							weakPtr.lock (),
-							0,
-							"radius",
-							radius);
-	  baseVerticesProperty_ = CkppIntegerProperty::create ("base vertices",
-							       weakPtr.lock (),
-							       0,
-							       "base vertices",
-							       baseVertices);
-	  parallelsProperty_ = CkppIntegerProperty::create ("parallels",
-							    weakPtr.lock (),
-							    0,
-							    "parallels",
-							    parallels);
+	return success;
+      }
 
-	  CkcdPolyhedronDataShPtr polyData = CkcdPolyhedronData::create ();
+      void Capsule::
+      fillPropertyVector (std::vector<CkppPropertyShPtr>& propertyVector) const
+      {
+	CkppKCDPolyhedron::fillPropertyVector (propertyVector);
 
-	  convertCapsuleToPolyhedronData (polyData,
-					  height,
-					  radius,
-					  baseVertices,
-					  parallels);
+	propertyVector.push_back (heightProperty_);
+	propertyVector.push_back (radiusProperty_);
+	propertyVector.push_back (baseVerticesProperty_);
+	propertyVector.push_back (parallelsProperty_);
+      }
 
-	  this->polyData (polyData);
-	}
+      bool Capsule::
+      modifiedProperty (const CkppPropertyShPtr& property)
+      {
+	if (!CkppKCDPolyhedron::modifiedProperty (property))
+	  return false;
 
-      return success;
-    }
+	return true;
+      }
 
-    void Capsule::
-    fillPropertyVector (std::vector<CkppPropertyShPtr>& propertyVector) const
-    {
-      CkppKCDPolyhedron::fillPropertyVector (propertyVector);
+      void Capsule::
+      updateProperty (const CkppPropertyShPtr& property)
+      {
+	CkppKCDPolyhedron::updateProperty (property);
+      }
 
-      propertyVector.push_back (heightProperty_);
-      propertyVector.push_back (radiusProperty_);
-      propertyVector.push_back (baseVerticesProperty_);
-      propertyVector.push_back (parallelsProperty_);
-    }
-
-    bool Capsule::
-    modifiedProperty (const CkppPropertyShPtr& property)
-    {
-      if (!CkppKCDPolyhedron::modifiedProperty (property))
-	return false;
-
-      return true;
-    }
-
-    void Capsule::
-    updateProperty (const CkppPropertyShPtr& property)
-    {
-      CkppKCDPolyhedron::updateProperty (property);
-    }
-
-  } // end of namespace component.
+    } // end of namespace component.
+  } // end of namespace geometry.
 } // end of namespace hpp.

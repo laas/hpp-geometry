@@ -27,103 +27,109 @@
 
 namespace hpp
 {
-  /// \brief Convert CkcdPoint to Geometric Tools Vector3.
-  inline void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst,
-					const CkcdPoint& src)
+  namespace geometry
   {
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
-  }
+    namespace collision
+    {
+      /// \brief Convert CkcdPoint to Geometric Tools Vector3.
+      inline void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst,
+					    const CkcdPoint& src)
+      {
+	dst[0] = src[0];
+	dst[1] = src[1];
+	dst[2] = src[2];
+      }
 
-  /// \brief Convert Geometric Tools Vector3 to CkcdPoint.
-  inline void convertVector3ToKcdPoint (CkcdPoint& dst,
-					const Wm5::Vector3<kcdReal>& src)
-  {
-    dst[0] = src[0];
-    dst[1] = src[1];
-    dst[2] = src[2];
-  }
+      /// \brief Convert Geometric Tools Vector3 to CkcdPoint.
+      inline void convertVector3ToKcdPoint (CkcdPoint& dst,
+					    const Wm5::Vector3<kcdReal>& src)
+      {
+	dst[0] = src[0];
+	dst[1] = src[1];
+	dst[2] = src[2];
+      }
 
-  /// \brief Print kcdMat4 matrix.
-  std::ostream& operator<< (std::ostream& os, const CkcdMat4& kcdMat4);
+      /// \brief Print kcdMat4 matrix.
+      std::ostream& operator<< (std::ostream& os, const CkcdMat4& kcdMat4);
 
-  /// \brief Print kcdPoint vector.
-  std::ostream&  operator<< (std::ostream& os, const CkcdPoint& kcdPoint);
+      /// \brief Print kcdPoint vector.
+      std::ostream&  operator<< (std::ostream& os, const CkcdPoint& kcdPoint);
 
-  /// \brief Compute square distance between a segment and a point.
-  ///
-  /// \param leftEndPoint1 left segment first end point
-  /// \param leftEndPoint2 left segment second end point
-  /// \param rightdPoint right point
-  /// \return squareDistance square distance between segment and point
-  /// \return leftSegmentClosest closest point on left segment
-  void computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
-					  const CkcdPoint& leftEndPoint2,
-					  const CkcdPoint& rightPoint,
-					  kcdReal& squareDistance,
-					  CkcdPoint& leftSegmentClosest);
+      /// \brief Compute square distance between a segment and a point.
+      ///
+      /// \param leftEndPoint1 left segment first end point
+      /// \param leftEndPoint2 left segment second end point
+      /// \param rightdPoint right point
+      /// \return squareDistance square distance between segment and point
+      /// \return leftSegmentClosest closest point on left segment
+      void computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
+					      const CkcdPoint& leftEndPoint2,
+					      const CkcdPoint& rightPoint,
+					      kcdReal& squareDistance,
+					      CkcdPoint& leftSegmentClosest);
 
-  /// \brief Compute square distance between two segments.
-  ///
-  /// \param leftEndPoint1 left segment first end point
-  /// \param leftEndPoint1 left segment second end point
-  /// \param rightEndPoint1 right segment first end point
-  /// \param rightEndPoint1 right segment second end point
-  /// \return squareDistance square distance between the two segments
-  /// \return leftSegmentClosest closest point on left segment
-  /// \return rightSegmentClosest closest point on right segment
-  void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
+      /// \brief Compute square distance between two segments.
+      ///
+      /// \param leftEndPoint1 left segment first end point
+      /// \param leftEndPoint1 left segment second end point
+      /// \param rightEndPoint1 right segment first end point
+      /// \param rightEndPoint1 right segment second end point
+      /// \return squareDistance square distance between the two segments
+      /// \return leftSegmentClosest closest point on left segment
+      /// \return rightSegmentClosest closest point on right segment
+      void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
+						const CkcdPoint& leftEndPoint2,
+						const CkcdPoint& rightEndPoint1,
+						const CkcdPoint& rightEndPoint2,
+						kcdReal& squareDistance,
+						CkcdPoint& leftSegmentClosest,
+						CkcdPoint& rightSegmentClosest);
+
+      /// \brief Compute square distance between a segment and a box.
+      ///
+      /// \param leftEndPoint1 left segment first end point
+      /// \param leftEndPoint1 left segment second end point
+      /// \param rightBoundingBox right bounding box
+      /// \return squareDistance square distance between segment and box
+      void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
 					    const CkcdPoint& leftEndPoint2,
-					    const CkcdPoint& rightEndPoint1,
-					    const CkcdPoint& rightEndPoint2,
-					    kcdReal& squareDistance,
-					    CkcdPoint& leftSegmentClosest,
-					    CkcdPoint& rightSegmentClosest);
+					    const CkcdTestTreeOBB::CkcdPolyOBBCache&
+					    rightPolyOBBCache,
+					    kcdReal& squareDistance);
 
-  /// \brief Compute square distance between a segment and a box.
-  ///
-  /// \param leftEndPoint1 left segment first end point
-  /// \param leftEndPoint1 left segment second end point
-  /// \param rightBoundingBox right bounding box
-  /// \return squareDistance square distance between segment and box
-  void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
-					const CkcdPoint& leftEndPoint2,
-					const CkcdTestTreeOBB::CkcdPolyOBBCache&
-					rightPolyOBBCache,
-					kcdReal& squareDistance);
+      /// \brief Compute square distance between a segment and a box.
+      ///
+      /// \param leftEndPoint1 left segment first end point
+      /// \param leftEndPoint1 left segment second end point
+      /// \param rightTriangle right triangle, array of 3 vertices
+      /// \return squareDistance square distance between segment and triangle
+      /// \return leftSegmentClosest closest point on left segment
+      /// \return rightTriangleClosest closest point on right triangle
+      void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
+						 const CkcdPoint& leftEndPoint2,
+						 const CkcdTestTreeOBB::
+						 CkcdTriangleCache<CkcdPoint>&
+						 rightTriangleCache,
+						 kcdReal& squareDistance,
+						 CkcdPoint& leftSegmentClosest,
+						 CkcdPoint& rightTriangleClosest);
 
-  /// \brief Compute square distance between a segment and a box.
-  ///
-  /// \param leftEndPoint1 left segment first end point
-  /// \param leftEndPoint1 left segment second end point
-  /// \param rightTriangle right triangle, array of 3 vertices
-  /// \return squareDistance square distance between segment and triangle
-  /// \return leftSegmentClosest closest point on left segment
-  /// \return rightTriangleClosest closest point on right triangle
-  void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
-					     const CkcdPoint& leftEndPoint2,
-					     const CkcdTestTreeOBB::
-					     CkcdTriangleCache<CkcdPoint>&
-					     rightTriangleCache,
-					     kcdReal& squareDistance,
-					     CkcdPoint& leftSegmentClosest,
-					     CkcdPoint& rightTriangleClosest);
-
-  /// \brief Compute bounding capsule of a polyhedron.
-  ///
-  /// Compute axis of capsule segment using least-squares fit. Radius
-  /// is maximum distance from points to axis. Hemispherical caps are
-  /// chosen as close together as possible.
-  ///
-  /// \param polyhedron polyhedron that contains the points
-  /// \return endPoint1 bounding capsule segment first end point
-  /// \return endPoint2 bounding capsule segment second end point
-  /// \return radius bounding capsule radius
-  void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
-					 CkcdPoint& endPoint1,
-					 CkcdPoint& endPoint2,
-					 kcdReal& radius);
+      /// \brief Compute bounding capsule of a polyhedron.
+      ///
+      /// Compute axis of capsule segment using least-squares fit. Radius
+      /// is maximum distance from points to axis. Hemispherical caps are
+      /// chosen as close together as possible.
+      ///
+      /// \param polyhedron polyhedron that contains the points
+      /// \return endPoint1 bounding capsule segment first end point
+      /// \return endPoint2 bounding capsule segment second end point
+      /// \return radius bounding capsule radius
+      void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
+					     CkcdPoint& endPoint1,
+					     CkcdPoint& endPoint2,
+					     kcdReal& radius);
  
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 #endif //! KCD_UTIL_HH_

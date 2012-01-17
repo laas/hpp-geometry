@@ -25,7 +25,7 @@
 #include <hpp/geometry/component/capsule.hh>
 
 using boost::test_tools::output_test_stream;
-using namespace hpp::component;
+using namespace hpp::geometry::component;
 
 BOOST_AUTO_TEST_CASE (component_capsule)
 {

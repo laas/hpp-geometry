@@ -31,58 +31,64 @@
 
 namespace hpp
 {
-  class PolySegment : public CkcdGeometry
+  namespace geometry
   {
-  public:
-    typedef boost::tuple<CkcdPoint, CkcdPoint> segment_t;
-    typedef std::vector<segment_t> segmentVector_t;
+    namespace collision
+    {
+      class PolySegment : public CkcdGeometry
+      {
+      public:
+	typedef boost::tuple<CkcdPoint, CkcdPoint> segment_t;
+	typedef std::vector<segment_t> segmentVector_t;
 
-    // Create new segment polygon.
-    static PolySegmentShPtr create ();
+	// Create new segment polygon.
+	static PolySegmentShPtr create ();
 
-    // Destructor.
-    virtual ~PolySegment ();
+	// Destructor.
+	virtual ~PolySegment ();
 
-    /// @name CkcdObject inherited functions
-    ///	the sub elements are the segments
-    ///@{
-    virtual unsigned int countSubElements () const;
-    //@}
+	/// @name CkcdObject inherited functions
+	///	the sub elements are the segments
+	///@{
+	virtual unsigned int countSubElements () const;
+	//@}
 
-    /// @name additionnal functions
-    ///	Used to fill the PolySegment and retrieve informations
-    void addSegment (const CkcdPoint& endPoint1,
-		     const CkcdPoint& endPoint2);
-
-    ktStatus setSegment (unsigned int index,
-			 const CkcdPoint& endPoint1,
+	/// @name additionnal functions
+	///	Used to fill the PolySegment and retrieve informations
+	void addSegment (const CkcdPoint& endPoint1,
 			 const CkcdPoint& endPoint2);
 
-    ktStatus getSegment (unsigned int index,
-			 CkcdPoint& endPoint1,
-			 CkcdPoint& endPoint2) const;
+	ktStatus setSegment (unsigned int index,
+			     const CkcdPoint& endPoint1,
+			     const CkcdPoint& endPoint2);
 
-    CkcdPoint getSegmentFirstEndPoint (unsigned int index) const;
+	ktStatus getSegment (unsigned int index,
+			     CkcdPoint& endPoint1,
+			     CkcdPoint& endPoint2) const;
 
-    CkcdPoint getSegmentSecondEndPoint (unsigned int index) const;
-    //@}
+	CkcdPoint getSegmentFirstEndPoint (unsigned int index) const;
 
-  protected:
-    // Initialization function
-    ktStatus init (const PolySegmentWkPtr& weakPtr);
+	CkcdPoint getSegmentSecondEndPoint (unsigned int index) const;
+	//@}
 
-    // Constructor
-    PolySegment ();
+      protected:
+	// Initialization function
+	ktStatus init (const PolySegmentWkPtr& weakPtr);
 
-  private:
-    // weak pointer to ( *this )
-    PolySegmentWkPtr weakPtr_;
+	// Constructor
+	PolySegment ();
 
-    segmentVector_t segmentVector_;
+      private:
+	// weak pointer to ( *this )
+	PolySegmentWkPtr weakPtr_;
 
-    CkcdMat4 moveMatrix_;
-  };
+	segmentVector_t segmentVector_;
 
+	CkcdMat4 moveMatrix_;
+      };
+
+    } // end of namespace collision.
+  } // end of namespace geometry.
 } // end of namespace hpp.
 
 #endif //! KCD_POLY_SEGMENT_HH_

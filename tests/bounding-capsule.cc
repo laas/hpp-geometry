@@ -28,7 +28,7 @@ using boost::test_tools::output_test_stream;
 
 BOOST_AUTO_TEST_CASE (bounding_capsule)
 {
-  using namespace hpp;
+  using namespace hpp::geometry::collision;
 
   // Validate Kineo license.
   if (!CkppLicense::initialize ())
