@@ -7,8 +7,8 @@ INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/kineo.cmake)
 
 SET(PROJECT_NAME hpp-geometry)
-SET(PROJECT_VERSION 1.0)
-SET(PROJECT_DESCRIPTION "Implementation of capsule objects in Kineo Collision Detection library.")
+SET(PROJECT_DESCRIPTION
+  "Implementation of capsule objects in Kineo Collision Detection library.")
 SET(PROJECT_URL "")
 
 # Where to compile shared objects
