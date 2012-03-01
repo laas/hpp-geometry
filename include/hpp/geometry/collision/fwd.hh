@@ -28,22 +28,22 @@ namespace hpp
   {
     namespace collision
     {
-      KIT_PREDEF_CLASS (TestTreeCapsule);
-      KIT_PREDEF_CLASS (PolyCapsule);
-      KIT_PREDEF_CLASS (Capsule);
-      KIT_PREDEF_CLASS (DetectorCapsuleCapsule);
-      KIT_PREDEF_CLASS (DetectorCapsuleOBB);
-      KIT_PREDEF_CLASS (DetectorOBBCapsule);
-      KIT_PREDEF_CLASS (DetectorCapsuleTriangle);
-      KIT_PREDEF_CLASS (DetectorTriangleCapsule);
-      KIT_PREDEF_CLASS (TestTreeSegment);
-      KIT_PREDEF_CLASS (PolySegment);
-      KIT_PREDEF_CLASS (Segment);
-      KIT_PREDEF_CLASS (DetectorSegmentSegment);
-      KIT_PREDEF_CLASS (DetectorSegmentOBB);
-      KIT_PREDEF_CLASS (DetectorOBBSegment);
-      KIT_PREDEF_CLASS (DetectorSegmentTriangle);
-      KIT_PREDEF_CLASS (DetectorTriangleSegment);
+      KIT_PREDEF_CLASS (TestTreeCapsule)
+      KIT_PREDEF_CLASS (PolyCapsule)
+      KIT_PREDEF_CLASS (Capsule)
+      KIT_PREDEF_CLASS (DetectorCapsuleCapsule)
+      KIT_PREDEF_CLASS (DetectorCapsuleOBB)
+      KIT_PREDEF_CLASS (DetectorOBBCapsule)
+      KIT_PREDEF_CLASS (DetectorCapsuleTriangle)
+      KIT_PREDEF_CLASS (DetectorTriangleCapsule)
+      KIT_PREDEF_CLASS (TestTreeSegment)
+      KIT_PREDEF_CLASS (PolySegment)
+      KIT_PREDEF_CLASS (Segment)
+      KIT_PREDEF_CLASS (DetectorSegmentSegment)
+      KIT_PREDEF_CLASS (DetectorSegmentOBB)
+      KIT_PREDEF_CLASS (DetectorOBBSegment)
+      KIT_PREDEF_CLASS (DetectorSegmentTriangle)
+      KIT_PREDEF_CLASS (DetectorTriangleSegment)
     } // end of namespace collision.
   } // end of namespace geometry.
 } // end of namespace hpp.
