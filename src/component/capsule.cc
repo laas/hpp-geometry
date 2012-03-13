@@ -244,6 +244,43 @@ namespace hpp
 	return ptrShPtr;
       }
 
+      CapsuleShPtr Capsule::
+      create (const std::string& name,
+	      const CkitPoint3& endPoint1,
+	      const CkitPoint3& endPoint2,
+	      const double& radius,
+	      const unsigned int baseVertices,
+	      const unsigned int parallels)
+      {
+	double height = endPoint1.distanceFrom (endPoint2);
+	CapsuleShPtr shPtr = Capsule::create (name, height, radius,
+					      baseVertices, parallels);
+
+	CkcdMat4 transform;
+	CkcdPoint kcdEndPoint1 (endPoint1);
+	CkcdPoint kcdEndPoint2 (endPoint2);
+	convertCapsuleAxisToTransform (transform, kcdEndPoint1, kcdEndPoint2);
+	shPtr->setAbsolutePosition (transform);
+
+	return shPtr;
+      }
+
+      CapsuleShPtr Capsule::
+      create (const std::string& name,
+	      const double& height,
+	      const double& radius,
+	      const CkitMat4& transformation,
+	      const unsigned int baseVertices,
+	      const unsigned int parallels)
+      {
+	CapsuleShPtr shPtr = Capsule::create (name, height, radius,
+					      baseVertices, parallels);
+
+	shPtr->setAbsolutePosition (transformation);
+
+	return shPtr;
+      }
+
       Capsule::
       Capsule ()
 	: CkppPolyhedron (),

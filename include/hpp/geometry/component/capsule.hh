@@ -71,7 +71,10 @@ namespace hpp
 	/// \brief Destructor
 	virtual ~Capsule ();
 
-	/// \brief Create a capsule.
+	/// \brief Create a default capsule.
+	///
+	/// The capsule center is at the frame origin, and its main
+	/// axis is oriented along the X axis.
 	///
 	/// \param name name of the capsule
 	/// \param height height of the cylindrical base of the capsule
@@ -85,6 +88,44 @@ namespace hpp
 	static CapsuleShPtr create (const std::string& name,
 				    const double& height,
 				    const double& radius,
+				    const unsigned int baseVertices = 32,
+				    const unsigned int parallels = 32);
+
+	/// \brief Create a capsule with a given transformation.
+	///
+	/// \param name name of the capsule
+	/// \param endPoint1 first end point of the capsule segment
+	/// \param endPoint2 second end point of the capsule segment
+	/// \param radius radius of the capsule
+	///
+	/// \param baseVertices number of base vertices on the
+	/// cylindrical base of the capsule
+	///
+	/// \param parallels number of parallels on each half-sphere of
+	/// the capsule
+	static CapsuleShPtr create (const std::string& name,
+				    const CkitPoint3& endPoint1,
+				    const CkitPoint3& endPoint2,
+				    const double& radius,
+				    const unsigned int baseVertices = 32,
+				    const unsigned int parallels = 32);
+
+	/// \brief Create a capsule with a given transformation.
+	///
+	/// \param name name of the capsule
+	/// \param endPoint1 first end point of the capsule segment
+	/// \param endPoint2 second end point of the capsule segment
+	/// \param radius radius of the capsule
+	///
+	/// \param baseVertices number of base vertices on the
+	/// cylindrical base of the capsule
+	///
+	/// \param parallels number of parallels on each half-sphere of
+	/// the capsule
+	static CapsuleShPtr create (const std::string& name,
+				    const double& height,
+				    const double& radius,
+				    const CkitMat4& transformation,
 				    const unsigned int baseVertices = 32,
 				    const unsigned int parallels = 32);
 
