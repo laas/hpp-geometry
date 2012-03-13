@@ -99,6 +99,132 @@ namespace hpp
 	return false;
       }
 
+      void Capsule::
+      setAbsolutePosition (const CkitMat4 &i_matrix)
+      {
+	polyhedron_->setAbsolutePosition (i_matrix);
+      }
+
+      void Capsule::
+      getAbsolutePosition (CkitMat4 &o_matrix) const
+      {
+	polyhedron_->getAbsolutePosition (o_matrix);
+      }
+
+      void Capsule::
+      setRelativePosition (const CkitMat4 &i_matrix)
+      {
+	polyhedron_->setRelativePosition (i_matrix);
+      }
+
+      void Capsule::
+      getRelativePosition (CkitMat4 &o_matrix) const
+      {
+	polyhedron_->getRelativePosition (o_matrix);
+      }
+
+      ktStatus Capsule::
+      getBBMatrixOrientation (CkitMat4 &o_matrix) const
+      {
+	// FIXME?
+	std::cout << "FIXME" << std::endl;
+	polyhedron_->getAbsolutePosition (o_matrix);
+	return KD_OK;
+      }
+
+      ktStatus Capsule::
+      getBBHalfLengths (float &x, float &y, float &z) const
+      {
+	// FIXME?
+	std::cout << "FIXME" << std::endl;
+	x = radius ();
+	y = radius ();
+	z = height () / 2 + radius ();
+
+	return KD_OK;
+      }
+
+      bool Capsule::
+      isCollisionLeaf () const
+      {
+	// FIXME?
+	return true;
+      }
+
+      CkitMat4 Capsule::
+      computeDefaultFrame () const
+      {
+	// FIXME.
+	CkitMat4 mat;
+	polyhedron_->getAbsolutePosition (mat);
+	return mat;
+      }
+
+      ktStatus Capsule::
+      addPoint (const CkitPoint3 &i_point)
+      {
+	polyhedron_->addPoint (i_point);
+      }
+
+      ktStatus Capsule::
+      addTriangle (unsigned int i_p1,
+		   unsigned int i_p2,
+		   unsigned int i_p3)
+      {
+	polyhedron_->addTriangle (i_p1, i_p2, i_p3);
+      }
+
+      void Capsule::
+      addPolygon (const std::vector< int > &i_verticesVector)
+      {
+	// FIXME.
+	std::cout << "FIXME" << std::endl;
+      }
+
+      unsigned int Capsule::
+      countPoints () const
+      {
+	return polyhedron_->countPoints ();
+      }
+
+      unsigned int Capsule::
+      countTriangles () const
+      {
+	return polyhedron_->countTriangles ();
+      }
+
+      void Capsule::
+      getTriangle (const unsigned int i_rank,
+		   unsigned int &o_p1,
+		   unsigned int &o_p2,
+		   unsigned int &o_p3) const
+      {
+	polyhedron_->getTriangle (i_rank, o_p1, o_p2, o_p3);
+      }
+
+      void Capsule::
+      getPoint (const unsigned int i_rank,
+		float &o_x, float &o_y, float &o_z) const
+      {
+	polyhedron_->getPoint (i_rank, o_x, o_y, o_z);
+      }
+
+      void Capsule::
+      getPoint (const unsigned int i_rank,
+		CkitPoint3 &o_point) const
+      {
+	polyhedron_->getPoint (i_rank, o_point);
+      }
+
+      CkppAssemblyComponentShPtr Capsule::
+      explode (const CkitProgressDelegateShPtr &i_delegate)
+      {
+	// FIXME.
+	std::cout << "FIXME" << std::endl;
+	CkppAssemblyComponentShPtr assemblyComponent;
+	return assemblyComponent;
+      }
+
       CapsuleShPtr Capsule::
       create (const std::string& name,
 	      const double& height,
@@ -125,7 +251,8 @@ namespace hpp
 	  heightProperty_ (),
 	  radiusProperty_ (),
 	  baseVerticesProperty_ (),
-	  parallelsProperty_ ()
+	  parallelsProperty_ (),
+	  polyhedron_ ()
       {
       }
 
@@ -173,7 +300,9 @@ namespace hpp
 					    baseVertices,
 					    parallels);
 
-	    this->polyData (polyData);
+	    polyhedron_ = CkcdPolyhedron::create ();
+
+	    polyhedron_->polyData (polyData);
 	  }
 
 	if (KD_OK == success1 && KD_OK == success2)
@@ -206,6 +335,17 @@ namespace hpp
       updateProperty (const CkppPropertyShPtr& property)
       {
 	CkppPolyhedron::updateProperty (property);
+      }
+
+      CkppPolyhedronShPtr Capsule::
+      createPolyhedronFromPolyExpandingData
+      (const CkppPolyExpandingDataShPtr& i_polyExpandingData,
+       unsigned int i_offset)
+      {
+	// FIXME.
+	std::cout << "FIXME" << std::endl;
+	CapsuleShPtr polyhedron = Capsule::create ("", 1, 1);
+	return polyhedron;
       }
 
     } // end of namespace component.

@@ -94,7 +94,70 @@ namespace hpp
 	/// \brief Tell whether the component can be cloned using
 	/// cloneComponent().
 	virtual bool isComponentClonable () const;
-      
+
+	/// \brief Set the absolute position of the component.
+	virtual void setAbsolutePosition (const CkitMat4 &i_matrix);
+
+	/// \brief Retrieve the absolute position of the component.
+	virtual void getAbsolutePosition (CkitMat4 &o_matrix) const;
+
+	/// \brief Set the relative position of the component.
+	virtual void setRelativePosition (const CkitMat4 &i_matrix);
+
+	/// \brief Retrieve the relative position of the component.
+	virtual void getRelativePosition (CkitMat4 &o_matrix) const;
+
+	/// \brief Retrieve the orientation of the bounding box
+	/// around the component.
+	virtual ktStatus getBBMatrixOrientation (CkitMat4 &o_matrix) const;
+
+	/// \brief Retrieve the half-lengths of the bounding box
+	/// around the component.
+	virtual ktStatus getBBHalfLengths (float &x, float &y, float &z) const;
+
+	/// \brief Return whether the component is a "collision leaf".
+	virtual bool isCollisionLeaf () const;
+
+	/// \brief Compute and returns the default motion frame.
+	virtual CkitMat4 computeDefaultFrame () const;
+
+	/// \brief Add a point to the polyhedron.
+	virtual ktStatus addPoint (const CkitPoint3 &i_point);
+
+	/// \brief Add a triangle to the polyhedron.
+	virtual ktStatus addTriangle (unsigned int i_p1,
+				      unsigned int i_p2,
+				      unsigned int i_p3);
+
+	/// \brief Add a polygon to the polyhedron.
+	virtual void addPolygon (const std::vector< int > &i_verticesVector);
+
+	/// \brief Return the number of points in the polyhedron.
+	virtual unsigned int countPoints () const;
+
+	/// \brief Return the number of triangles in the polyhedron.
+	virtual unsigned int countTriangles () const;
+
+	/// \brief Get the triangle corresponding to the given rank.
+	virtual void getTriangle (const unsigned int i_rank,
+				  unsigned int &o_p1,
+				  unsigned int &o_p2,
+				  unsigned int &o_p3) const;
+
+	/// \brief Get the point corresponding to the given rank.
+	virtual void getPoint (const unsigned int i_rank,
+			       float &o_x, float &o_y, float &o_z) const;
+
+	/// \brief Get the point corresponding to the given rank.
+	virtual void getPoint (const unsigned int i_rank,
+			       CkitPoint3 &o_point) const;
+
+	/// \brief Explode the polyhedron, transforming it into an
+	/// assembly.
+	virtual CkppAssemblyComponentShPtr
+	explode (const CkitProgressDelegateShPtr &i_delegate
+		 =CkitProgressDelegateShPtr());
+
       protected:
 	/// \brief Constructor.
 	Capsule ();
@@ -120,6 +183,10 @@ namespace hpp
 	/// properties is about to be retrieved.
 	virtual void updateProperty (const CkppPropertyShPtr& property);
 
+	virtual CkppPolyhedronShPtr createPolyhedronFromPolyExpandingData
+	(const CkppPolyExpandingDataShPtr& i_polyExpandingData,
+	 unsigned int i_offset);
+
       private:
 	CapsuleWkPtr weakPtr_;
 
@@ -127,6 +194,8 @@ namespace hpp
 	CkppDoublePropertyShPtr radiusProperty_;
 	CkppIntegerPropertyShPtr baseVerticesProperty_;
 	CkppIntegerPropertyShPtr parallelsProperty_;
+
+	CkcdPolyhedronShPtr polyhedron_;
       };
 
     } // end of namespace component.    
