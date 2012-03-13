@@ -103,24 +103,26 @@ namespace hpp
       setAbsolutePosition (const CkitMat4 &i_matrix)
       {
 	polyhedron_->setAbsolutePosition (i_matrix);
+	collision::PolyCapsule::setAbsolutePosition (i_matrix);
       }
 
       void Capsule::
       getAbsolutePosition (CkitMat4 &o_matrix) const
       {
-	polyhedron_->getAbsolutePosition (o_matrix);
+	collision::PolyCapsule::getAbsolutePosition (o_matrix);
       }
 
       void Capsule::
       setRelativePosition (const CkitMat4 &i_matrix)
       {
 	polyhedron_->setRelativePosition (i_matrix);
+	collision::PolyCapsule::setRelativePosition (i_matrix);
       }
 
       void Capsule::
       getRelativePosition (CkitMat4 &o_matrix) const
       {
-	polyhedron_->getRelativePosition (o_matrix);
+	collision::PolyCapsule::getRelativePosition (o_matrix);
       }
 
       ktStatus Capsule::
@@ -128,7 +130,7 @@ namespace hpp
       {
 	// FIXME?
 	std::cout << "FIXME" << std::endl;
-	polyhedron_->getAbsolutePosition (o_matrix);
+	collision::PolyCapsule::getAbsolutePosition (o_matrix);
 	return KD_OK;
       }
 
@@ -156,7 +158,7 @@ namespace hpp
       {
 	// FIXME.
 	CkitMat4 mat;
-	polyhedron_->getAbsolutePosition (mat);
+	collision::PolyCapsule::getAbsolutePosition (mat);
 	return mat;
       }
 
