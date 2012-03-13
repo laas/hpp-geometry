@@ -24,8 +24,8 @@
 # define KPP_COMPONENT_CAPSULE_HH_
 
 # include <KineoModel/KineoModel.h>
-# include <KineoKCDModel/KineoKCDModel.h>
 
+# include "hpp/geometry/collision/poly-capsule.hh"
 # include "hpp/geometry/component/fwd.hh"
 
 namespace hpp
@@ -34,7 +34,7 @@ namespace hpp
   {
     namespace component
     {
-      class Capsule : public CkppKCDPolyhedron
+      class Capsule : public CkppPolyhedron, public collision::PolyCapsule
       {
       public:
 	KPP_DECLARE_PROPERTY(HEIGHT);

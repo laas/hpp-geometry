@@ -120,7 +120,8 @@ namespace hpp
 
       Capsule::
       Capsule ()
-	: CkppKCDPolyhedron (),
+	: CkppPolyhedron (),
+	  collision::PolyCapsule (),
 	  heightProperty_ (),
 	  radiusProperty_ (),
 	  baseVerticesProperty_ (),
@@ -136,9 +137,10 @@ namespace hpp
 	    const unsigned int baseVertices,
 	    const unsigned int parallels)
       {
-	ktStatus success = CkppKCDPolyhedron::init (weakPtr, name);
+	ktStatus success1 = CkppPolyhedron::init (weakPtr, name);
+	ktStatus success2 = collision::PolyCapsule::init (weakPtr);
 
-	if (KD_OK == success)
+	if (KD_OK == success1 && KD_OK == success2)
 	  {
 	    // Set attributes.
 	    weakPtr_ = weakPtr;
@@ -174,13 +176,16 @@ namespace hpp
 	    this->polyData (polyData);
 	  }
 
-	return success;
+	if (KD_OK == success1 && KD_OK == success2)
+	  return KD_OK;
+	else
+	  return KD_ERROR;
       }
 
       void Capsule::
       fillPropertyVector (std::vector<CkppPropertyShPtr>& propertyVector) const
       {
-	CkppKCDPolyhedron::fillPropertyVector (propertyVector);
+	CkppPolyhedron::fillPropertyVector (propertyVector);
 
 	propertyVector.push_back (heightProperty_);
 	propertyVector.push_back (radiusProperty_);
@@ -191,7 +196,7 @@ namespace hpp
       bool Capsule::
       modifiedProperty (const CkppPropertyShPtr& property)
       {
-	if (!CkppKCDPolyhedron::modifiedProperty (property))
+	if (!CkppPolyhedron::modifiedProperty (property))
 	  return false;
 
 	return true;
@@ -200,7 +205,7 @@ namespace hpp
       void Capsule::
       updateProperty (const CkppPropertyShPtr& property)
       {
-	CkppKCDPolyhedron::updateProperty (property);
+	CkppPolyhedron::updateProperty (property);
       }
 
     } // end of namespace component.
