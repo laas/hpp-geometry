@@ -50,7 +50,7 @@ namespace hpp
 
 	/// \brief Get raidus of the capsule.
 	double radius () const;
-      
+
 	/// \brief Set radius of the capsule.
 	void radius (const double& radius);
 
@@ -198,7 +198,7 @@ namespace hpp
 	CkcdPolyhedronShPtr polyhedron_;
       };
 
-    } // end of namespace component.    
+    } // end of namespace component.
   } // end of namespace geometry.
 } // end of namespace hpp.
 
