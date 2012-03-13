@@ -36,18 +36,46 @@ BOOST_AUTO_TEST_CASE (component_capsule)
       return;
     }
 
-  // Create capsule component.
-  double height = 1.;
-  double radius = 0.3;
-  unsigned int baseVertices = 32;
-  unsigned int parallels = 32;
+  // Create default capsule component from height and radius.
+  double height1 = 1.;
+  double radius1 = 0.3;
+  unsigned int baseVertices1 = 32;
+  unsigned int parallels1 = 32;
 
-  CapsuleShPtr capsule
-    = Capsule::create ("capsule",height, radius, baseVertices, parallels);
+  CapsuleShPtr capsule1
+    = Capsule::create ("capsule",height1, radius1, baseVertices1, parallels1);
   
-  BOOST_CHECK_EQUAL (!capsule, 0);
-  BOOST_CHECK_CLOSE (capsule->height (), height, 1e-4);
-  BOOST_CHECK_CLOSE (capsule->radius (), radius, 1e-4);
-  BOOST_CHECK_EQUAL (capsule->baseVertices (), baseVertices);
-  BOOST_CHECK_EQUAL (capsule->parallels (), parallels);
+  BOOST_CHECK_EQUAL (!capsule1, 0);
+  BOOST_CHECK_CLOSE (capsule1->height (), height1, 1e-4);
+  BOOST_CHECK_CLOSE (capsule1->radius (), radius1, 1e-4);
+  BOOST_CHECK_EQUAL (capsule1->baseVertices (), baseVertices1);
+  BOOST_CHECK_EQUAL (capsule1->parallels (), parallels1);
+
+  // Create capsule component from end points and radius.
+  CkitPoint3 endPoint1 (1, 2, 3);
+  CkitPoint3 endPoint2 (4, 5, 6);
+  double radius2 = 0.5;
+  unsigned int baseVertices2 = 32;
+  unsigned int parallels2 = 32;
+
+  CapsuleShPtr capsule2
+    = Capsule::create ("capsule", endPoint1, endPoint2, radius2,
+		       baseVertices2, parallels2);
+  
+  BOOST_CHECK_EQUAL (!capsule2, 0);
+
+  // Create capsule component from height, radius and absolute
+  // transformation.
+  double height3 = 1.;
+  double radius3 = 0.3;
+  CkitMat4 transformation3;
+  transformation3.rotateX (M_PI);
+  unsigned int baseVertices3 = 32;
+  unsigned int parallels3 = 32;
+
+  CapsuleShPtr capsule3
+    = Capsule::create ("capsule", height1, radius1, transformation3,
+		       baseVertices1, parallels1);
+
+  BOOST_CHECK_EQUAL (!capsule3, 0);
 }
