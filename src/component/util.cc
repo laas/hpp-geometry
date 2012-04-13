@@ -202,6 +202,24 @@ namespace hpp
 	dst(2, 3) = center[2];
       }
 
+      void convertCapsuleAxisToUrdfEuler (double& roll,
+					  double& pitch,
+					  double& yaw,
+					  const CkcdPoint& endPoint1,
+					  const CkcdPoint& endPoint2)
+      {
+	// Compute rotation part.
+	CkcdPoint axis = endPoint2 - endPoint1;
+    
+	kcdReal alpha = atan2 (axis[1], axis[0]);
+	kcdReal beta = atan2 (axis[2],
+			      sqrt (axis[0] * axis[0] +  axis[1] * axis[1]));
+
+	roll = 0;
+	pitch = -beta + M_PI / 2;
+	yaw = alpha;
+      }
+
     } // end of namespace component.
   } // end of namespace geometry.
 } // end of namespace hpp.

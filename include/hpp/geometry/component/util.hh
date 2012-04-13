@@ -52,6 +52,22 @@ namespace hpp
 					  const CkcdPoint& endPoint1,
 					  const CkcdPoint& endPoint2);
 
+      /// \brief convert capsule axis to Euler angles as defined for
+      /// cylinders in urdf files (urdf cylinders are aligned along
+      /// the z axis while Kite cylinders are aligned along the x
+      /// axis).
+      ///
+      /// \param endPoint1 capsule segment first end point.
+      /// \param endPoint2 capsule segment second end point.
+      /// \return roll roll angle.
+      /// \return pitch pitch angle.
+      /// \return yaw yaw angle.
+      void convertCapsuleAxisToUrdfEuler (double& roll,
+					  double& pitch,
+					  double& yaw,
+					  const CkcdPoint& endPoint1,
+					  const CkcdPoint& endPoint2);
+
     } // end of namespace component.
   } // end of namespace geometry.
 } // end of namespace hpp.
