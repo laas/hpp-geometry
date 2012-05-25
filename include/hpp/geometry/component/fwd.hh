@@ -29,6 +29,7 @@ namespace hpp
     namespace component
     {
       KIT_PREDEF_CLASS (Capsule)
+      KIT_PREDEF_CLASS (Segment)
     } // end of namespace component.
   } // end of namespace geometry.
 } // end of namespace hpp.

@@ -57,25 +57,27 @@ namespace hpp
 
       void PolySegment::
       addSegment (const CkcdPoint& endPoint1,
-		  const CkcdPoint& endPoint2)
+		  const CkcdPoint& endPoint2,
+		  const kcdReal& radius)
       {
-	segmentVector_.push_back(segment_t (endPoint1, endPoint2));
+	segmentVector_.push_back(segment_t (endPoint1, endPoint2, radius));
       }
 
       ktStatus PolySegment::
       setSegment (unsigned int index,
 		  const CkcdPoint& endPoint1,
-		  const CkcdPoint& endPoint2)
+		  const CkcdPoint& endPoint2,
+		  const kcdReal& radius)
       {
 	ktStatus result = KD_OK;
 
 	if (index < segmentVector_.size())
 	  {
-	    segmentVector_[index] = segment_t (endPoint1, endPoint2);
+	    segmentVector_[index] = segment_t (endPoint1, endPoint2, radius);
 	  }
 	else if (index == segmentVector_.size())
 	  {
-	    segmentVector_.push_back(segment_t (endPoint1, endPoint2));
+	    segmentVector_.push_back(segment_t (endPoint1, endPoint2, radius));
 	  }
 	else
 	  {
@@ -87,7 +89,8 @@ namespace hpp
       ktStatus PolySegment::
       getSegment (unsigned int index,
 		  CkcdPoint& endPoint1,
-		  CkcdPoint& endPoint2) const
+		  CkcdPoint& endPoint2,
+		  kcdReal& radius) const
       {
 	using namespace boost;
 
@@ -96,6 +99,7 @@ namespace hpp
 	  {
 	    endPoint1 = moveMatrix_ * get<0> (segmentVector_[index]);
 	    endPoint2 = moveMatrix_ * get<1> (segmentVector_[index]);
+	    radius = get<2> (segmentVector_[index]);
 	    result = KD_OK;
 	  }
 	return result;
@@ -117,6 +121,15 @@ namespace hpp
 
 	KCD_ASSERT(index < segmentVector_.size());
 	return moveMatrix_ * get<1> (segmentVector_[index]);
+      }
+
+      kcdReal PolySegment::
+      getSegmentRadius (unsigned int index) const
+      {
+	using namespace boost;
+
+	KCD_ASSERT(index < segmentVector_.size());
+	return get<2> (segmentVector_[index]);
       }
   
       ktStatus PolySegment::

@@ -38,7 +38,7 @@ namespace hpp
       class PolySegment : public CkcdGeometry
       {
       public:
-	typedef boost::tuple<CkcdPoint, CkcdPoint> segment_t;
+	typedef boost::tuple<CkcdPoint, CkcdPoint, kcdReal> segment_t;
 	typedef std::vector<segment_t> segmentVector_t;
 
 	// Create new segment polygon.
@@ -56,19 +56,24 @@ namespace hpp
 	/// @name additionnal functions
 	///	Used to fill the PolySegment and retrieve informations
 	void addSegment (const CkcdPoint& endPoint1,
-			 const CkcdPoint& endPoint2);
+			 const CkcdPoint& endPoint2,
+			 const kcdReal& radius = 0);
 
 	ktStatus setSegment (unsigned int index,
 			     const CkcdPoint& endPoint1,
-			     const CkcdPoint& endPoint2);
+			     const CkcdPoint& endPoint2,
+			     const kcdReal& radius = 0);
 
 	ktStatus getSegment (unsigned int index,
 			     CkcdPoint& endPoint1,
-			     CkcdPoint& endPoint2) const;
+			     CkcdPoint& endPoint2,
+			     kcdReal& radius) const;
 
 	CkcdPoint getSegmentFirstEndPoint (unsigned int index) const;
 
 	CkcdPoint getSegmentSecondEndPoint (unsigned int index) const;
+
+	kcdReal getSegmentRadius (unsigned int index) const;
 	//@}
 
       protected:

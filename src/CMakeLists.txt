@@ -21,6 +21,7 @@ ADD_LIBRARY(${LIBRARY_NAME}
   collision/detector-triangle-segment.cc
   component/util.cc
   component/capsule.cc
+  component/segment.cc
   )
 
 SET_TARGET_PROPERTIES(${LIBRARY_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION})

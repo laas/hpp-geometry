@@ -143,11 +143,13 @@ namespace hpp
 	  {
 	    CkcdPoint endPoint1;
 	    CkcdPoint endPoint2;
+	    kcdReal radius;
 	    getSegment (it, endPoint1, endPoint2);
 	    SegmentShPtr segment = Segment::create (weakPtr_.lock (),
 						    it.index (),
 						    endPoint1,
-						    endPoint2);
+						    endPoint2,
+						    radius);
 	    return segment;
 	  }
       }
@@ -272,8 +274,9 @@ namespace hpp
 	    unsigned int segmentIndex;
 	    if (KD_OK == getSegmentIndexes(it.index (), polyIndex, segmentIndex))
 	      {
+		kcdReal radius;
 		polySegments_[polyIndex]
-		  ->getSegment (segmentIndex, endPoint1, endPoint2);
+		  ->getSegment (segmentIndex, endPoint1, endPoint2, radius);
 		result = KD_OK;
 	      }
 	  }

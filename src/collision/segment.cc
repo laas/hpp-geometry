@@ -35,12 +35,13 @@ namespace hpp
       create (const TestTreeSegmentShPtr testTree,
 	      unsigned int index,
 	      const CkcdPoint& endPoint1,
-	      const CkcdPoint& endPoint2)
+	      const CkcdPoint& endPoint2,
+	      const kcdReal& radius)
       {
 	Segment* ptr = new Segment (testTree);
 	SegmentShPtr ptrShPtr (ptr);
 
-	if (ptr->init (ptrShPtr, index, endPoint1, endPoint2) != KD_OK)
+	if (ptr->init (ptrShPtr, index, endPoint1, endPoint2, radius) != KD_OK)
 	  {
 	    ptrShPtr.reset ();
 	  }
@@ -76,6 +77,12 @@ namespace hpp
 	return endPoint2_;
       }
 
+      kcdReal Segment::
+      radius () const
+      {
+	return radius_;
+      }
+
       Segment::
       Segment(TestTreeSegmentShPtr testTree)
 	: CkcdGeometrySubElement(testTree),
@@ -87,7 +94,8 @@ namespace hpp
       init (const SegmentWkPtr& weakPtr,
 	    unsigned int index,
 	    const CkcdPoint& endPoint1,
-	    const CkcdPoint& endPoint2)
+	    const CkcdPoint& endPoint2,
+	    const kcdReal& radius)
       {
 	ktStatus success = CkcdGeometrySubElement::init (weakPtr);
 
@@ -96,6 +104,7 @@ namespace hpp
 	    index_ = index;
 	    endPoint1_ = endPoint1;
 	    endPoint2_ = endPoint2;
+	    radius_ = radius;
 	    weakPtr_ = weakPtr;
 	  }
     

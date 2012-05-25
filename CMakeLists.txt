@@ -39,6 +39,7 @@ SET(${PROJECT_NAME}_COMPONENT_HEADERS
   include/hpp/geometry/component/fwd.hh
   include/hpp/geometry/component/util.hh
   include/hpp/geometry/component/capsule.hh
+  include/hpp/geometry/component/segment.hh
   )
 
 INSTALL(FILES ${${PROJECT_NAME}_COLLISION_HEADERS}

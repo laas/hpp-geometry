@@ -42,12 +42,21 @@ namespace hpp
 	///	\param index Sphere index within the tree
 	/// \param endPoint1 First end point of the segment axis
 	///	\param endPoint2 Second end point of the segment axis
+	/// \param radius Radius of equivalent capsule
 	///
 	/// \return New segment
+	///
+	/// \note KCD cannot return a negative distance. The radius
+	/// parameter can be used in the case of distance computation
+	/// for capsules: it is then up to the user to define the
+	/// segment object equivalent to the capsule, compute the
+	/// distance between segments, and subtract their
+	/// radii. Radius parameter is not needed by KCD in this case.
 	static SegmentShPtr create (const TestTreeSegmentShPtr testTree,
 				    unsigned int index,
 				    const CkcdPoint& endPoint1,
-				    const CkcdPoint& endPoint2);
+				    const CkcdPoint& endPoint2,
+				    const kcdReal& radius = 0.);
     
 	/// Destructor.
 	virtual ~Segment ();
@@ -70,6 +79,11 @@ namespace hpp
 	/// \return center coordinate
 	CkcdPoint endPoint2 () const;
 
+	/// Get the radius of the equivalent capsule.
+	///
+	/// \return center coordinate
+	kcdReal radius () const;
+
       protected:
 	/// Constructor.
 	Segment (TestTreeSegmentShPtr testTree);
@@ -78,7 +92,8 @@ namespace hpp
 	ktStatus init (const SegmentWkPtr& weakPtr,
 		       unsigned int index,
 		       const CkcdPoint& endPoint1,
-		       const CkcdPoint& endPoint2);
+		       const CkcdPoint& endPoint2,
+		       const kcdReal& radius);
 
 	/// Get segment test tree.
 	TestTreeSegmentShPtr testTreeSegment () const;
@@ -89,6 +104,7 @@ namespace hpp
 	unsigned int index_;
 	CkcdPoint endPoint1_;
 	CkcdPoint endPoint2_;
+	kcdReal radius_;
       };
 
     } // end of namespace collision.
