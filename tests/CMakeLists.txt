@@ -43,6 +43,9 @@ KINEO_STANDALONE(proximity-query-segment)
 ADD_TESTCASE(proximity-query-segment-obb)
 KINEO_STANDALONE(proximity-query-segment-obb)
 
+ADD_TESTCASE(gradient-segment-obb)
+KINEO_STANDALONE(gradient-segment-obb)
+
 ADD_TESTCASE(component-capsule)
 KINEO_STANDALONE(component-capsule)
 
@@ -57,3 +60,9 @@ KINEO_STANDALONE(bounding-capsule)
 
 ADD_TESTCASE(component-segment-proximity-query)
 KINEO_STANDALONE(component-segment-proximity-query)
+
+ADD_TESTCASE(segment-proximity-query-performance)
+KINEO_STANDALONE(segment-proximity-query-performance)
+
+ADD_TESTCASE(segment-obb-proximity-query-performance)
+KINEO_STANDALONE(segment-obb-proximity-query-performance)
