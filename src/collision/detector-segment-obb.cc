@@ -90,10 +90,6 @@ namespace hpp
 	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2);
 	rightTree->fillOBBCache (right, true, rightPolyOBBCache);
 
-	// Apply transformation to have both positions in the same frame.
-	rightPolyOBBCache.m_matrix = testData->rightToLeftTransformation ()
-	  * rightPolyOBBCache.m_matrix;
-
 	// Compute Distance between the segments axis and the OBB.
 	hppReal squareDistance;
 
