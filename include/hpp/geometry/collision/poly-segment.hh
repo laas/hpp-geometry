@@ -88,8 +88,6 @@ namespace hpp
 	PolySegmentWkPtr weakPtr_;
 
 	segmentVector_t segmentVector_;
-
-	CkcdMat4 moveMatrix_;
       };
 
     } // end of namespace collision.

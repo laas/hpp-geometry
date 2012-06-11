@@ -111,41 +111,18 @@ namespace hpp
 	if (squareDistance < std::numeric_limits<kcdReal>::epsilon ()
 	    * std::numeric_limits<kcdReal>::epsilon ())
 	  {
-	    if (right.countChildren () > 0)
-	      {
-		// if it is not a leaf, report an overlap (of bounding volumes)
-		testAnswer = query.reportOverlap (left, right, testData);
-	      }
-	    else
-	      {
-		// if it is a leaf, report a collision.
-		testAnswer = query.reportCollision (left, right, testData);
-	      }
+	    // if it is a leaf, report a collision.
+	    testAnswer = query.reportCollision (left, right, testData);
 	  }
 	else
 	  {
-	    if (right.countChildren () > 0)
-	      {
-		// if it is not a leaf, report an estimated distance
-		testAnswer
-		  = query.reportEstimatedDistance (left,
-						   right,
-						   testData,
-						   sqrt (squareDistance));
-	      }
-	    else
-	      {
-		// if it is a leaf, report an exact distance
-		CkitVect3 axis = leftTriangleClosest - rightSegmentClosest;
-		axis.normalize ();
-
-		testAnswer = query.reportExactDistance (left,
-							right,
-							testData,
-							sqrt (squareDistance),
-							rightSegmentClosest,
-							leftTriangleClosest);
-	      }
+	    // if it is a leaf, report an exact distance
+	    testAnswer = query.reportExactDistance (left,
+						    right,
+						    testData,
+						    sqrt (squareDistance),
+						    rightSegmentClosest,
+						    leftTriangleClosest);
 	  }
 
 	return testAnswer;

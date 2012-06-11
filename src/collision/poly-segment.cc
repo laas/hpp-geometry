@@ -97,8 +97,8 @@ namespace hpp
 	ktStatus result = KD_ERROR;
 	if (index < segmentVector_.size ())
 	  {
-	    endPoint1 = moveMatrix_ * get<0> (segmentVector_[index]);
-	    endPoint2 = moveMatrix_ * get<1> (segmentVector_[index]);
+	    endPoint1 = get<0> (segmentVector_[index]);
+	    endPoint2 = get<1> (segmentVector_[index]);
 	    radius = get<2> (segmentVector_[index]);
 	    result = KD_OK;
 	  }
@@ -111,7 +111,7 @@ namespace hpp
 	using namespace boost;
 
 	KCD_ASSERT(index < segmentVector_.size());
-	return moveMatrix_ * get<0> (segmentVector_[index]);
+	return get<0> (segmentVector_[index]);
       }
   
       CkcdPoint PolySegment::
@@ -120,7 +120,7 @@ namespace hpp
 	using namespace boost;
 
 	KCD_ASSERT(index < segmentVector_.size());
-	return moveMatrix_ * get<1> (segmentVector_[index]);
+	return get<1> (segmentVector_[index]);
       }
 
       kcdReal PolySegment::
@@ -148,7 +148,6 @@ namespace hpp
       PolySegment::
       PolySegment ()
       {
-	moveMatrix_.identity ();
       }
 
     } // end of namespace collision.

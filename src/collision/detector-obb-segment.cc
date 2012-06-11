@@ -107,16 +107,8 @@ namespace hpp
 	if (squareDistance < std::numeric_limits<kcdReal>::epsilon ()
 	    * std::numeric_limits<kcdReal>::epsilon ())
 	  {
-	    if (right.countChildren () > 0)
-	      {
-		// if it is not a leaf, report an overlap (of bounding volumes)
-		testAnswer = query.reportOverlap (left, right, testData);
-	      }
-	    else
-	      {
-		// if it is a leaf, report a collision.
-		testAnswer = query.reportCollision (left, right, testData);
-	      }
+	    // if it is a leaf, report overlap.
+	    testAnswer = query.reportOverlap (left, right, testData);
 	  }
 	else
 	  {

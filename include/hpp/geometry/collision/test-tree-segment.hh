@@ -133,28 +133,6 @@ namespace hpp
 				    unsigned int& polySegmentIndex,
 				    unsigned int& segmentIndex) const;
     
-	/// @name Bounding volumes building functions
-	///	Computes segments that englobe other segments
-	///@{
-	void buildBoundingVolumes (unsigned int index,
-				   unsigned int start,
-				   unsigned int end,
-				   std::vector<std::pair<unsigned int, unsigned int> >&
-				   indexVector);
-    
-	void computeSegmentBV (unsigned int start,
-			       unsigned int end,
-			       std::vector<std::pair<unsigned int, unsigned int> >&
-			       io_indexVector,
-			       CkcdPoint& endPoint1,
-			       CkcdPoint& endPoint2);
-    
-	unsigned int sortSegmentBV (unsigned int start,
-				    unsigned int end,
-				    std::vector<std::pair<unsigned int, unsigned int> >&
-				    indexVector,
-				    const CkcdPoint& barycenter);
-    
 	void switchIndexes (unsigned int index1,
 			    unsigned int index2,
 			    std::vector<std::pair<unsigned int, unsigned int> >&
@@ -165,7 +143,6 @@ namespace hpp
 
       private:
 	// internal IDs
-	static const char segmentBoundingVolumeID_;
 	static const char segmentElementID_;
 
 	// external ID
@@ -175,18 +152,6 @@ namespace hpp
 
 	std::vector<PolySegmentConstShPtr> polySegments_;
 
-	class SegmentBoudingVolume
-	{
-	public:
-	  CkcdPoint endPoint1_;
-	  CkcdPoint endPoint2_;
-	  bool firstChildIsBoundingVolume_;
-	  bool secondChildIsBoundingVolume_;
-	  unsigned int firstChildIndex_;
-	  unsigned int secondChildIndex_;
-	};
-
-	std::vector<SegmentBoudingVolume> segmentBoundingVolumes_;
       };
   
     } // end of namespace collision.

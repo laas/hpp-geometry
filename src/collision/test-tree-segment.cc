@@ -36,8 +36,7 @@ namespace hpp
       // this line gets a new unique dispatch ID from CkcdGlobal
       unsigned int TestTreeSegment::segmentDispatchID_ = CkcdGlobal::getNewDispatchID ();
 
-      const char TestTreeSegment::segmentBoundingVolumeID_ = 0;
-      const char TestTreeSegment::segmentElementID_ = 1;
+      const char TestTreeSegment::segmentElementID_ = 0;
 
       TestTreeSegmentShPtr TestTreeSegment::
       create (CkcdObjectShPtr collisionEntity)
@@ -60,57 +59,16 @@ namespace hpp
       unsigned int TestTreeSegment::
       countChildren (const CkcdTreeIterator& it) const
       {
-	if (it.type () == segmentBoundingVolumeID_)
-	  {
-	    return 2;
-	  }
-	else
-	  {
-	    return 0;
-	  }
+	return 0;
       }
   
       CkcdTreeIterator TestTreeSegment::
       getChildIterator (const CkcdTreeIterator& it,
 			unsigned int rank) const
       {
-	KCD_ASSERT(rank == 0 || rank == 1);
-	KCD_ASSERT(it.type() == segmentBoundingVolumeID_);
-
-	if (rank == 0)
-	  {
-	    if (segmentBoundingVolumes_[it.index ()].firstChildIsBoundingVolume_)
-	      {
-		return CkcdTreeIterator ((CkcdTestTree*) this,
-					 (int) segmentBoundingVolumes_[it.index ()]
-					 .firstChildIndex_,
-					 segmentBoundingVolumeID_);
-	      }
-	    else
-	      {
-		return CkcdTreeIterator ((CkcdTestTree*) this,
-					 (int) segmentBoundingVolumes_[it.index ()]
-					 .firstChildIndex_,
-					 segmentElementID_);
-	      }
-	  }
-	else
-	  {
-	    if (segmentBoundingVolumes_[it.index ()].secondChildIsBoundingVolume_)
-	      {
-		return CkcdTreeIterator((CkcdTestTree*) this,
-					(int) segmentBoundingVolumes_[it.index ()]
-					.secondChildIndex_,
-					segmentBoundingVolumeID_);
-	      }
-	    else
-	      {
-		return CkcdTreeIterator((CkcdTestTree*) this,
-					(int) segmentBoundingVolumes_[it.index ()]
-					.secondChildIndex_,
-					segmentElementID_);
-	      }
-	  }
+	// This should not happen, under the assumption there is only
+	// one segment.
+	std::cout << "FIXME" << std::endl;
       }
 
       double TestTreeSegment::
@@ -134,24 +92,16 @@ namespace hpp
       CkcdGeometrySubElementShPtr TestTreeSegment::
       geometrySubElement (const CkcdTreeIterator& it) const
       {
-	if (it.type () == segmentBoundingVolumeID_)
-	  {
-	    KCD_ASSERT(false);
-	    return CkcdGeometrySubElementShPtr ();
-	  }
-	else
-	  {
-	    CkcdPoint endPoint1;
-	    CkcdPoint endPoint2;
-	    kcdReal radius;
-	    getSegment (it, endPoint1, endPoint2);
-	    SegmentShPtr segment = Segment::create (weakPtr_.lock (),
-						    it.index (),
-						    endPoint1,
-						    endPoint2,
-						    radius);
-	    return segment;
-	  }
+	CkcdPoint endPoint1;
+	CkcdPoint endPoint2;
+	kcdReal radius;
+	getSegment (it, endPoint1, endPoint2);
+	SegmentShPtr segment = Segment::create (weakPtr_.lock (),
+						it.index (),
+						endPoint1,
+						endPoint2,
+						radius);
+	return segment;
       }
 
       CkcdTreeIterator TestTreeSegment::
@@ -180,7 +130,7 @@ namespace hpp
       CkcdTreeIterator TestTreeSegment::
       rootIterator () const
       {
-	return CkcdTreeIterator ((CkcdTestTree*) this, (int) 0, segmentBoundingVolumeID_);
+	return CkcdTreeIterator ((CkcdTestTree*) this, (int) 0, segmentElementID_);
       }
   
       bool TestTreeSegment::
@@ -226,10 +176,6 @@ namespace hpp
 	      }
 	  }
 
-	segmentBoundingVolumes_.clear();
-	segmentBoundingVolumes_.push_back (SegmentBoudingVolume ());
-	buildBoundingVolumes (0, 0, indexVector.size (), indexVector);
-
 	canContinue = false;
 	return KD_OK;
       }
@@ -259,26 +205,14 @@ namespace hpp
       {
 	ktStatus result = KD_ERROR;
 
-	if (it.type () == segmentBoundingVolumeID_)
+	unsigned int polyIndex;
+	unsigned int segmentIndex;
+	if (KD_OK == getSegmentIndexes(it.index (), polyIndex, segmentIndex))
 	  {
-	    if (it.index () < (int) segmentBoundingVolumes_.size ())
-	      {
-		endPoint1 = segmentBoundingVolumes_[it.index ()].endPoint1_;
-		endPoint2 = segmentBoundingVolumes_[it.index ()].endPoint2_;
-		result = KD_OK;
-	      }
-	  }
-	else
-	  {
-	    unsigned int polyIndex;
-	    unsigned int segmentIndex;
-	    if (KD_OK == getSegmentIndexes(it.index (), polyIndex, segmentIndex))
-	      {
-		kcdReal radius;
-		polySegments_[polyIndex]
-		  ->getSegment (segmentIndex, endPoint1, endPoint2, radius);
-		result = KD_OK;
-	      }
+	    kcdReal radius;
+	    polySegments_[polyIndex]
+	      ->getSegment (segmentIndex, endPoint1, endPoint2, radius);
+	    result = KD_OK;
 	  }
 
 	return result;
@@ -363,214 +297,6 @@ namespace hpp
 	  }
 
 	return result;
-      }
-    
-      void TestTreeSegment::
-      buildBoundingVolumes (unsigned int index,
-			    unsigned int start,
-			    unsigned int end,
-			    std::vector<std::pair<unsigned int, unsigned int> >&
-			    indexVector)
-      {
-	computeSegmentBV (start,
-			  end,
-			  indexVector,
-			  segmentBoundingVolumes_[index].endPoint1_,
-			  segmentBoundingVolumes_[index].endPoint2_);
-
-	unsigned int mediumIndex
-	  = sortSegmentBV (start,
-			   end,
-			   indexVector,
-			   (segmentBoundingVolumes_[index].endPoint1_
-			    + segmentBoundingVolumes_[index].endPoint2_) / 2);
-
-	if ((mediumIndex - start) == 1)
-	  {
-	    segmentBoundingVolumes_[index].firstChildIsBoundingVolume_ = false;
-	    segmentBoundingVolumes_[index].firstChildIndex_
-	      = getSegmentIndex (indexVector[start].first, indexVector[start].second);
-	  }
-	else
-	  {
-	    segmentBoundingVolumes_[index].firstChildIsBoundingVolume_ = true;
-	    segmentBoundingVolumes_[index].firstChildIndex_
-	      = segmentBoundingVolumes_.size ();
-	    segmentBoundingVolumes_.push_back (SegmentBoudingVolume ());
-	    buildBoundingVolumes (segmentBoundingVolumes_[index].firstChildIndex_,
-				  start,
-				  mediumIndex,
-				  indexVector);
-	  }
-
-	if ((end - mediumIndex) == 0)
-	  {
-	    // special case : only one segment !
-	    // the bounding segment will have the same child twice
-	    segmentBoundingVolumes_[index].secondChildIsBoundingVolume_ = false;
-	    segmentBoundingVolumes_[index].secondChildIndex_
-	      = getSegmentIndex (indexVector[start].first, indexVector[start].second);
-	  }
-	else if ((end - mediumIndex) == 1)
-	  {
-	    segmentBoundingVolumes_[index].secondChildIsBoundingVolume_ = false;
-	    segmentBoundingVolumes_[index].secondChildIndex_
-	      = getSegmentIndex (indexVector[mediumIndex].first,
-				 indexVector[mediumIndex].second);
-	  }
-	else
-	  {
-	    segmentBoundingVolumes_[index].secondChildIsBoundingVolume_ = true;
-	    segmentBoundingVolumes_[index].secondChildIndex_
-	      = segmentBoundingVolumes_.size();
-	    segmentBoundingVolumes_.push_back (SegmentBoudingVolume ());
-	    buildBoundingVolumes (segmentBoundingVolumes_[index].secondChildIndex_,
-				  mediumIndex,
-				  end,
-				  indexVector);
-	  }
-      }
-    
-      void TestTreeSegment::
-      computeSegmentBV (unsigned int start,
-			unsigned int end,
-			std::vector<std::pair<unsigned int, unsigned int> >&
-			indexVector,
-			CkcdPoint& endPoint1,
-			CkcdPoint& endPoint2)
-      {
-	endPoint1 = CkcdPoint (0, 0, 0);
-	endPoint2 = CkcdPoint (0, 0, 0);
-	for (unsigned int i = start; i < end; i++)
-	  {
-	    endPoint1 += polySegments_[indexVector[i].first]
-	      ->getSegmentFirstEndPoint (indexVector[i].second);
-	    endPoint2 += polySegments_[indexVector[i].first]
-	      ->getSegmentSecondEndPoint (indexVector[i].second);
-	  }
-	endPoint1 = endPoint1 / (float) (end - start);
-	endPoint2 = endPoint2 / (float) (end - start);
-	CkcdPoint center = (endPoint1 + endPoint2) / 2;
-      }
-
-      unsigned int TestTreeSegment::
-      sortSegmentBV (unsigned int start,
-		     unsigned int end,
-		     std::vector<std::pair<unsigned int, unsigned int> >&
-		     indexVector,
-		     const CkcdPoint& barycenter)
-      {
-	// compute main axis (AABB method)
-	CkcdPoint center
-	  = (polySegments_[indexVector[start].first]
-	     ->getSegmentFirstEndPoint (indexVector[start].second)
-	     + polySegments_[indexVector[start].first]
-	     ->getSegmentSecondEndPoint (indexVector[start].second))
-	  / 2;
-	kcdReal xMin = center .x();
-	kcdReal xMax = center.x ();
-	kcdReal yMin = center.y ();
-	kcdReal yMax = center.y ();
-	kcdReal zMin = center.z ();
-	kcdReal zMax = center.z ();
-	for (unsigned int i = start + 1; i < end; i++)
-	  {
-	    center
-	      = (polySegments_[indexVector[i].first]
-		 ->getSegmentFirstEndPoint (indexVector[i].second)
-		 + polySegments_[indexVector[i].first]
-		 ->getSegmentSecondEndPoint (indexVector[i].second))
-	      / 2;
-	    xMin = std::min (xMin, center.x ());
-	    xMax = std::max (xMax, center.x ());
-	    yMin = std::min (yMin, center.y ());
-	    yMax = std::max (yMax, center.y ());
-	    zMin = std::min (zMin, center.z ());
-	    zMax = std::max (zMax, center.z ());
-	  }
-	kcdReal xSize = xMax - xMin;
-	kcdReal ySize = xMax - xMin;
-	kcdReal zSize = xMax - xMin;
-
-	int minIndex = start;
-	int maxIndex = end - 1;
-	if ((zSize > ySize) && (zSize > xSize))
-	  {
-	    // sort on z Axis
-	    while (maxIndex >= minIndex)
-	      {
-		center
-		  = (polySegments_[indexVector[minIndex].first]
-		     ->getSegmentFirstEndPoint (indexVector[minIndex].second)
-		     + polySegments_[indexVector[minIndex].first]
-		     ->getSegmentSecondEndPoint (indexVector[minIndex].second))
-		  / 2;
-		if (center.z () < barycenter.z ())
-		  {
-		    minIndex++;
-		  }
-		else
-		  {
-		    //switch min and max
-		    switchIndexes (minIndex, maxIndex, indexVector);
-		    maxIndex--;
-		  }
-	      }
-	  }
-	else if (ySize > xSize)
-	  {
-	    // sort on y Axis
-	    while (maxIndex >= minIndex)
-	      {
-		center 
-		  = (polySegments_[indexVector[minIndex].first]
-		     ->getSegmentFirstEndPoint (indexVector[minIndex].second)
-		     + polySegments_[indexVector[minIndex].first]
-		     ->getSegmentSecondEndPoint (indexVector[minIndex].second))
-		  / 2;
-		if (center.y () < barycenter.y ())
-		  {
-		    minIndex++;
-		  }
-		else
-		  {
-		    //switch min and max
-		    switchIndexes (minIndex, maxIndex, indexVector);
-		    maxIndex--;
-		  }
-	      }
-	  }
-	else
-	  {
-	    // sort on x Axis
-	    while (maxIndex >= minIndex)
-	      {
-		center
-		  = (polySegments_[indexVector[minIndex].first]
-		     ->getSegmentFirstEndPoint (indexVector[minIndex].second)
-		     + polySegments_[indexVector[minIndex].first]
-		     ->getSegmentSecondEndPoint (indexVector[minIndex].second))
-		  / 2;
-		if (center.x () < barycenter.x ())
-		  {
-		    minIndex++;
-		  }
-		else
-		  {
-		    //switch min and max
-		    switchIndexes (minIndex, maxIndex, indexVector);
-		    maxIndex--;
-		  }
-	      }
-	  }
-
-	if (minIndex == 0)
-	  {
-	    //happens when all centers are equal
-	    minIndex++;
-	  }
-
-	return minIndex;
       }
     
       void TestTreeSegment::

@@ -88,10 +88,6 @@ namespace hpp
 	PolyCapsuleWkPtr weakPtr_;
 
 	capsuleVector_t capsuleVector_;
-
-	CkcdMat4 moveMatrix_;
-
-	kcdReal radiusScale_;
       };
 
     } // end of namespace collision.
