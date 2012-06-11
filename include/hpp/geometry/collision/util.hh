@@ -22,6 +22,10 @@
 # include <iostream>
 
 # include <geometric-tools/Wm5Vector3.h>
+# include <geometric-tools/Wm5DistPoint3Segment3.h>
+# include <geometric-tools/Wm5DistSegment3Segment3.h>
+# include <geometric-tools/Wm5DistSegment3Box3.h>
+# include <geometric-tools/Wm5DistSegment3Triangle3.h>
 
 # include <kcd2/kcdInterface.h>
 
@@ -31,8 +35,11 @@ namespace hpp
   {
     namespace collision
     {
+      typedef float hppReal;
+
       /// \brief Convert CkcdPoint to Geometric Tools Vector3.
-      inline void convertKcdPointToVector3 (Wm5::Vector3<kcdReal>& dst,
+      template<typename hppReal>
+      inline void convertKcdPointToVector3 (Wm5::Vector3<hppReal>& dst,
 					    const CkcdPoint& src)
       {
 	dst[0] = src[0];
@@ -41,8 +48,9 @@ namespace hpp
       }
 
       /// \brief Convert Geometric Tools Vector3 to CkcdPoint.
+      template<typename hppReal>
       inline void convertVector3ToKcdPoint (CkcdPoint& dst,
-					    const Wm5::Vector3<kcdReal>& src)
+					    const Wm5::Vector3<hppReal>& src)
       {
 	dst[0] = src[0];
 	dst[1] = src[1];
@@ -62,12 +70,36 @@ namespace hpp
       /// \param rightdPoint right point
       /// \return squareDistance square distance between segment and point
       /// \return leftSegmentClosest closest point on left segment
-      void computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
-					      const CkcdPoint& leftEndPoint2,
-					      const CkcdPoint& rightPoint,
-					      kcdReal& squareDistance,
-					      CkcdPoint& leftSegmentClosest);
+      template<typename hppReal>
+      inline void
+      computeSquareDistanceSegmentPoint (const CkcdPoint& leftEndPoint1,
+					 const CkcdPoint& leftEndPoint2,
+					 const CkcdPoint& rightPoint,
+					 hppReal& squareDistance,
+					 CkcdPoint& leftSegmentClosest)
+      {
+	using namespace Wm5;
 
+	Vector3<hppReal> leftP0;
+	Vector3<hppReal> leftP1;
+	Vector3<hppReal> rightP;
+
+	convertKcdPointToVector3 (leftP0, leftEndPoint1);
+	convertKcdPointToVector3 (leftP1, leftEndPoint2);
+	convertKcdPointToVector3 (rightP, rightPoint);
+
+	Segment3<hppReal> s0 (leftP0, leftP1);
+
+	DistPoint3Segment3<hppReal> distance (rightP, s0);
+
+	squareDistance = distance.GetSquared ();
+
+	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	  + distance.GetSegmentParameter () * s0.Direction;
+
+	convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
+      }
+      
       /// \brief Compute square distance between two segments.
       ///
       /// \param leftEndPoint1 left segment first end point
@@ -77,13 +109,43 @@ namespace hpp
       /// \return squareDistance square distance between the two segments
       /// \return leftSegmentClosest closest point on left segment
       /// \return rightSegmentClosest closest point on right segment
-      void computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
-						const CkcdPoint& leftEndPoint2,
-						const CkcdPoint& rightEndPoint1,
-						const CkcdPoint& rightEndPoint2,
-						kcdReal& squareDistance,
-						CkcdPoint& leftSegmentClosest,
-						CkcdPoint& rightSegmentClosest);
+      template<typename hppReal>
+      inline void
+      computeSquareDistanceSegmentSegment (const CkcdPoint& leftEndPoint1,
+					   const CkcdPoint& leftEndPoint2,
+					   const CkcdPoint& rightEndPoint1,
+					   const CkcdPoint& rightEndPoint2,
+					   hppReal& squareDistance,
+					   CkcdPoint& leftSegmentClosest,
+					   CkcdPoint& rightSegmentClosest)
+      {
+	using namespace Wm5;
+
+	Vector3<hppReal> leftP0;
+	Vector3<hppReal> leftP1;
+	Vector3<hppReal> rightP0;
+	Vector3<hppReal> rightP1;
+
+	convertKcdPointToVector3 (leftP0, leftEndPoint1);
+	convertKcdPointToVector3 (leftP1, leftEndPoint2);
+	convertKcdPointToVector3 (rightP0, rightEndPoint1);
+	convertKcdPointToVector3 (rightP1, rightEndPoint2);
+
+	Segment3<hppReal> s0 (leftP0, leftP1);
+	Segment3<hppReal> s1 (rightP0, rightP1);
+
+	DistSegment3Segment3<hppReal> distance (s0, s1);
+    
+	squareDistance = distance.GetSquared ();
+
+	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	  + distance.GetSegment0Parameter () * s0.Direction;
+	Vector3<hppReal> wm5RightSegmentClosest = s1.Center
+	  + distance.GetSegment1Parameter () * s1.Direction;
+
+	convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
+	convertVector3ToKcdPoint (rightSegmentClosest, wm5RightSegmentClosest);
+      }
 
       /// \brief Compute square distance between a segment and a box.
       ///
@@ -91,11 +153,48 @@ namespace hpp
       /// \param leftEndPoint1 left segment second end point
       /// \param rightBoundingBox right bounding box
       /// \return squareDistance square distance between segment and box
-      void computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
-					    const CkcdPoint& leftEndPoint2,
-					    const CkcdTestTreeOBB::CkcdPolyOBBCache&
-					    rightPolyOBBCache,
-					    kcdReal& squareDistance);
+      template<typename hppReal>
+      inline void
+      computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
+				       const CkcdPoint& leftEndPoint2,
+				       const CkcdTestTreeOBB::CkcdPolyOBBCache&
+				       rightPolyOBBCache,
+				       hppReal& squareDistance)
+      {
+	using namespace Wm5;
+
+	// Define segment from left capsule axis.
+	Vector3<hppReal> leftP0;
+	Vector3<hppReal> leftP1;
+	convertKcdPointToVector3 (leftP0, leftEndPoint1);
+	convertKcdPointToVector3 (leftP1, leftEndPoint2);
+
+	Segment3<hppReal> s0 (leftP0, leftP1);
+
+	// Define box from right OBB.
+	CkcdMat4 position = rightPolyOBBCache.m_matrix;
+
+	CkcdPoint rightPolyOBBCacheCenter (position(0, 3),
+					   position(1, 3),
+					   position(2, 3));
+	Vector3<hppReal> center;
+	convertKcdPointToVector3 (center, rightPolyOBBCacheCenter);
+
+	Vector3<hppReal> axis0 (position(0, 0), position(1, 0), position(2, 0));
+	Vector3<hppReal> axis1 (position(0, 1), position(1, 1), position(2, 1));
+	Vector3<hppReal> axis2 (position(0, 2), position(1, 2), position(2, 2));
+
+	hppReal extent0 = rightPolyOBBCache.m_halfLength[0];
+	hppReal extent1 = rightPolyOBBCache.m_halfLength[1];
+	hppReal extent2 = rightPolyOBBCache.m_halfLength[2];
+
+	Box3<hppReal> box (center, axis0, axis1, axis2, extent0, extent1, extent2);
+
+	// Define distance and compute squared distance.
+	DistSegment3Box3<hppReal> distance (s0, box);
+
+	squareDistance = distance.GetSquared ();
+      }
 
       /// \brief Compute square distance between a segment and a box.
       ///
@@ -105,14 +204,53 @@ namespace hpp
       /// \return squareDistance square distance between segment and triangle
       /// \return leftSegmentClosest closest point on left segment
       /// \return rightTriangleClosest closest point on right triangle
-      void computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
-						 const CkcdPoint& leftEndPoint2,
-						 const CkcdTestTreeOBB::
-						 CkcdTriangleCache<CkcdPoint>&
-						 rightTriangleCache,
-						 kcdReal& squareDistance,
-						 CkcdPoint& leftSegmentClosest,
-						 CkcdPoint& rightTriangleClosest);
+      template<typename hppReal>
+      inline void
+      computeSquareDistanceSegmentTriangle (const CkcdPoint& leftEndPoint1,
+					    const CkcdPoint& leftEndPoint2,
+					    const CkcdTestTreeOBB::
+					    CkcdTriangleCache<CkcdPoint>&
+					    rightTriangleCache,
+					    hppReal& squareDistance,
+					    CkcdPoint& leftSegmentClosest,
+					    CkcdPoint& rightTriangleClosest)
+      {
+	using namespace Wm5;
+
+	// Define segment.
+	Vector3<hppReal> leftP0;
+	Vector3<hppReal> leftP1;
+	convertKcdPointToVector3 (leftP0, leftEndPoint1);
+	convertKcdPointToVector3 (leftP1, leftEndPoint2);
+
+	Segment3<hppReal> s0 (leftP0, leftP1);
+
+	// Define triangle.
+	Vector3<hppReal> rightV0;
+	Vector3<hppReal> rightV1;
+	Vector3<hppReal> rightV2;
+	convertKcdPointToVector3 (rightV0, rightTriangleCache.m_vertex[0]);
+	convertKcdPointToVector3 (rightV1, rightTriangleCache.m_vertex[1]);
+	convertKcdPointToVector3 (rightV2, rightTriangleCache.m_vertex[2]);
+    
+	Triangle3<hppReal> triangle (rightV0, rightV1, rightV2);
+
+	// Define distance.
+	DistSegment3Triangle3<hppReal> distance (s0, triangle);
+
+	// Compute distance and closest points.
+	squareDistance = distance.GetSquared ();
+
+	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	  + distance.GetSegmentParameter () * s0.Direction;
+	Vector3<hppReal> wm5RightSegmentClosest 
+	  = distance.GetTriangleBary (0) * rightV0
+	  + distance.GetTriangleBary (1) * rightV1
+	  + distance.GetTriangleBary (2) * rightV2;
+
+	convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
+	convertVector3ToKcdPoint (rightTriangleClosest, wm5RightSegmentClosest);
+      }
 
       /// \brief Compute bounding capsule of a polyhedron.
       ///

@@ -94,7 +94,7 @@ namespace hpp
 	rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
 
 	// Compute Distance between the capsules axis and the triangle.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 	CkcdPoint rightSegmentClosest;
 	CkcdPoint leftTriangleClosest;
 

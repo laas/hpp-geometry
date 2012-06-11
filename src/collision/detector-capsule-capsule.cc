@@ -93,7 +93,7 @@ namespace hpp
 	rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
 
 	// Compute Distance between the two capsules axes.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 	CkcdPoint leftSegmentClosest;
 	CkcdPoint rightSegmentClosest;
 
@@ -105,7 +105,7 @@ namespace hpp
 					     leftSegmentClosest,
 					     rightSegmentClosest);
 
-	kcdReal radiusSum = leftRadius + rightRadius;
+	hppReal radiusSum = leftRadius + rightRadius;
 
 	// depending on the result, we will call one of the 4 report
 	// functions of CkcdProximityQuery

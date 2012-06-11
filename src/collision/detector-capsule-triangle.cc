@@ -98,7 +98,7 @@ namespace hpp
 	  * rightTriangleCache.m_vertex[2];
 
 	// Compute Distance between the capsules axis and the triangle.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 	CkcdPoint leftSegmentClosest;
 	CkcdPoint rightTriangleClosest;
 

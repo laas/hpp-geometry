@@ -40,8 +40,8 @@ BOOST_AUTO_TEST_CASE (bounding_capsule)
   // Build cylinder polyhedron. Main axis is oriented along x.
   CkcdPolyhedronShPtr polyhedron = CkcdPolyhedron::create ();
 
-  kcdReal radius = 0.2f;
-  kcdReal height = 1.f;
+  hppReal radius = 0.2;
+  hppReal height = 1.;
   unsigned int nbPhiStep = 100;
   unsigned int nbHeightStep = 100;
   int bitMask = 1;

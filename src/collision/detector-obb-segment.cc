@@ -95,7 +95,7 @@ namespace hpp
 	rightEndPoint2 = testData->rightToLeftTransformation () * rightEndPoint2;
 
 	// Compute Distance between the segments axis and the OBB.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 
 	computeSquareDistanceSegmentBox (rightEndPoint1,
 					 rightEndPoint2,
@@ -104,8 +104,8 @@ namespace hpp
 
 	// depending on the result, we will call one of the 4 report
 	// functions of CkcdProximityQuery
-	if (squareDistance < std::numeric_limits<kcdReal>::epsilon ()
-	    * std::numeric_limits<kcdReal>::epsilon ())
+	if (squareDistance < std::numeric_limits<hppReal>::epsilon ()
+	    * std::numeric_limits<hppReal>::epsilon ())
 	  {
 	    // if it is a leaf, report overlap.
 	    testAnswer = query.reportOverlap (left, right, testData);

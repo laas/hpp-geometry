@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_segment_obb)
   // Build cubic polyhedron.
   CkcdPolyhedronShPtr polyhedron = CkcdPolyhedron::create ();
   unsigned int rank;
-  kcdReal halfLength = 0.5f;
+  hppReal halfLength = 0.5;
 
   polyhedron->addPoint(-halfLength, -halfLength, -halfLength, rank);
   polyhedron->addPoint(-halfLength, -halfLength, halfLength, rank);
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_segment_obb)
   polySegment->setAbsolutePosition (CkcdMat4 ().translate (0.f, 0.f, 0.f));
 
   // Translate polyhedron on the x axis and compute analysis.
-  kcdReal distance = 0.f;
+  hppReal distance = 0.;
   while (distance < 2.0f)
     {
       polyhedron->setAbsolutePosition (CkcdMat4 ().translate (distance, 0.f, 0.f));

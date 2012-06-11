@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE (component_segment_proximity_query)
   segment2->getAbsolutePosition (position);
 
   // Translate right segment on the x axis and compute analysis.
-  kcdReal distance = 0.25;
+  hppReal distance = 0.25;
   while (distance < 2)
     {
       CkitMat4 trans = CkcdMat4 ().translate (distance, 0.f, 0.f);

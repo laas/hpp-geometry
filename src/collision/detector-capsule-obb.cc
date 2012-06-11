@@ -94,7 +94,7 @@ namespace hpp
 	  * rightPolyOBBCache.m_matrix;
 
 	// Compute Distance between the capsules axis and the OBB.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 
 	computeSquareDistanceSegmentBox (leftEndPoint1,
 					 leftEndPoint2,

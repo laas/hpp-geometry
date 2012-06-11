@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_segment)
   polySegment1->setAbsolutePosition (CkcdMat4 ().translate (0.f, 0.f, 0.f));
 
   // Translate right poly segment on the x axis and compute analysis.
-  kcdReal distance = 0.001f;
+  hppReal distance = 0.001;
   while (distance < 2.f)
     {
       polySegment2->setAbsolutePosition (CkcdMat4 ().translate (distance, 0.f, 0.f));

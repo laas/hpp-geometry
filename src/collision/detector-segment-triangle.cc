@@ -99,7 +99,7 @@ namespace hpp
 	  * rightTriangleCache.m_vertex[2];
 
 	// Compute Distance between the segments axis and the triangle.
-	kcdReal squareDistance;
+	hppReal squareDistance;
 	CkcdPoint leftSegmentClosest;
 	CkcdPoint rightTriangleClosest;
 
@@ -109,11 +109,11 @@ namespace hpp
 					      squareDistance,
 					      leftSegmentClosest,
 					      rightTriangleClosest);
-
+	
 	// depending on the result, we will call one of the 4 report
 	// functions of CkcdProximityQuery
-	if (squareDistance < std::numeric_limits<kcdReal>::epsilon ()
-	    * std::numeric_limits<kcdReal>::epsilon ())
+	if (squareDistance < std::numeric_limits<hppReal>::epsilon ()
+	    * std::numeric_limits<hppReal>::epsilon ())
 	  {
 	    // if it is a leaf, report a collision.
 	    testAnswer = query.reportCollision (left, right, testData);

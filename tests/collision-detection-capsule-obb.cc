@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
   // Build poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  kcdReal radius = 0.1f;
+  hppReal radius = 0.1;
 
   PolyCapsuleShPtr polyCapsule = PolyCapsule::create ();
   polyCapsule->addCapsule (e1, e2, radius);
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
   // Build cubic polyhedron.
   CkcdPolyhedronShPtr polyhedron = CkcdPolyhedron::create ();
   unsigned int rank;
-  kcdReal halfLength = 0.5f;
+  hppReal halfLength = 0.5;
 
   polyhedron->addPoint(-halfLength, -halfLength, -halfLength, rank);
   polyhedron->addPoint(-halfLength, -halfLength, halfLength, rank);
@@ -90,8 +90,8 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
   polyCapsule->setAbsolutePosition (CkcdMat4 ().translate (0.f, 0.f, 0.f));
 
   // Translate polyhedron on the x axis and compute analysis1.
-  kcdReal distance = 0;
-  while (distance < 2.0f)
+  hppReal distance = 0;
+  while (distance < 2.0)
     {
       polyhedron->setAbsolutePosition (CkcdMat4 ().translate (distance, 0.f, 0.f));
       analysis1->compute ();
@@ -101,6 +101,6 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_obb)
 	  BOOST_CHECK_EQUAL (analysis1->countCollisionReports (), 1);
 	  BOOST_CHECK_EQUAL (analysis2->countCollisionReports (), 1);
 	}
-      distance += 0.01f;
+      distance += 0.01;
     }
 }

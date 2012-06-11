@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE (component_capsule)
   capsule1->setAbsolutePosition (CkcdMat4 ().translate (0.f, 0.f, 0.f));
 
   // Translate right capsule on the x axis and compute analysis.
-  kcdReal distance = 0;
+  hppReal distance = 0;
   while (distance < 0.3)
     {
       capsule2->setAbsolutePosition (CkcdMat4 ().translate (distance, 0.f, 0.f));
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE (component_capsule)
     }
 
   // Rotate right capsule around y axis and compute analysis.
-  kcdReal angle = 0;
+  hppReal angle = 0;
   CkcdMat4 position;
   while (angle < CkitGeometry::PI / 2)
     {

@@ -22,12 +22,15 @@
 #ifndef KPP_COMPONENT_FWD_HH
 # define KPP_COMPONENT_FWD_HH
 
+# include "hpp/geometry/collision/util.hh"
+
 namespace hpp
 {
   namespace geometry
   {
     namespace component
     {
+      typedef collision::hppReal hppReal;
       KIT_PREDEF_CLASS (Capsule)
       KIT_PREDEF_CLASS (Segment)
     } // end of namespace component.
