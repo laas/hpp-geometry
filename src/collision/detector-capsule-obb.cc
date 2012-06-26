@@ -89,10 +89,6 @@ namespace hpp
 	leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
 	rightTree->fillOBBCache (right, true, rightPolyOBBCache);
 
-	// Apply transformation to have both positions in the same frame.
-	rightPolyOBBCache.m_matrix = testData->rightToLeftTransformation ()
-	  * rightPolyOBBCache.m_matrix;
-
 	// Compute Distance between the capsules axis and the OBB.
 	hppReal squareDistance;
 
@@ -105,16 +101,8 @@ namespace hpp
 	// functions of CkcdProximityQuery
 	if (squareDistance < leftRadius * leftRadius)
 	  {
-	    if (left.countChildren () > 0)
-	      {
-		// if it is not a leaf, report an overlap (of bounding volumes)
-		testAnswer = query.reportOverlap (left, right, testData);
-	      }
-	    else
-	      {
-		// if it is a leaf, report a collision.
-		testAnswer = query.reportCollision (left, right, testData);
-	      }
+	    // if it is not a leaf, report an overlap (of bounding volumes)
+	    testAnswer = query.reportOverlap (left, right, testData);
 	  }
 	else
 	  {

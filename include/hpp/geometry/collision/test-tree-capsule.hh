@@ -134,29 +134,6 @@ namespace hpp
 				    unsigned int& polyCapsuleIndex,
 				    unsigned int& capsuleIndex) const;
     
-	/// @name Bounding volumes building functions
-	///	Computes capsules that englobe other capsules
-	///@{
-	void buildBoundingVolumes (unsigned int index,
-				   unsigned int start,
-				   unsigned int end,
-				   std::vector<std::pair<unsigned int, unsigned int> >&
-				   indexVector);
-    
-	void computeCapsuleBV (unsigned int start,
-			       unsigned int end,
-			       std::vector<std::pair<unsigned int, unsigned int> >&
-			       io_indexVector,
-			       CkcdPoint& endPoint1,
-			       CkcdPoint& endPoint2,
-			       kcdReal& radius);
-    
-	unsigned int sortCapsuleBV (unsigned int start,
-				    unsigned int end,
-				    std::vector<std::pair<unsigned int, unsigned int> >&
-				    indexVector,
-				    const CkcdPoint& barycenter);
-    
 	void switchIndexes (unsigned int index1,
 			    unsigned int index2,
 			    std::vector<std::pair<unsigned int, unsigned int> >&
@@ -167,7 +144,6 @@ namespace hpp
 
       private:
 	// internal IDs
-	static const char capsuleBoundingVolumeID_;
 	static const char capsuleElementID_;
 
 	// external ID
@@ -177,19 +153,6 @@ namespace hpp
 
 	std::vector<PolyCapsuleConstShPtr> polyCapsules_;
 
-	class CapsuleBoudingVolume
-	{
-	public:
-	  CkcdPoint endPoint1_;
-	  CkcdPoint endPoint2_;
-	  kcdReal radius_;
-	  bool firstChildIsBoundingVolume_;
-	  bool secondChildIsBoundingVolume_;
-	  unsigned int firstChildIndex_;
-	  unsigned int secondChildIndex_;
-	};
-
-	std::vector<CapsuleBoudingVolume> capsuleBoundingVolumes_;
       };
   
     } // end of namespace collision.

@@ -105,16 +105,8 @@ namespace hpp
 	// functions of CkcdProximityQuery
 	if (squareDistance < rightRadius * rightRadius)
 	  {
-	    if (right.countChildren () > 0)
-	      {
-		// if it is not a leaf, report an overlap (of bounding volumes)
-		testAnswer = query.reportOverlap (left, right, testData);
-	      }
-	    else
-	      {
-		// if it is a leaf, report a collision.
-		testAnswer = query.reportCollision (left, right, testData);
-	      }
+	    // if it is not a leaf, report an overlap (of bounding volumes)
+	    testAnswer = query.reportOverlap (left, right, testData);
 	  }
 	else
 	  {
