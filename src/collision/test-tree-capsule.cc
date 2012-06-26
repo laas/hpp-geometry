@@ -22,6 +22,7 @@
  * \brief Implementation of TestTreeCapsule.
  */
 
+#include "hpp/geometry/component/util.hh"
 #include "hpp/geometry/collision/test-tree-capsule.hh"
 
 namespace hpp
@@ -319,6 +320,15 @@ namespace hpp
       computeBoundingBox () const
       {
 	CkcdBoundingBoxShPtr bb = CkcdBoundingBox::create ();
+	CkcdPoint endPoint1, endPoint2;
+	kcdReal radius;
+	getCapsule (rootIterator (), endPoint1, endPoint2, radius);
+	CkcdPoint axis = endPoint2 - endPoint1;
+	CkcdMat4 position;
+	component::convertCapsuleAxisToTransform (position,
+						  endPoint1, endPoint2);
+	bb->setRelativePosition (position);
+	bb->setHalfLengths (axis.norm () / 2 + radius, radius, radius);
 	return bb;
       }
 
