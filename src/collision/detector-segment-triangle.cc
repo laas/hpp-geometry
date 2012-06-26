@@ -85,9 +85,10 @@ namespace hpp
 	const CkcdTestTreePolyBV* rightTree
 	  = static_cast<CkcdTestTreePolyBV*> (right.testTree ());
 	CkcdPoint leftEndPoint1, leftEndPoint2;
+	kcdReal leftRadius;
 	CkcdTestTreeOBB::CkcdTriangleCache<CkcdPoint> rightTriangleCache;
 
-	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2);
+	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2, leftRadius);
 	rightTree->fillTriangleCache (right, rightTriangleCache);
 
 	// Apply transformation to have both positions in the same frame.

@@ -85,9 +85,12 @@ namespace hpp
 	const TestTreeSegment* rightTree
 	  = static_cast<TestTreeSegment*> (right.testTree ());
 	CkcdPoint leftEndPoint1, leftEndPoint2, rightEndPoint1, rightEndPoint2;
+	kcdReal leftRadius, rightRadius;
 
-	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2);
-	rightTree->getSegment (right, rightEndPoint1, rightEndPoint2);
+	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2,
+			      leftRadius);
+	rightTree->getSegment (right, rightEndPoint1, rightEndPoint2,
+			       rightRadius);
 
 	// Apply transformation to have both positions in the same frame.
 	rightEndPoint1 = testData->rightToLeftTransformation () * rightEndPoint1;

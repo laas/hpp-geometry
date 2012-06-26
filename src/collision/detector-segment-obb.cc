@@ -85,9 +85,10 @@ namespace hpp
 	const CkcdTestTreePolyBV* rightTree
 	  = static_cast<CkcdTestTreePolyBV*> (right.testTree ());
 	CkcdPoint leftEndPoint1, leftEndPoint2;
+	kcdReal leftRadius;
 	CkcdTestTreeOBB::CkcdPolyOBBCache rightPolyOBBCache;
 
-	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2);
+	leftTree->getSegment (left, leftEndPoint1, leftEndPoint2, leftRadius);
 	rightTree->fillOBBCache (right, true, rightPolyOBBCache);
 
 	// Compute Distance between the segments axis and the OBB.

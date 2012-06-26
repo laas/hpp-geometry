@@ -103,7 +103,8 @@ namespace hpp
 	/// information needed to compute collisions.
 	ktStatus getSegment (const CkcdTreeIterator& it,
 			     CkcdPoint& endPoint1,
-			     CkcdPoint& endPoint2) const;
+			     CkcdPoint& endPoint2,
+			     kcdReal& radius) const;
 
 	/// Retrieves a CkttPolySegment integrated in the CkttTestTreeSegment
 	PolySegmentConstShPtr getPolySegment (unsigned int index) const;
