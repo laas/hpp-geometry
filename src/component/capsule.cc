@@ -113,6 +113,12 @@ namespace hpp
       }
 
       void Capsule::
+      getAbsolutePosition (CkcdMat4 &o_matrix) const
+      {
+	collision::PolyCapsule::getAbsolutePosition (o_matrix);
+      }
+
+      void Capsule::
       setRelativePosition (const CkitMat4 &i_matrix)
       {
 	polyhedron_->setRelativePosition (i_matrix);

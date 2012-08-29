@@ -113,6 +113,12 @@ namespace hpp
       }
 
       void Segment::
+      getAbsolutePosition (CkcdMat4 &o_matrix) const
+      {
+	collision::PolySegment::getAbsolutePosition (o_matrix);
+      }
+
+      void Segment::
       setRelativePosition (const CkitMat4 &i_matrix)
       {
 	polyhedron_->setRelativePosition (i_matrix);

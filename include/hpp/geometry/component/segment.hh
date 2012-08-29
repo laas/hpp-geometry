@@ -142,6 +142,9 @@ namespace hpp
 	/// \brief Retrieve the absolute position of the component.
 	virtual void getAbsolutePosition (CkitMat4 &o_matrix) const;
 
+	/// \brief Retrieve the absolute position of the component.
+	virtual void getAbsolutePosition (CkcdMat4 &o_matrix) const;
+
 	/// \brief Set the relative position of the component.
 	virtual void setRelativePosition (const CkitMat4 &i_matrix);
 
