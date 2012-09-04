@@ -63,3 +63,9 @@ KINEO_STANDALONE(segment-proximity-query-performance)
 
 ADD_TESTCASE(segment-obb-proximity-query-performance)
 KINEO_STANDALONE(segment-obb-proximity-query-performance)
+
+ADD_TESTCASE(collision-detection-capsule-segment)
+KINEO_STANDALONE(collision-detection-capsule-segment)
+
+ADD_TESTCASE(proximity-query-capsule-segment)
+KINEO_STANDALONE(proximity-query-capsule-segment)

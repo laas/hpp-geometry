@@ -44,6 +44,8 @@ namespace hpp
       KIT_PREDEF_CLASS (DetectorOBBSegment)
       KIT_PREDEF_CLASS (DetectorSegmentTriangle)
       KIT_PREDEF_CLASS (DetectorTriangleSegment)
+      KIT_PREDEF_CLASS (DetectorSegmentCapsule)
+      KIT_PREDEF_CLASS (DetectorCapsuleSegment)
     } // end of namespace collision.
   } // end of namespace geometry.
 } // end of namespace hpp.
