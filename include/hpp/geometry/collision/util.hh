@@ -80,9 +80,9 @@ namespace hpp
       {
 	using namespace Wm5;
 
-	Vector3<hppReal> leftP0;
-	Vector3<hppReal> leftP1;
-	Vector3<hppReal> rightP;
+	Wm5::Vector3<hppReal> leftP0;
+	Wm5::Vector3<hppReal> leftP1;
+	Wm5::Vector3<hppReal> rightP;
 
 	convertKcdPointToVector3 (leftP0, leftEndPoint1);
 	convertKcdPointToVector3 (leftP1, leftEndPoint2);
@@ -94,7 +94,7 @@ namespace hpp
 
 	squareDistance = distance.GetSquared ();
 
-	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	Wm5::Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
 	  + distance.GetSegmentParameter () * s0.Direction;
 
 	convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
@@ -121,10 +121,10 @@ namespace hpp
       {
 	using namespace Wm5;
 
-	Vector3<hppReal> leftP0;
-	Vector3<hppReal> leftP1;
-	Vector3<hppReal> rightP0;
-	Vector3<hppReal> rightP1;
+	Wm5::Vector3<hppReal> leftP0;
+	Wm5::Vector3<hppReal> leftP1;
+	Wm5::Vector3<hppReal> rightP0;
+	Wm5::Vector3<hppReal> rightP1;
 
 	convertKcdPointToVector3 (leftP0, leftEndPoint1);
 	convertKcdPointToVector3 (leftP1, leftEndPoint2);
@@ -138,9 +138,9 @@ namespace hpp
     
 	squareDistance = distance.GetSquared ();
 
-	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	Wm5::Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
 	  + distance.GetSegment0Parameter () * s0.Direction;
-	Vector3<hppReal> wm5RightSegmentClosest = s1.Center
+	Wm5::Vector3<hppReal> wm5RightSegmentClosest = s1.Center
 	  + distance.GetSegment1Parameter () * s1.Direction;
 
 	convertVector3ToKcdPoint (leftSegmentClosest, wm5LeftSegmentClosest);
@@ -164,8 +164,8 @@ namespace hpp
 	using namespace Wm5;
 
 	// Define segment from left capsule axis.
-	Vector3<hppReal> leftP0;
-	Vector3<hppReal> leftP1;
+	Wm5::Vector3<hppReal> leftP0;
+	Wm5::Vector3<hppReal> leftP1;
 	convertKcdPointToVector3 (leftP0, leftEndPoint1);
 	convertKcdPointToVector3 (leftP1, leftEndPoint2);
 
@@ -177,12 +177,12 @@ namespace hpp
 	CkcdPoint rightPolyOBBCacheCenter (position(0, 3),
 					   position(1, 3),
 					   position(2, 3));
-	Vector3<hppReal> center;
+	Wm5::Vector3<hppReal> center;
 	convertKcdPointToVector3 (center, rightPolyOBBCacheCenter);
 
-	Vector3<hppReal> axis0 (position(0, 0), position(1, 0), position(2, 0));
-	Vector3<hppReal> axis1 (position(0, 1), position(1, 1), position(2, 1));
-	Vector3<hppReal> axis2 (position(0, 2), position(1, 2), position(2, 2));
+	Wm5::Vector3<hppReal> axis0 (position(0, 0), position(1, 0), position(2, 0));
+	Wm5::Vector3<hppReal> axis1 (position(0, 1), position(1, 1), position(2, 1));
+	Wm5::Vector3<hppReal> axis2 (position(0, 2), position(1, 2), position(2, 2));
 
 	hppReal extent0 = rightPolyOBBCache.m_halfLength[0];
 	hppReal extent1 = rightPolyOBBCache.m_halfLength[1];
@@ -218,17 +218,17 @@ namespace hpp
 	using namespace Wm5;
 
 	// Define segment.
-	Vector3<hppReal> leftP0;
-	Vector3<hppReal> leftP1;
+	Wm5::Vector3<hppReal> leftP0;
+	Wm5::Vector3<hppReal> leftP1;
 	convertKcdPointToVector3 (leftP0, leftEndPoint1);
 	convertKcdPointToVector3 (leftP1, leftEndPoint2);
 
 	Segment3<hppReal> s0 (leftP0, leftP1);
 
 	// Define triangle.
-	Vector3<hppReal> rightV0;
-	Vector3<hppReal> rightV1;
-	Vector3<hppReal> rightV2;
+	Wm5::Vector3<hppReal> rightV0;
+	Wm5::Vector3<hppReal> rightV1;
+	Wm5::Vector3<hppReal> rightV2;
 	convertKcdPointToVector3 (rightV0, rightTriangleCache.m_vertex[0]);
 	convertKcdPointToVector3 (rightV1, rightTriangleCache.m_vertex[1]);
 	convertKcdPointToVector3 (rightV2, rightTriangleCache.m_vertex[2]);
@@ -241,9 +241,9 @@ namespace hpp
 	// Compute distance and closest points.
 	squareDistance = distance.GetSquared ();
 
-	Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
+	Wm5::Vector3<hppReal> wm5LeftSegmentClosest = s0.Center
 	  + distance.GetSegmentParameter () * s0.Direction;
-	Vector3<hppReal> wm5RightSegmentClosest 
+	Wm5::Vector3<hppReal> wm5RightSegmentClosest 
 	  = distance.GetTriangleBary (0) * rightV0
 	  + distance.GetTriangleBary (1) * rightV1
 	  + distance.GetTriangleBary (2) * rightV2;
