@@ -47,6 +47,7 @@ BOOST_AUTO_TEST_CASE (component_capsule)
 
   CapsuleShPtr capsule1
     = Capsule::create ("capsule1", e1, e2, radius1, baseVertices, parallels);
+  capsule1->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
   
   // Build second capsule component.
   CkitPoint3 e3 (0, 0, -1);
@@ -55,6 +56,7 @@ BOOST_AUTO_TEST_CASE (component_capsule)
 
   CapsuleShPtr capsule2
     = Capsule::create ("capsule2", e3, e4, radius2, baseVertices, parallels);
+  capsule2->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
 
   // Build analysis with capsules.
   CkcdAnalysisShPtr analysis = CkcdAnalysis::create ();

@@ -47,6 +47,7 @@ BOOST_AUTO_TEST_CASE (component_segment_proximity_query)
 
   SegmentShPtr segment1
     = Segment::create ("segment1", e1, e2, radius1, baseVertices, parallels);
+  segment1->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
   
   // Build second segment component.
   CkitPoint3 e3 (0, 0, -1);
@@ -55,6 +56,7 @@ BOOST_AUTO_TEST_CASE (component_segment_proximity_query)
 
   SegmentShPtr segment2
     = Segment::create ("segment2", e3, e4, radius2, baseVertices, parallels);
+  segment2->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
 
   // Build analysis with segments.
   CkcdAnalysisShPtr analysis = CkcdAnalysis::create ();

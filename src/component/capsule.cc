@@ -253,7 +253,6 @@ namespace hpp
 	    CkcdPoint e1 (- height / 2, 0, 0);
 	    CkcdPoint e2 (height / 2, 0, 0);
 	    ptrShPtr->addCapsule (e1, e2, radius);
-	    ptrShPtr->makeCollisionEntity (CkcdObject::IMMEDIATE_BUILD);
 	  }
 
 	return ptrShPtr;
