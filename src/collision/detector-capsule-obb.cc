@@ -87,7 +87,11 @@ namespace hpp
 	CkcdTestTreeOBB::CkcdPolyOBBCache rightPolyOBBCache;
 
 	leftTree->getCapsule (left, leftEndPoint1, leftEndPoint2, leftRadius);
-	rightTree->fillOBBCache (right, true, rightPolyOBBCache);
+	rightTree->fillOBBCache (right, false, rightPolyOBBCache);
+
+	// Apply transformation to have both positions in the same frame.
+	rightPolyOBBCache.m_matrix = testData->rightToLeftTransformation ()
+	  * rightPolyOBBCache.m_matrix;
 
 	// Compute Distance between the capsules axis and the OBB.
 	hppReal squareDistance;
