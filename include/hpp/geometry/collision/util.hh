@@ -147,11 +147,12 @@ namespace hpp
 	convertVector3ToKcdPoint (rightSegmentClosest, wm5RightSegmentClosest);
       }
 
-      /// \brief Compute square distance between a segment and a box.
+      /// \brief Compute square distance between a segment and a box
+      /// represented by an OBB.
       ///
       /// \param leftEndPoint1 left segment first end point
       /// \param leftEndPoint1 left segment second end point
-      /// \param rightBoundingBox right bounding box
+      /// \param rightPolyOBBCache right OBB
       /// \return squareDistance square distance between segment and box
       template<typename hppReal>
       inline void
@@ -189,6 +190,58 @@ namespace hpp
 	hppReal extent2 = rightPolyOBBCache.m_halfLength[2];
 
 	Box3<hppReal> box (center, axis0, axis1, axis2, extent0, extent1, extent2);
+
+	// Define distance and compute squared distance.
+	DistSegment3Box3<hppReal> distance (s0, box);
+
+	squareDistance = distance.GetSquared ();
+      }
+
+      /// \brief Compute square distance between a segment and a box.
+      ///
+      /// \param leftEndPoint1 left segment first end point
+      /// \param leftEndPoint1 left segment second end point
+      /// \param rightBoundingBox right bounding box
+      /// \return squareDistance square distance between segment and box
+      template<typename hppReal>
+      inline void
+      computeSquareDistanceSegmentBox (const CkcdPoint& leftEndPoint1,
+				       const CkcdPoint& leftEndPoint2,
+				       const CkcdBoundingBoxShPtr&
+				       rightBoundingBox,
+				       hppReal& squareDistance)
+      {
+	using namespace Wm5;
+
+	// Define segment from left capsule axis.
+	Wm5::Vector3<hppReal> leftP0;
+	Wm5::Vector3<hppReal> leftP1;
+	convertKcdPointToVector3 (leftP0, leftEndPoint1);
+	convertKcdPointToVector3 (leftP1, leftEndPoint2);
+
+	Segment3<hppReal> s0 (leftP0, leftP1);
+
+	// Define box from right box.
+	CkcdMat4 position = rightBoundingBox->relativePosition ();
+
+	CkcdPoint rightBoundingBoxCenter (position(0, 3),
+					  position(1, 3),
+					  position(2, 3));
+	Wm5::Vector3<hppReal> center;
+	convertKcdPointToVector3 (center, rightBoundingBoxCenter);
+
+	Wm5::Vector3<hppReal>
+	  axis0 (position(0, 0), position(1, 0), position(2, 0));
+	Wm5::Vector3<hppReal>
+	  axis1 (position(0, 1), position(1, 1), position(2, 1));
+	Wm5::Vector3<hppReal>
+	  axis2 (position(0, 2), position(1, 2), position(2, 2));
+
+	hppReal extent0, extent1, extent2;
+	rightBoundingBox->getHalfLengths (extent0, extent1, extent2);
+	
+	Box3<hppReal> box (center, axis0, axis1, axis2,
+			   extent0, extent1, extent2);
 
 	// Define distance and compute squared distance.
 	DistSegment3Box3<hppReal> distance (s0, box);

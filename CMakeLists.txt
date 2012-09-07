@@ -35,6 +35,8 @@ SET(${PROJECT_NAME}_COLLISION_HEADERS
   include/hpp/geometry/collision/detector-triangle-segment.hh
   include/hpp/geometry/collision/detector-segment-capsule.hh
   include/hpp/geometry/collision/detector-capsule-segment.hh
+  include/hpp/geometry/collision/detector-capsule-box.hh
+  include/hpp/geometry/collision/detector-box-capsule.hh
   )
 
 SET(${PROJECT_NAME}_COMPONENT_HEADERS

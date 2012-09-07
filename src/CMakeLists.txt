@@ -21,6 +21,8 @@ ADD_LIBRARY(${LIBRARY_NAME}
   collision/detector-triangle-segment.cc
   collision/detector-capsule-segment.cc
   collision/detector-segment-capsule.cc
+  collision/detector-capsule-box.cc
+  collision/detector-box-capsule.cc
   component/util.cc
   component/capsule.cc
   component/segment.cc
