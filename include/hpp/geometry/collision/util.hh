@@ -38,6 +38,7 @@ namespace hpp
       typedef float hppReal;
       typedef Wm5::Vector3<hppReal> point_t;
       typedef CkcdPolyhedronShPtr polyhedron_t;
+      typedef CkcdAssemblyShPtr assembly_t;
       typedef std::vector<CkcdPolyhedronShPtr> polyhedrons_t;
 
       /// \brief Convert CkcdPoint to Geometric Tools Vector3.
@@ -59,6 +60,10 @@ namespace hpp
 	dst[1] = src[1];
 	dst[2] = src[2];
       }
+
+      /// \brief Convert KcdAssembly to polyhedron vector
+      void convertKcdAssemblyToPolyhedronVector (polyhedrons_t& dst,
+						 const assembly_t& src);
 
       /// \brief Print kcdMat4 matrix.
       std::ostream& operator<< (std::ostream& os, const CkcdMat4& kcdMat4);

@@ -55,6 +55,28 @@ namespace hpp
 	return os;
       }
 
+      void convertKcdAssemblyToPolyhedronVector (polyhedrons_t& dst,
+						 const assembly_t& src)
+      {
+	assert (!!src && "Null pointer to assembly.");
+
+	for (unsigned i = 0; i < src->countChildren (); ++i)
+	  {
+	    CkcdPolyhedronShPtr polyhedron
+	      = KIT_DYNAMIC_PTR_CAST (CkcdPolyhedron,
+				      src->child (i));
+	    CkcdAssemblyShPtr assembly
+	      = KIT_DYNAMIC_PTR_CAST (CkcdAssembly,
+				      src->child (i));
+
+	    if (polyhedron)
+	      dst.push_back (polyhedron);
+	    else if (assembly)
+	      convertKcdAssemblyToPolyhedronVector (dst,
+						    assembly);
+	  }
+      }
+
       void computeBoundingCapsulePolyhedron (const polyhedrons_t& polyhedrons,
 					     CkcdPoint& endPoint1,
 					     CkcdPoint& endPoint2,
