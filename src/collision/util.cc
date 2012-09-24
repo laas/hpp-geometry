@@ -55,38 +55,42 @@ namespace hpp
 	return os;
       }
 
-      void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
+      void computeBoundingCapsulePolyhedron (const polyhedrons_t& polyhedrons,
 					     CkcdPoint& endPoint1,
 					     CkcdPoint& endPoint2,
 					     kcdReal& radius)
       {
-	assert (!!polyhedron && "Null pointer to polyhedron.");
-	assert (polyhedron->countPoints () != 0
-		&& "Polyhedron is empty.");
+	assert (polyhedron.size () !=0 && "Empty polyhedron vector.");
 
 	using namespace Wm5;
 
-	// Retrieve vector of points from polyhedron.
-	Vector3<kcdReal> wm5Points[polyhedron->countPoints ()];
+	// Retrieve vector of points from polyhedrons.
+	unsigned nbPoints = 0;
+	for (unsigned i = 0; i < polyhedrons.size (); ++i)
+	  nbPoints += polyhedrons[i]->countPoints ();
 
-	CkcdMat4 transform;
-	polyhedron->getAbsolutePosition (transform);
-
-	for (unsigned i = 0; i < polyhedron->countPoints (); ++i)
+	point_t points[nbPoints];
+	unsigned k = 0;
+	for (unsigned i = 0; i < polyhedrons.size (); ++i)
 	  {
-	    CkcdPoint point;
-	    polyhedron->getPoint (i, point);
-	    point = transform * point;
-
-	    Vector3<kcdReal> wm5Point;
-	    convertKcdPointToVector3 (wm5Point, point);
-
-	    wm5Points[i] = wm5Point;
+	    polyhedron_t polyhedron = polyhedrons[i];
+	    CkcdMat4 transform;
+	    polyhedron->getAbsolutePosition (transform);
+	    for (unsigned j = 0; j < polyhedron->countPoints (); ++j)
+	      {
+		CkcdPoint kcdPoint;
+		point_t point;
+		polyhedron->getPoint (j, kcdPoint);
+		kcdPoint = transform * kcdPoint;
+		convertKcdPointToVector3 (point, kcdPoint);
+		points[k] = point;
+		++k;
+	      }
 	  }
 
 	// Compute bounding capsule of points.
-	Capsule3<kcdReal> wm5Capsule = ContCapsule (polyhedron->countPoints (),
-						    wm5Points);
+	Capsule3<kcdReal> wm5Capsule = ContCapsule (nbPoints,
+						    points);
 
 	// Get capsule parameters.
 	Vector3<kcdReal> wm5EndPoint1 = wm5Capsule.Segment.P0;

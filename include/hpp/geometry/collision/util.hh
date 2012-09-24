@@ -36,6 +36,9 @@ namespace hpp
     namespace collision
     {
       typedef float hppReal;
+      typedef Wm5::Vector3<hppReal> point_t;
+      typedef CkcdPolyhedronShPtr polyhedron_t;
+      typedef std::vector<CkcdPolyhedronShPtr> polyhedrons_t;
 
       /// \brief Convert CkcdPoint to Geometric Tools Vector3.
       template<typename hppReal>
@@ -311,11 +314,12 @@ namespace hpp
       /// is maximum distance from points to axis. Hemispherical caps are
       /// chosen as close together as possible.
       ///
-      /// \param polyhedron polyhedron that contains the points
+      /// \param polyhedrons vector of polyhedrons that contain the
+      /// points
       /// \return endPoint1 bounding capsule segment first end point
       /// \return endPoint2 bounding capsule segment second end point
       /// \return radius bounding capsule radius
-      void computeBoundingCapsulePolyhedron (const CkcdPolyhedronShPtr& polyhedron,
+      void computeBoundingCapsulePolyhedron (const polyhedrons_t& polyhedrons,
 					     CkcdPoint& endPoint1,
 					     CkcdPoint& endPoint2,
 					     kcdReal& radius);

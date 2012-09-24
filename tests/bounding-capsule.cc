@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE (bounding_capsule)
     }
 
   // Build cylinder polyhedron. Main axis is oriented along x.
-  CkcdPolyhedronShPtr polyhedron = CkcdPolyhedron::create ();
+  CkcdPolyhedronShPtr kcdPolyhedron = CkcdPolyhedron::create ();
 
   hppReal radius = 0.2;
   hppReal height = 1.;
@@ -50,13 +50,17 @@ BOOST_AUTO_TEST_CASE (bounding_capsule)
 						  nbPhiStep,
 						  nbHeightStep,
 						  bitMask,
-						  polyhedron);
+						  kcdPolyhedron);
+
+  // Convert KCD polyhedron to polyhedron type.
+  polyhedrons_t polyhedrons;
+  polyhedrons.push_back (kcdPolyhedron);
   
   // Compute polyhedron bounding capsule
   CkcdPoint endPoint1;
   CkcdPoint endPoint2;
   kcdReal capsuleRadius;
-  computeBoundingCapsulePolyhedron (polyhedron,
+  computeBoundingCapsulePolyhedron (polyhedrons,
 				    endPoint1,
 				    endPoint2,
 				    capsuleRadius);
