@@ -82,7 +82,7 @@ namespace hpp
 					     CkcdPoint& endPoint2,
 					     kcdReal& radius)
       {
-	assert (polyhedron.size () !=0 && "Empty polyhedron vector.");
+	assert (polyhedrons.size () !=0 && "Empty polyhedron vector.");
 
 	using namespace Wm5;
 
