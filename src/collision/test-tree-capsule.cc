@@ -133,7 +133,7 @@ namespace hpp
       CkcdTreeIterator TestTreeCapsule::
       rootIterator () const
       {
-	return CkcdTreeIterator ((CkcdTestTree*) this, (int) 0, capsuleElementID_);
+	return CkcdTreeIterator ((CkcdTestTree*) this, (size_t) 0, capsuleElementID_);
       }
   
       bool TestTreeCapsule::
@@ -159,8 +159,13 @@ namespace hpp
       }
 
       ktStatus TestTreeCapsule::
-      startCollisionEntity (CkitProgressDelegateShPtr progress,
+      startCollisionEntity (CkitProgressDelegateShPtr,
 			    bool& canContinue)
+      {
+	return startCollisionEntity (canContinue);
+      }
+
+      ktStatus TestTreeCapsule::startCollisionEntity(bool& canContinue)
       {
 	std::vector<std::pair<unsigned int, unsigned int> > indexVector;
 	unsigned int index = 0;

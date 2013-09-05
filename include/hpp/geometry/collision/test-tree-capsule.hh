@@ -92,6 +92,8 @@ namespace hpp
 	virtual ktStatus startCollisionEntity (CkitProgressDelegateShPtr progress,
 					       bool& canContinue);
 
+	virtual ktStatus startCollisionEntity(bool& canContinue);
+
 	virtual ktStatus continueCollisionEntity (bool& canContinue);
 
 	virtual ktStatus finishCollisionEntity (ktStatus status);
