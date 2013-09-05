@@ -20,6 +20,8 @@
  * \file src/hpp/geometry/collision/util.cc
  */
 
+# define __STDC_LIMIT_MACROS
+# include <stdint.h>
 #include <geometric-tools/Wm5ContCapsule3.h>
 
 #include "hpp/geometry/collision/util.hh"

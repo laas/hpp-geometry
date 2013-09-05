@@ -22,6 +22,8 @@
  * \brief KPP utility functions.
  */
 
+# define __STDC_LIMIT_MACROS
+# include <stdint.h>
 #include "hpp/geometry/collision/util.hh"
 #include "hpp/geometry/component/util.hh";
 
