@@ -184,7 +184,7 @@ namespace hpp
       }
 
       void Segment::
-      addPolygon (const std::vector< int > &i_verticesVector)
+      addPolygon (const std::vector< int >&)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;
@@ -226,7 +226,7 @@ namespace hpp
       }
 
       CkppAssemblyComponentShPtr Segment::
-      explode (const CkitProgressDelegateShPtr &i_delegate)
+      explode (const CkitProgressDelegateShPtr&)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;
@@ -391,8 +391,8 @@ namespace hpp
 
       CkppPolyhedronShPtr Segment::
       createPolyhedronFromPolyExpandingData
-      (const CkppPolyExpandingDataShPtr& i_polyExpandingData,
-       unsigned int i_offset)
+      (const CkppPolyExpandingDataShPtr&,
+       unsigned int)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;

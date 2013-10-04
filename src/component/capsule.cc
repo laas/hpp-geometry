@@ -184,7 +184,7 @@ namespace hpp
       }
 
       void Capsule::
-      addPolygon (const std::vector< int > &i_verticesVector)
+      addPolygon (const std::vector< int >&)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;
@@ -226,7 +226,7 @@ namespace hpp
       }
 
       CkppAssemblyComponentShPtr Capsule::
-      explode (const CkitProgressDelegateShPtr &i_delegate)
+      explode (const CkitProgressDelegateShPtr&)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;
@@ -391,8 +391,8 @@ namespace hpp
 
       CkppPolyhedronShPtr Capsule::
       createPolyhedronFromPolyExpandingData
-      (const CkppPolyExpandingDataShPtr& i_polyExpandingData,
-       unsigned int i_offset)
+      (const CkppPolyExpandingDataShPtr&,
+       unsigned int)
       {
 	// FIXME.
 	std::cout << "FIXME" << std::endl;

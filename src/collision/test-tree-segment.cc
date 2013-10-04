@@ -58,14 +58,14 @@ namespace hpp
       }
   
       unsigned int TestTreeSegment::
-      countChildren (const CkcdTreeIterator& it) const
+      countChildren (const CkcdTreeIterator&) const
       {
 	return 0;
       }
   
       CkcdTreeIterator TestTreeSegment::
-      getChildIterator (const CkcdTreeIterator& it,
-			unsigned int rank) const
+      getChildIterator (const CkcdTreeIterator&,
+			unsigned int) const
       {
 	// This should not happen, under the assumption there is only
 	// one segment.
@@ -73,19 +73,19 @@ namespace hpp
       }
 
       double TestTreeSegment::
-      tolerance (const CkcdTreeIterator& it) const
+      tolerance (const CkcdTreeIterator&) const
       {
 	return 0.;
       }
 
       kcdReal TestTreeSegment::
-      heuristicValue (const CkcdTreeIterator& it) const
+      heuristicValue (const CkcdTreeIterator&) const
       {
 	return 0.f;
       }
 
       CkcdObjectShPtr TestTreeSegment::
-      sceneAnchor (const CkcdTreeIterator& it) const
+      sceneAnchor (const CkcdTreeIterator&) const
       {
 	return collisionEntity ();
       }
@@ -123,7 +123,7 @@ namespace hpp
       }
   
       unsigned int TestTreeSegment::
-      dispatchID (const CkcdTreeIterator& it) const
+      dispatchID (const CkcdTreeIterator&) const
       {
 	return segmentDispatchID_;
       }
@@ -141,7 +141,7 @@ namespace hpp
       }
     
       ktStatus TestTreeSegment::
-      integrate (CkitProgressDelegateShPtr progress,
+      integrate (CkitProgressDelegateShPtr,
 		 CkcdGeometryConstShPtr geometry)
       {
 	ktStatus result = KD_ERROR;
@@ -181,14 +181,14 @@ namespace hpp
       }
 
       ktStatus TestTreeSegment::
-      startCollisionEntity (CkitProgressDelegateShPtr progress,
+      startCollisionEntity (CkitProgressDelegateShPtr,
 			    bool& canContinue)
       {
 	return startCollisionEntity (canContinue);
       }
 
       ktStatus TestTreeSegment::
-      continueCollisionEntity (bool& canContinue)
+      continueCollisionEntity (bool&)
       {
 	return KD_ERROR;
       }

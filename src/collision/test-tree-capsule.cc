@@ -58,14 +58,14 @@ namespace hpp
       }
   
       unsigned int TestTreeCapsule::
-      countChildren (const CkcdTreeIterator& it) const
+      countChildren (const CkcdTreeIterator&) const
       {
 	return 0;
       }
   
       CkcdTreeIterator TestTreeCapsule::
-      getChildIterator (const CkcdTreeIterator& it,
-			unsigned int rank) const
+      getChildIterator (const CkcdTreeIterator&,
+			unsigned int) const
       {
 	// This should not happen, under the assumption there is only
 	// one segment.
@@ -73,7 +73,7 @@ namespace hpp
       }
 
       double TestTreeCapsule::
-      tolerance (const CkcdTreeIterator& it) const
+      tolerance (const CkcdTreeIterator&) const
       {
 	return 0.;
       }
@@ -87,7 +87,7 @@ namespace hpp
       }
 
       CkcdObjectShPtr TestTreeCapsule::
-      sceneAnchor (const CkcdTreeIterator& it) const
+      sceneAnchor (const CkcdTreeIterator&) const
       {
 	return collisionEntity ();
       }
@@ -125,7 +125,7 @@ namespace hpp
       }
   
       unsigned int TestTreeCapsule::
-      dispatchID (const CkcdTreeIterator& it) const
+      dispatchID (const CkcdTreeIterator&) const
       {
 	return capsuleDispatchID_;
       }
@@ -143,7 +143,7 @@ namespace hpp
       }
     
       ktStatus TestTreeCapsule::
-      integrate (CkitProgressDelegateShPtr progress,
+      integrate (CkitProgressDelegateShPtr,
 		 CkcdGeometryConstShPtr geometry)
       {
 	ktStatus result = KD_ERROR;
@@ -189,7 +189,7 @@ namespace hpp
       }
 
       ktStatus TestTreeCapsule::
-      continueCollisionEntity (bool& canContinue)
+      continueCollisionEntity (bool&)
       {
 	return KD_ERROR;
       }
