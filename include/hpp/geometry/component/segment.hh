@@ -37,10 +37,13 @@ namespace hpp
       class Segment : public CkppPolyhedron, public collision::PolySegment
       {
       public:
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-pedantic"
 	KPP_DECLARE_PROPERTY(HEIGHT);
 	KPP_DECLARE_PROPERTY(RADIUS);
 	KPP_DECLARE_PROPERTY(BASE_VERTICES);
 	KPP_DECLARE_PROPERTY(PARALLELS);
+# pragma GCC diagnostic pop
 
 	/// \brief Get height of the segment.
 	double height () const;

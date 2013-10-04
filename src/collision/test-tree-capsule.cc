@@ -32,7 +32,10 @@ namespace hpp
     namespace collision
     {
       // this line registers the test tree in the global locked test tree list
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-pedantic"
       KCD_REGISTER_TEST_TREE_LOCKED(TestTreeCapsule);
+# pragma GCC diagnostic pop
 
       // this line gets a new unique dispatch ID from CkcdGlobal
       unsigned int TestTreeCapsule::capsuleDispatchID_ = CkcdGlobal::getNewDispatchID ();

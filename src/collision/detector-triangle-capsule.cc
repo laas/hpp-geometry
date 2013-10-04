@@ -33,7 +33,10 @@ namespace hpp
     namespace collision
     {
       // this line registers the detector in the global detector dispatcher
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-pedantic"
       KCD_REGISTER_DETECTOR(DetectorTriangleCapsule);
+#pragma GCC diagnostic pop
 
       DetectorTriangleCapsuleShPtr DetectorTriangleCapsule::
       create ()
