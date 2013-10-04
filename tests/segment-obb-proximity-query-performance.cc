@@ -43,9 +43,6 @@ BOOST_AUTO_TEST_CASE (segment_obb_proximity_query_performance)
     }
 
   // Validate collision part in component.
-  unsigned int baseVertices = 32;
-  unsigned int parallels = 32;
-
   // Build segment component.
   CkcdPoint e1 (0, 0, -1);
   CkcdPoint e2 (0, 0 , 1);
@@ -124,12 +121,6 @@ BOOST_AUTO_TEST_CASE (segment_obb_proximity_query_performance)
       ::gettimeofday(&tv_start, NULL);
       analysis->compute ();
       ::gettimeofday(&tv_stop, NULL);
-
-      double distance;
-      if (analysis->exactDistanceReport (0))
-	distance = analysis->exactDistanceReport (0)->distance ();
-      else
-	distance = 0;
 
       inner_loop_time = ( tv_stop.tv_sec - tv_start.tv_sec ) * TICKS_PER_SECOND
 	+ ( tv_stop.tv_usec - tv_start.tv_usec );

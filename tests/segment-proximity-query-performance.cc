@@ -43,9 +43,6 @@ BOOST_AUTO_TEST_CASE (segment_proximity_query_performance)
     }
 
   // Validate collision part in component.
-  unsigned int baseVertices = 32;
-  unsigned int parallels = 32;
-
   // Build first segment component.
   CkcdPoint e1 (0, 0, -1);
   CkcdPoint e2 (0, 0 , 1);
