@@ -70,6 +70,7 @@ namespace hpp
 	// This should not happen, under the assumption there is only
 	// one segment.
 	std::cout << "FIXME" << std::endl;
+	return CkcdTreeIterator ();
       }
 
       double TestTreeCapsule::

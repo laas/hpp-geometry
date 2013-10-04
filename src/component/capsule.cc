@@ -164,15 +164,17 @@ namespace hpp
       computeDefaultFrame () const
       {
 	// FIXME.
-	CkitMat4 mat;
-	collision::PolyCapsule::getAbsolutePosition (mat);
-	return mat;
+	CkcdMat4 kcdMatrix;
+	collision::PolyCapsule::getAbsolutePosition (kcdMatrix);
+	CkitMat4 kitMatrix;
+	kcdMatrix.toKitMat4 (kitMatrix);
+	return kitMatrix;
       }
 
       ktStatus Capsule::
       addPoint (const CkitPoint3 &i_point)
       {
-	polyhedron_->addPoint (i_point);
+	return polyhedron_->addPoint (i_point);
       }
 
       ktStatus Capsule::
@@ -180,7 +182,7 @@ namespace hpp
 		   unsigned int i_p2,
 		   unsigned int i_p3)
       {
-	polyhedron_->addTriangle (i_p1, i_p2, i_p3);
+	return polyhedron_->addTriangle (i_p1, i_p2, i_p3);
       }
 
       void Capsule::

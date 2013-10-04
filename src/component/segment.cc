@@ -172,7 +172,7 @@ namespace hpp
       ktStatus Segment::
       addPoint (const CkitPoint3 &i_point)
       {
-	polyhedron_->addPoint (i_point);
+	return polyhedron_->addPoint (i_point);
       }
 
       ktStatus Segment::
@@ -180,7 +180,7 @@ namespace hpp
 		   unsigned int i_p2,
 		   unsigned int i_p3)
       {
-	polyhedron_->addTriangle (i_p1, i_p2, i_p3);
+	return polyhedron_->addTriangle (i_p1, i_p2, i_p3);
       }
 
       void Segment::
