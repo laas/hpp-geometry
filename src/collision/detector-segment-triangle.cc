@@ -125,7 +125,8 @@ namespace hpp
 	    testAnswer = query.reportExactDistance (left,
 						    right,
 						    testData,
-						    sqrt (squareDistance),
+						    static_cast<kcdReal>
+						    (sqrt (squareDistance)),
 						    leftSegmentClosest,
 						    rightTriangleClosest);
 	  }

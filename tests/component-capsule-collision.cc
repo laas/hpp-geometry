@@ -90,6 +90,6 @@ BOOST_AUTO_TEST_CASE (component_capsule)
       analysis->compute ();
       if (angle > (6 * CkitGeometry::PI / 20))
       	BOOST_CHECK_EQUAL (analysis->countCollisionReports (), 1);
-      angle += CkitGeometry::PI / 20;
+      angle += static_cast<kcdReal> (CkitGeometry::PI) / 20;
     }
 }

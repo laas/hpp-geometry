@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_segment)
   // Build first poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  hppReal radius1 = 0.1;
+  hppReal radius1 = 0.1f;
 
   PolyCapsuleShPtr polyCapsule1 = PolyCapsule::create ();
   polyCapsule1->addCapsule (e1, e2, radius1);
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule_segment)
   // Build second poly segment.
   CkcdPoint e3 (0.f, 0.f, -1.f);
   CkcdPoint e4 (0.f, 0.f, 1.f);
-  hppReal radius2 = 0.1;
+  hppReal radius2 = 0.1f;
 
   PolySegmentShPtr polySegment2 = PolySegment::create ();
   polySegment2->addSegment (e3, e4, radius2);

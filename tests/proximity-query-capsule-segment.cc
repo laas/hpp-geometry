@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule_segment)
   // Build first poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  hppReal radius1 = 0.1;
+  hppReal radius1 = 0.1f;
 
   PolyCapsuleShPtr polyCapsule1 = PolyCapsule::create ();
   polyCapsule1->addCapsule (e1, e2, radius1);
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule_segment)
   // Build second poly segment.
   CkcdPoint e3 (0.f, 0.f, -1.f);
   CkcdPoint e4 (0.f, 0.f, 1.f);
-  hppReal radius2 = 0.1;
+  hppReal radius2 = 0.1f;
 
   PolySegmentShPtr polySegment2 = PolySegment::create ();
   polySegment2->addSegment (e3, e4, radius2);
@@ -79,7 +79,8 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule_segment)
 
   // Rotate right poly capsule around y axis, translate and compute analysis.
   distance = 2.f;
-  CkcdMat4 position = CkcdMat4 ().rotateY (CkitGeometry::PI / 2);
+  CkcdMat4 position =
+    CkcdMat4 ().rotateY (static_cast<kcdReal> (CkitGeometry::PI / 2));
 
   while (distance < 5.f)
     {

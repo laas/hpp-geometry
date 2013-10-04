@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE (segment_proximity_query_performance)
   // Build second segment component.
   CkcdPoint e3 (0, 0, -1);
   CkcdPoint e4 (0, 0, 1);
-  hpp::geometry::collision::hppReal radius2 = 0.1;
+  hpp::geometry::collision::hppReal radius2 = 0.1f;
 
   hpp::geometry::collision::PolySegmentShPtr segment2
     = hpp::geometry::collision::PolySegment::create ();

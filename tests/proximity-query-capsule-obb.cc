@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE (proximity_query_capsule_obb)
   // Build poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  hppReal radius = 0.1;
+  hppReal radius = 0.1f;
 
   PolyCapsuleShPtr polyCapsule = PolyCapsule::create ();
   polyCapsule->addCapsule (e1, e2, radius);

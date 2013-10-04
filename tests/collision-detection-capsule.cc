@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule)
   // Build first poly capsule.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  hppReal radius1 = 0.1;
+  hppReal radius1 = 0.1f;
 
   PolyCapsuleShPtr polyCapsule1 = PolyCapsule::create ();
   polyCapsule1->addCapsule (e1, e2, radius1);
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule)
   // Build second poly capsule.
   CkcdPoint e3 (0.f, 0.f, -1.f);
   CkcdPoint e4 (0.f, 0.f, 1.f);
-  hppReal radius2 = 0.1;
+  hppReal radius2 = 0.1f;
 
   PolyCapsuleShPtr polyCapsule2 = PolyCapsule::create ();
   polyCapsule2->addCapsule (e3, e4, radius2);
@@ -87,6 +87,6 @@ BOOST_AUTO_TEST_CASE (collision_detection_capsule)
       analysis->compute ();
       if (angle > (6 * CkitGeometry::PI / 20))
       	BOOST_CHECK_EQUAL (analysis->countCollisionReports (), 1);
-      angle += CkitGeometry::PI / 20;
+      angle += static_cast<hppReal> (CkitGeometry::PI) / 20;
     }
 }

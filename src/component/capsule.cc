@@ -145,9 +145,10 @@ namespace hpp
       {
 	// FIXME?
 	std::cout << "FIXME" << std::endl;
-	x = radius ();
-	y = radius ();
-	z = height () / 2 + radius ();
+	x = static_cast<float> (radius ());
+	y = static_cast<float> (radius ());
+	z = static_cast<float> (height ()) / 2
+	  + static_cast<float> (radius ());
 
 	return KD_OK;
       }
@@ -250,9 +251,9 @@ namespace hpp
 	  }
 	else
 	  {
-	    CkcdPoint e1 (- height / 2, 0, 0);
-	    CkcdPoint e2 (height / 2, 0, 0);
-	    ptrShPtr->addCapsule (e1, e2, radius);
+	    CkcdPoint e1 (- static_cast<kcdReal> (height) / 2, 0, 0);
+	    CkcdPoint e2 (static_cast<kcdReal> (height) / 2, 0, 0);
+	    ptrShPtr->addCapsule (e1, e2, static_cast<kcdReal> (radius));
 	  }
 
 	return ptrShPtr;

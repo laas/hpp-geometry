@@ -85,12 +85,12 @@ BOOST_AUTO_TEST_CASE (gradient_segment_obb)
 
   // Translate polyhedron on the x axis and compute analysis.
   double FLOAT_PERTURBATION = sqrt(pow (2, -24));
-  double DOUBLE_PERTURBATION = sqrt(pow (2, -53));
   double STEP = FLOAT_PERTURBATION;
   double distance = halfLength + 1e-3;
   while (distance < 4.0)
     {
-      polyhedron->setAbsolutePosition (CkcdMat4 ().translate (distance, 0, 0));
+      polyhedron->setAbsolutePosition
+	(CkcdMat4 ().translate (static_cast<kcdReal> (distance), 0, 0));
       analysis->compute ();
       if (distance > halfLength + 1e-3)
 	{

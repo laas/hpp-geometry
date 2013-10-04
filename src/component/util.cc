@@ -43,7 +43,8 @@ namespace hpp
 	std::vector<CkcdPoint> vertices;
 	std::vector<std::vector<unsigned int> > facets;
 
-	CkcdPolyhedronFactory::convertSphereToIndexedFaceSet (radius,
+	CkcdPolyhedronFactory::convertSphereToIndexedFaceSet (static_cast<kcdReal>
+							      (radius),
 							      baseVertices,
 							      parallels,
 							      vertices,
@@ -57,8 +58,8 @@ namespace hpp
 	// Apply transformation on sphere lower half and add points
 	// to form first cap.
 	CkcdMat4 hsFirstTransform;
-	hsFirstTransform.rotateY (M_PI / 2);
-	hsFirstTransform(0, 3) = - height / 2;
+	hsFirstTransform.rotateY (static_cast<kcdReal>(M_PI) / 2);
+	hsFirstTransform(0, 3) = - static_cast<kcdReal> (height) / 2;
 
 	unsigned rank;
 	for (unsigned i = 0; i < hsPointsRange; ++i)
@@ -67,8 +68,8 @@ namespace hpp
 	// Apply opposite transformation on sphere lower half and
 	// add points to form second cap.
 	CkcdMat4 hsSecondTransform;
-	hsSecondTransform.rotateY (- M_PI / 2);
-	hsSecondTransform(0, 3) = height / 2;
+	hsSecondTransform.rotateY (- static_cast<kcdReal> (M_PI) / 2);
+	hsSecondTransform(0, 3) = static_cast<kcdReal> (height) / 2;
 
 	for (unsigned i = 0; i < hsPointsRange; ++i)
 	  dst->addPoint (hsSecondTransform * vertices[i], rank);
@@ -185,9 +186,10 @@ namespace hpp
 	// Compute rotation part.
 	CkcdPoint axis = endPoint2 - endPoint1;
     
-	kcdReal alpha = atan2 (axis[1], axis[0]);
-	kcdReal beta = atan2 (axis[2],
-			      sqrt (axis[0] * axis[0] +  axis[1] * axis[1]));
+	kcdReal alpha = static_cast<kcdReal> (atan2 (axis[1], axis[0]));
+	kcdReal beta = static_cast<kcdReal>
+	  (atan2 (axis[2],
+		  sqrt (axis[0] * axis[0] +  axis[1] * axis[1])));
 
 	CkcdMat4 rotAlpha;
 	rotAlpha.rotateZ (alpha);
@@ -213,9 +215,10 @@ namespace hpp
 	// Compute rotation part.
 	CkcdPoint axis = endPoint2 - endPoint1;
     
-	kcdReal alpha = atan2 (axis[1], axis[0]);
-	kcdReal beta = atan2 (axis[2],
-			      sqrt (axis[0] * axis[0] +  axis[1] * axis[1]));
+	kcdReal alpha = static_cast<kcdReal> (atan2 (axis[1], axis[0]));
+	kcdReal beta = static_cast<kcdReal>
+	  (atan2 (axis[2],
+		  sqrt (axis[0] * axis[0] +  axis[1] * axis[1])));
 
 	roll = 0;
 	pitch = -beta + M_PI / 2;

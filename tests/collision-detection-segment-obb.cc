@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE (collision_detection_segment_obb)
   // Build poly segment.
   CkcdPoint e1 (0.f, 0.f, -1.f);
   CkcdPoint e2 (0.f, 0.f , 1.f);
-  hppReal radius = 0.1;
+  hppReal radius = 0.1f;
 
   PolySegmentShPtr polySegment = PolySegment::create ();
   polySegment->addSegment (e1, e2, radius);
@@ -101,6 +101,6 @@ BOOST_AUTO_TEST_CASE (collision_detection_segment_obb)
 	  BOOST_CHECK_EQUAL (analysis1->countCollisionReports (), 1);
 	  BOOST_CHECK_EQUAL (analysis2->countCollisionReports (), 1);
 	}
-      distance += 0.01;
+      distance += 0.01f;
     }
 }

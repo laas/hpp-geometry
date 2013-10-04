@@ -115,7 +115,9 @@ namespace hpp
 	      = query.reportEstimatedDistance (left,
 					       right,
 					       testData,
-					       sqrt (squareDistance) - rightRadius);
+					       static_cast<kcdReal>
+					       (sqrt (squareDistance))
+					       - rightRadius);
 	  }
 
 	return testAnswer;

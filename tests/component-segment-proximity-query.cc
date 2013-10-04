@@ -92,7 +92,8 @@ BOOST_AUTO_TEST_CASE (component_segment_proximity_query)
 
   // Rotate right segment around y axis and compute analysis.
   distance = 2.f;
-  CkcdMat4 trans = CkcdMat4 ().rotateY (CkitGeometry::PI / 2);
+  CkcdMat4 trans =
+    CkcdMat4 ().rotateY (static_cast<kcdReal> (CkitGeometry::PI) / 2);
 
   while (distance < 5.f)
     {
