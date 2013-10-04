@@ -74,8 +74,8 @@ BOOST_AUTO_TEST_CASE (component_capsule)
   unsigned int parallels3 = 32;
 
   CapsuleShPtr capsule3
-    = Capsule::create ("capsule", height1, radius1, transformation3,
-		       baseVertices1, parallels1);
+    = Capsule::create ("capsule", height3, radius3, transformation3,
+		       baseVertices3, parallels3);
 
   BOOST_CHECK_EQUAL (!capsule3, 0);
 }

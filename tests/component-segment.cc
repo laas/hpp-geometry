@@ -74,8 +74,8 @@ BOOST_AUTO_TEST_CASE (component_segment)
   unsigned int parallels3 = 32;
 
   SegmentShPtr segment3
-    = Segment::create ("segment", height1, radius1, transformation3,
-		       baseVertices1, parallels1);
+    = Segment::create ("segment", height3, radius3, transformation3,
+		       baseVertices3, parallels3);
 
   BOOST_CHECK_EQUAL (!segment3, 0);
 }
