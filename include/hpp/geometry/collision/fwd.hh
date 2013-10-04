@@ -22,6 +22,9 @@
 #ifndef KCD_FWD_HH
 # define KCD_FWD_HH
 
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-pedantic"
+
 namespace hpp
 {
   namespace geometry
@@ -51,5 +54,7 @@ namespace hpp
     } // end of namespace collision.
   } // end of namespace geometry.
 } // end of namespace hpp.
+
+# pragma GCC diagnostic pop
 
 #endif //! KCD_FWD_HH

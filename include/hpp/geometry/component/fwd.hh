@@ -31,8 +31,11 @@ namespace hpp
     namespace component
     {
       typedef collision::hppReal hppReal;
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-pedantic"
       KIT_PREDEF_CLASS (Capsule)
       KIT_PREDEF_CLASS (Segment)
+# pragma GCC diagnostic pop
     } // end of namespace component.
   } // end of namespace geometry.
 } // end of namespace hpp.
