@@ -102,14 +102,17 @@ namespace hpp
       void Segment::
       setAbsolutePosition (const CkitMat4 &i_matrix)
       {
-	polyhedron_->setAbsolutePosition (i_matrix);
-	collision::PolySegment::setAbsolutePosition (i_matrix);
+	CkcdMat4 kcdMatrix (i_matrix);
+	polyhedron_->setAbsolutePosition (kcdMatrix);
+	collision::PolySegment::setAbsolutePosition (kcdMatrix);
       }
 
       void Segment::
       getAbsolutePosition (CkitMat4 &o_matrix) const
       {
-	collision::PolySegment::getAbsolutePosition (o_matrix);
+	CkcdMat4 kcdMatrix;
+	collision::PolySegment::getAbsolutePosition (kcdMatrix);
+	kcdMatrix.toKitMat4 (o_matrix);
       }
 
       void Segment::
@@ -121,14 +124,17 @@ namespace hpp
       void Segment::
       setRelativePosition (const CkitMat4 &i_matrix)
       {
-	polyhedron_->setRelativePosition (i_matrix);
-	collision::PolySegment::setRelativePosition (i_matrix);
+	CkcdMat4 kcdMatrix (i_matrix);
+	polyhedron_->setRelativePosition (kcdMatrix);
+	collision::PolySegment::setRelativePosition (kcdMatrix);
       }
 
       void Segment::
       getRelativePosition (CkitMat4 &o_matrix) const
       {
-	collision::PolySegment::getRelativePosition (o_matrix);
+	CkcdMat4 kcdMatrix;
+	collision::PolySegment::getRelativePosition (kcdMatrix);
+	kcdMatrix.toKitMat4 (o_matrix);
       }
 
       ktStatus Segment::
@@ -136,7 +142,9 @@ namespace hpp
       {
 	// FIXME?
 	std::cout << "FIXME" << std::endl;
-	collision::PolySegment::getAbsolutePosition (o_matrix);
+	CkcdMat4 kcdMatrix;
+	collision::PolySegment::getAbsolutePosition (kcdMatrix);
+	kcdMatrix.toKitMat4 (o_matrix);
 	return KD_OK;
       }
 
@@ -164,9 +172,11 @@ namespace hpp
       computeDefaultFrame () const
       {
 	// FIXME.
-	CkitMat4 mat;
-	collision::PolySegment::getAbsolutePosition (mat);
-	return mat;
+	CkcdMat4 kcdMatrix;
+	collision::PolySegment::getAbsolutePosition (kcdMatrix);
+	CkitMat4 kitMatrix;
+	kcdMatrix.toKitMat4 (kitMatrix);
+	return kitMatrix;
       }
 
       ktStatus Segment::
