@@ -93,7 +93,7 @@ namespace hpp
 	for (unsigned i = 0; i < polyhedrons.size (); ++i)
 	  nbPoints += polyhedrons[i]->countPoints ();
 
-	point_t points[nbPoints];
+	point_t* points = new point_t[nbPoints];
 	unsigned k = 0;
 	for (unsigned i = 0; i < polyhedrons.size (); ++i)
 	  {
@@ -123,6 +123,8 @@ namespace hpp
 	convertVector3ToKcdPoint (endPoint1, wm5EndPoint1);
 	convertVector3ToKcdPoint (endPoint2, wm5EndPoint2);
 	radius = wm5Capsule.Radius;
+
+	delete[] points;
       }
 
     } // end of namespace collision.
