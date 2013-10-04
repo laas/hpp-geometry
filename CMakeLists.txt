@@ -5,6 +5,7 @@ SET(CXX_DISABLE_WERROR TRUE)
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/kineo.cmake)
+INCLUDE(cmake/geometric-tools.cmake)
 
 SET(PROJECT_NAME hpp-geometry)
 SET(PROJECT_DESCRIPTION
@@ -58,38 +59,8 @@ SETUP_PROJECT()
 
 # Declare dependencies
 SEARCH_FOR_BOOST()
+SEARCH_FOR_GEOMETRIC_TOOLS()
 ADD_REQUIRED_DEPENDENCY("KineoController >= 2.06")
-
-# Search for GeometricTools library.
-SET(GEOMETRIC_TOOLS_INSTALL_PREFIX "" CACHE PATH "geometric-tools installation prefix")
-SET(LIB_GEOMETRIC_TOOLS_CORE LIB_GEOMETRIC_TOOLS_CORE-NOTFOUND)
-SET(LIB_GEOMETRIC_TOOLS_MATH LIB_GEOMETRIC_TOOLS_MATH-NOTFOUND)
-FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_CORE
-  libWm5Core.so
-  PATH
-  ${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib)
-IF (NOT LIB_GEOMETRIC_TOOLS_CORE)
-  MESSAGE(FATAL_ERROR
-    "Failed to find geometric-tools Core library, check that geometric-tools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
-ENDIF()
-FIND_LIBRARY(LIB_GEOMETRIC_TOOLS_MATH
-  libWm5Mathematics.so
-  PATH
-  ${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib)
-IF (NOT LIB_GEOMETRIC_TOOLS_MATH)
-  MESSAGE(FATAL_ERROR
-    "Failed to find geometric-tools Mathematics library, check that geometric-tools is installed and set the GEOMETRIC_TOOLS_INSTALL_PREFIX CMake variable.")
-ENDIF()
-SET(GEOMETRIC_TOOLS_H GEOMETRIC_TOOLS-NOTFOUND)
-FIND_PATH (GEOMETRIC_TOOLS_H
-  Wm5DistSegment3Segment3.h
-  "${GEOMETRIC_TOOLS_INSTALL_PREFIX}/include/geometric-tools")
-IF (NOT GEOMETRIC_TOOLS_H)
-  MESSAGE(FATAL_ERROR
-    "Failed to find geometric-tools/Wm5DistSegment3Segment3.h, check that geometric-tools is installed.")
-ENDIF()
-INCLUDE_DIRECTORIES("${GEOMETRIC_TOOLS_INSTALL_PREFIX}/include")
-LINK_DIRECTORIES("${GEOMETRIC_TOOLS_INSTALL_PREFIX}/lib")
 
 PKG_CONFIG_APPEND_LIBS(${PROJECT_NAME})
 
