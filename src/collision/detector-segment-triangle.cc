@@ -35,7 +35,7 @@ namespace hpp
     namespace collision
     {
       // this line registers the detector in the global detector dispatcher
-      KCD_REGISTER_DETECTOR(DetectorSegmentTriangle);
+      HPP_KCD_REGISTER_DETECTOR(DetectorSegmentTriangle);
 
       DetectorSegmentTriangleShPtr DetectorSegmentTriangle::
       create ()

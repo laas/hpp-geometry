@@ -22,32 +22,34 @@
 #ifndef KCD_FWD_HH
 # define KCD_FWD_HH
 
+# include <hpp/util/kitelab.hh>
+
 namespace hpp
 {
   namespace geometry
   {
     namespace collision
     {
-      KIT_PREDEF_CLASS (TestTreeCapsule)
-      KIT_PREDEF_CLASS (PolyCapsule)
-      KIT_PREDEF_CLASS (Capsule)
-      KIT_PREDEF_CLASS (DetectorCapsuleCapsule)
-      KIT_PREDEF_CLASS (DetectorCapsuleOBB)
-      KIT_PREDEF_CLASS (DetectorOBBCapsule)
-      KIT_PREDEF_CLASS (DetectorCapsuleTriangle)
-      KIT_PREDEF_CLASS (DetectorTriangleCapsule)
-      KIT_PREDEF_CLASS (TestTreeSegment)
-      KIT_PREDEF_CLASS (PolySegment)
-      KIT_PREDEF_CLASS (Segment)
-      KIT_PREDEF_CLASS (DetectorSegmentSegment)
-      KIT_PREDEF_CLASS (DetectorSegmentOBB)
-      KIT_PREDEF_CLASS (DetectorOBBSegment)
-      KIT_PREDEF_CLASS (DetectorSegmentTriangle)
-      KIT_PREDEF_CLASS (DetectorTriangleSegment)
-      KIT_PREDEF_CLASS (DetectorSegmentCapsule)
-      KIT_PREDEF_CLASS (DetectorCapsuleSegment)
-      KIT_PREDEF_CLASS (DetectorCapsuleBox)
-      KIT_PREDEF_CLASS (DetectorBoxCapsule)
+      HPP_KIT_PREDEF_CLASS (TestTreeCapsule);
+      HPP_KIT_PREDEF_CLASS (PolyCapsule);
+      HPP_KIT_PREDEF_CLASS (Capsule);
+      HPP_KIT_PREDEF_CLASS (DetectorCapsuleCapsule);
+      HPP_KIT_PREDEF_CLASS (DetectorCapsuleOBB);
+      HPP_KIT_PREDEF_CLASS (DetectorOBBCapsule);
+      HPP_KIT_PREDEF_CLASS (DetectorCapsuleTriangle);
+      HPP_KIT_PREDEF_CLASS (DetectorTriangleCapsule);
+      HPP_KIT_PREDEF_CLASS (TestTreeSegment);
+      HPP_KIT_PREDEF_CLASS (PolySegment);
+      HPP_KIT_PREDEF_CLASS (Segment);
+      HPP_KIT_PREDEF_CLASS (DetectorSegmentSegment);
+      HPP_KIT_PREDEF_CLASS (DetectorSegmentOBB);
+      HPP_KIT_PREDEF_CLASS (DetectorOBBSegment);
+      HPP_KIT_PREDEF_CLASS (DetectorSegmentTriangle);
+      HPP_KIT_PREDEF_CLASS (DetectorTriangleSegment);
+      HPP_KIT_PREDEF_CLASS (DetectorSegmentCapsule);
+      HPP_KIT_PREDEF_CLASS (DetectorCapsuleSegment);
+      HPP_KIT_PREDEF_CLASS (DetectorCapsuleBox);
+      HPP_KIT_PREDEF_CLASS (DetectorBoxCapsule);
     } // end of namespace collision.
   } // end of namespace geometry.
 } // end of namespace hpp.

@@ -37,10 +37,10 @@ namespace hpp
       class Capsule : public CkppPolyhedron, public collision::PolyCapsule
       {
       public:
-	KPP_DECLARE_PROPERTY(HEIGHT);
-	KPP_DECLARE_PROPERTY(RADIUS);
-	KPP_DECLARE_PROPERTY(BASE_VERTICES);
-	KPP_DECLARE_PROPERTY(PARALLELS);
+	HPP_KPP_DECLARE_PROPERTY(HEIGHT);
+	HPP_KPP_DECLARE_PROPERTY(RADIUS);
+	HPP_KPP_DECLARE_PROPERTY(BASE_VERTICES);
+	HPP_KPP_DECLARE_PROPERTY(PARALLELS);
 
 	/// \brief Get height of the capsule.
 	double height () const;
