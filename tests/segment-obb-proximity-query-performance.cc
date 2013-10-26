@@ -92,7 +92,9 @@ BOOST_AUTO_TEST_CASE (segment_obb_proximity_query_performance)
   analysis->leftObjectEmbedded (embeddedPoly);
   analysis->rightObjectEmbedded (embeddedSegment1);
   analysis->analysisData ()->analysisType (CkcdAnalysisType::EXACT_DISTANCE);
+#ifndef KIT_MONOTHREAD
   analysis->analysisData ()->maximumSpawnedThreadCount (0);
+#endif
 
   long TICKS_PER_SECOND = 1e6;
   struct timeval tv_start, tv_stop;
